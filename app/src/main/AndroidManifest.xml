@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.development.espakio.appespakio">
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activities.SplashScreen"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.WelcomeActivity" />
+        <activity android:name=".activities.Inicio" />
+        <activity android:name=".activities.SplashScreen2" />
+        <activity android:name=".activities.Ingresar" />
+        <activity android:name=".activities.Registrar" />
+        <activity android:name=".activities.MenuUsuarios" />
+        <activity android:name=".activities.NuevoUsuario" />
+        <activity android:name=".activities.Configuraciones" />
+        <activity android:name=".activities.MenuJuegos" />
+        <activity android:name=".activities.SplashScreen3" />
+        <activity android:name=".activities.DescripcionJuego"></activity>
+    </application>
+
+</manifest>

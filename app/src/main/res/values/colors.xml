@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- Colores Espakio -->
+    <color name="PlanetaAmarillo">#de9f33</color>
+    <color name="PlanetaAzul">#1d8b9e</color>
+    <color name="PlanetaRojo">#c13844</color>
+    <color name="SombraPlanetaAmarillo">#B97D29</color>
+    <color name="SombraPlanetaAzul">#177584</color>
+    <color name="SombraPlanetaRojo">#A4181A</color>
+    <color name="Espacio">#20282b</color>
+
+    <color name="Blanco">#ffffff</color>
+    <color name="GrisBajo">#CECECE</color>
+
+
+
+
+
+</resources>

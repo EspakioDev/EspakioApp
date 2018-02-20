@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Espakio</string>
+
+    <string name="Slider1_parte1">Somos un equipo conformado por desarrolladores y psicólogos trabajando en un solo objetivo.</string>
+    <string name="Slider1_parte2">Mejorar las habilidades cognitivas de los niños.</string>
+    <string name="Slider2">Disfruta con juegos de base científica y mejora las habilidades cognitivas de los mas pequeños.</string>
+    <string name="Slider3">Sigue el rendimiento de los niños a traves de los datos recaudados de pruebas desarrolladas por nuestro equipo de psicólogos.</string>
+
+    <!-- Strings Botones -->
+    <string name="Ingresar">Ingresar</string>
+    <string name="Registrar">Registrar</string>
+    <string name="Aceptar">Aceptar</string>
+    <string name="Regresar">Regresar</string>
+    <string name="Juego">Juego Uno</string>
+    <string name="Jugar">Jugar</string>
+    <string name="Configuraciones">Configuraciones</string>
+
+
+    <!-- Descripcion Juego -->
+    <string name="Juego_Ejemplo">Responde lo mas rapido que puedas a un conjunto de preguntas matematicas. </string>
+
+
+</resources>
