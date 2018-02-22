@@ -2,6 +2,7 @@ package com.development.espakio.appespakio.activities;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.development.espakio.appespakio.ImagenPerfilUsuario;
 import com.development.espakio.appespakio.R;
 import com.development.espakio.appespakio.models.BackgroundWorker;
 import com.development.espakio.appespakio.models.Cliente;
@@ -24,6 +27,7 @@ import java.util.Calendar;
 public class NuevoUsuario extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnAceptar;
+    private ImageView imagenPerfil;
     private EditText etxtNombre, etxtBirthday;
     private Cliente cliente;
     private int idCliente;
@@ -39,6 +43,16 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
         etxtNombre = (EditText) findViewById(R.id.nuevoUsuario_etxtNombre);
         etxtBirthday = (EditText) findViewById(R.id.nuevoUsuario_etxtBirthday);
         etxtBirthday.setOnClickListener(this);
+
+
+        imagenPerfil = (ImageView) findViewById(R.id.IvImgUsuario);
+        imagenPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NuevoUsuario.this, ImagenPerfilUsuario.class));
+                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
+            }
+        });
 
         btnAceptar = (Button) findViewById(R.id.nuevoUsuario_btnAceptar);
         btnAceptar.setOnClickListener(this);

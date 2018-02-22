@@ -21,7 +21,23 @@
         app:srcCompat="@drawable/img_usuario_1" />
 
     <Button
-        android:id="@+id/btnConfig"
+        android:id="@+id/btnPerfilUsuario"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:drawable/ic_menu_myplaces"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toEndOf="@+id/btnConfig2"
+        app:layout_constraintTop_toBottomOf="@+id/imgJuegoTres"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btnConfig2"
         android:layout_width="83dp"
         android:layout_height="83dp"
         android:layout_marginBottom="4dp"

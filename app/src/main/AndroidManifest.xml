@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.development.espakio.appespakio">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,9 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.SplashScreen"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-
-        </activity>
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
         <activity android:name=".activities.WelcomeActivity" />
         <activity android:name=".activities.Inicio">
             <intent-filter>
@@ -25,20 +23,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.SplashScreen2" />
-        <activity android:name=".activities.Ingresar">
-
-        </activity>
-        <activity android:name=".activities.Registrar">
-
-        </activity>
+        <activity android:name=".activities.Ingresar" />
+        <activity android:name=".activities.Registrar" />
         <activity android:name=".activities.MenuUsuarios" />
-        <activity android:name=".activities.NuevoUsuario">
-
-        </activity>
+        <activity android:name=".activities.NuevoUsuario" />
         <activity android:name=".activities.Configuraciones" />
         <activity android:name=".activities.MenuJuegos" />
         <activity android:name=".activities.SplashScreen3" />
-        <activity android:name=".activities.DescripcionJuego"></activity>
+        <activity android:name=".activities.DescripcionJuego" />
+        <activity android:name=".ImagenPerfilUsuario" />
+        <activity android:name=".PerfilUsuario"></activity>
     </application>
 
 </manifest>

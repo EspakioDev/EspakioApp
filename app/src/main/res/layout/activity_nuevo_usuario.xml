@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/img_planeta_azul" />
 
     <ImageView
-        android:id="@+id/nuevoUsuario_imageView3"
+        android:id="@+id/IvImgUsuario"
         android:layout_width="167dp"
         android:layout_height="163dp"
         android:layout_marginBottom="8dp"
@@ -63,7 +63,7 @@
         android:textColor="@color/Blanco"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nuevoUsuario_imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/IvImgUsuario" />
 
     <EditText
         android:id="@+id/nuevoUsuario_etxtBirthday"

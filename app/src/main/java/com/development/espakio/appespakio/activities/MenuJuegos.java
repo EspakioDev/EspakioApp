@@ -11,12 +11,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.development.espakio.appespakio.PerfilUsuario;
 import com.development.espakio.appespakio.R;
 
 public class MenuJuegos extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView btnJuegoUno,btnJuegoDos,btnJuegoTres;
-    private Button btnConfig;
+    private Button btnConfig, btnPerfilUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +30,14 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
         btnJuegoUno = (ImageView) findViewById(R.id.imgJuegoUno);
         btnJuegoDos = (ImageView) findViewById(R.id.imgJuegoDos);
         btnJuegoTres = (ImageView) findViewById(R.id.imgJuegoTres);
-        btnConfig = (Button) findViewById(R.id.btnConfig);
+        btnPerfilUsuario = (Button) findViewById(R.id.btnPerfilUsuario);
+        btnConfig = (Button) findViewById(R.id.btnConfig2);
 
         btnConfig.setOnClickListener(this);
         btnJuegoUno.setOnClickListener(this);
         btnJuegoDos.setOnClickListener(this);
         btnJuegoTres.setOnClickListener(this);
+        btnPerfilUsuario.setOnClickListener(this);
 
         changeStatusBarColor();
     }
@@ -61,10 +64,15 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
                 startActivity(new Intent(MenuJuegos.this, DescripcionJuego.class));
                 overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);
                 break;
-            case R.id.btnConfig:
+            case R.id.btnConfig2:
                 startActivity(new Intent(MenuJuegos.this, Configuraciones.class));
                 overridePendingTransition(R.anim.right_in, R.anim.right_out);
                 break;
+            case R.id.btnPerfilUsuario:
+                startActivity(new Intent(MenuJuegos.this, PerfilUsuario.class));
+                overridePendingTransition(R.anim.right_in, R.anim.right_out);
+                break;
+
         }
     }
 }
