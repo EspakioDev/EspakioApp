@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.development.espakio.appespakio.R;
 import com.development.espakio.appespakio.models.BackgroundWorker;
 
-public class Registrar extends AppCompatActivity {
+public class Registrar extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnAceptar;
     private TextView tvRegresar;
@@ -36,21 +36,12 @@ public class Registrar extends AppCompatActivity {
         etxtCheckPassword = (EditText) findViewById(R.id.registrar_etxtCheckPassword);
 
         btnAceptar = (Button) findViewById(R.id.registrar_btnAceptar);
-        btnAceptar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                OnRegister();
-            }
-        });
-        changeStatusBarColor();
+        btnAceptar.setOnClickListener(this);
+
         tvRegresar = (TextView) findViewById(R.id.registrar_tvRegresar);
-        tvRegresar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Registrar.this, Inicio.class));
-                overridePendingTransition(R.anim.right_in, R.anim.right_out);
-            }
-        });
+        tvRegresar.setOnClickListener(this);
+
+        changeStatusBarColor();
     }
 
     private void changeStatusBarColor() {
@@ -61,20 +52,28 @@ public class Registrar extends AppCompatActivity {
         }
     }
 
-    public void OnRegister() {
-        String username = etxtUser.getText().toString();
-        String password = etxtPassword.getText().toString();
-        String verPassword = etxtCheckPassword.getText().toString();
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.registrar_tvRegresar:
+                startActivity(new Intent(this, Inicio.class));
+                overridePendingTransition(R.anim.right_in, R.anim.right_out);
+                break;
+            case R.id.registrar_btnAceptar:
+                String username = etxtUser.getText().toString();
+                String password = etxtPassword.getText().toString();
+                String verPassword = etxtCheckPassword.getText().toString();
 
-        String type = "register";
+                String type = "register";
 
-        if(password.equals(verPassword)) {
-            BackgroundWorker worker = new BackgroundWorker(this);
-            worker.execute(type, username, password);
-        } else {
-            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                if(password.equals(verPassword)) {
+                    BackgroundWorker worker = new BackgroundWorker(this);
+                    worker.execute(type, username, password);
+                } else {
+                    Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
-
-
     }
 }

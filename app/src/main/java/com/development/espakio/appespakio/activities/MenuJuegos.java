@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.development.espakio.appespakio.R;
 
-public class MenuJuegos extends AppCompatActivity {
+public class MenuJuegos extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView btnJuegoUno,btnJuegoDos,btnJuegoTres;
     private Button btnConfig;
@@ -31,44 +31,10 @@ public class MenuJuegos extends AppCompatActivity {
         btnJuegoTres = (ImageView) findViewById(R.id.imgJuegoTres);
         btnConfig = (Button) findViewById(R.id.btnConfig);
 
-        btnConfig.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MenuJuegos.this, Configuraciones.class));
-                overridePendingTransition(R.anim.right_in, R.anim.right_out);
-
-            }
-        });
-
-        btnJuegoUno.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MenuJuegos.this, DescripcionJuego.class));
-                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
-
-            }
-        });
-
-        btnJuegoDos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MenuJuegos.this, DescripcionJuego.class));
-                overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);
-
-            }
-        });
-
-        btnJuegoTres.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MenuJuegos.this, DescripcionJuego.class));
-                overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);
-
-            }
-        });
-
-
-
+        btnConfig.setOnClickListener(this);
+        btnJuegoUno.setOnClickListener(this);
+        btnJuegoDos.setOnClickListener(this);
+        btnJuegoTres.setOnClickListener(this);
 
         changeStatusBarColor();
     }
@@ -77,6 +43,28 @@ public class MenuJuegos extends AppCompatActivity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imgJuegoUno:
+                startActivity(new Intent(MenuJuegos.this, DescripcionJuego.class));
+                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
+                break;
+            case R.id.imgJuegoDos:
+                startActivity(new Intent(MenuJuegos.this, DescripcionJuego.class));
+                overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);
+                break;
+            case R.id.imgJuegoTres:
+                startActivity(new Intent(MenuJuegos.this, DescripcionJuego.class));
+                overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);
+                break;
+            case R.id.btnConfig:
+                startActivity(new Intent(MenuJuegos.this, Configuraciones.class));
+                overridePendingTransition(R.anim.right_in, R.anim.right_out);
+                break;
         }
     }
 }

@@ -14,19 +14,27 @@
         <activity
             android:name=".activities.SplashScreen"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+
+        </activity>
+        <activity android:name=".activities.WelcomeActivity" />
+        <activity android:name=".activities.Inicio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.WelcomeActivity" />
-        <activity android:name=".activities.Inicio" />
         <activity android:name=".activities.SplashScreen2" />
-        <activity android:name=".activities.Ingresar" />
-        <activity android:name=".activities.Registrar" />
+        <activity android:name=".activities.Ingresar">
+
+        </activity>
+        <activity android:name=".activities.Registrar">
+
+        </activity>
         <activity android:name=".activities.MenuUsuarios" />
-        <activity android:name=".activities.NuevoUsuario" />
+        <activity android:name=".activities.NuevoUsuario">
+
+        </activity>
         <activity android:name=".activities.Configuraciones" />
         <activity android:name=".activities.MenuJuegos" />
         <activity android:name=".activities.SplashScreen3" />

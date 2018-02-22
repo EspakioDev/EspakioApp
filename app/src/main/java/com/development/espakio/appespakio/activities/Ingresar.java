@@ -13,17 +13,19 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
 import com.development.espakio.appespakio.models.BackgroundWorker;
 
 import java.util.concurrent.ExecutionException;
 
-public class Ingresar extends AppCompatActivity {
+public class Ingresar extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnAceptar;
     private TextView tvRegresar;
     private EditText etxtUser, etxtPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,24 +40,10 @@ public class Ingresar extends AppCompatActivity {
         etxtPassword = (EditText) findViewById(R.id.ingresar_etxtPassword);
 
         btnAceptar = (Button) findViewById(R.id.ingresar_btnAceptar);
-
-        btnAceptar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                OnLogin();
-            }
-        });
+        btnAceptar.setOnClickListener(this);
 
         tvRegresar = (TextView) findViewById(R.id.ingresar_tvRegresar);
-
-        tvRegresar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Ingresar.this, Inicio.class));
-                overridePendingTransition(R.anim.right_in, R.anim.right_out);
-
-            }
-        });
+        tvRegresar.setOnClickListener(this);
 
         changeStatusBarColor();
     }
@@ -68,13 +56,23 @@ public class Ingresar extends AppCompatActivity {
         }
     }
 
-    public void OnLogin () {
-        String username = etxtUser.getText().toString();
-        String password = etxtPassword.getText().toString();
-        String type = "login";
 
-        BackgroundWorker worker = new BackgroundWorker(this);
-        worker.execute(type, username, password);
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.ingresar_tvRegresar:
+                startActivity(new Intent(this, Inicio.class));
+                overridePendingTransition(R.anim.right_in, R.anim.right_out);
+                break;
+            case R.id.ingresar_btnAceptar:
+                String username = etxtUser.getText().toString();
+                String password = etxtPassword.getText().toString();
+                String type = "login";
+
+                BackgroundWorker worker = new BackgroundWorker(this);
+                worker.execute(type, username, password);
+                break;
+        }
     }
-
 }

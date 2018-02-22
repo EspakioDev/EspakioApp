@@ -10,13 +10,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.content.pm.ActivityInfo;
+import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.models.Cliente;
 
-public class MenuUsuarios extends AppCompatActivity {
+public class MenuUsuarios extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView btnUsuarioUno, btnUsuarioPlus;
     private Button btnConfig;
+    private Cliente cliente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,34 +29,17 @@ public class MenuUsuarios extends AppCompatActivity {
         }
         setContentView(R.layout.activity_menu_usuarios);
 
-        btnUsuarioUno = (ImageView) findViewById(R.id.imgUsuarioUno);
-        btnUsuarioPlus = (ImageView) findViewById(R.id.imgUsuarioPlus);
-        btnConfig = (Button) findViewById(R.id.btnConfig);
+        btnUsuarioUno = (ImageView) findViewById(R.id.menuUsu_imgUsuarioUno);
+        btnUsuarioUno.setOnClickListener(this);
 
-        btnUsuarioUno.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MenuUsuarios.this, SplashScreen3.class));
-                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
-            }
-        });
+        btnUsuarioPlus = (ImageView) findViewById(R.id.menuUsu_imgUsuarioPlus);
+        btnUsuarioPlus.setOnClickListener(this);
 
-        btnUsuarioPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MenuUsuarios.this, NuevoUsuario.class));
-                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
+        btnConfig = (Button) findViewById(R.id.menuUsu_btnConfig);
+        btnConfig.setOnClickListener(this);
 
-            }
-        });
-
-        btnConfig.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MenuUsuarios.this, Configuraciones.class));
-                overridePendingTransition(R.anim.right_in, R.anim.right_out);
-            }
-        });
+        cliente = (Cliente) getIntent().getExtras().getSerializable("cliente");
+        Toast.makeText(this, "La informacion que recibi"+cliente.toString(), Toast.LENGTH_SHORT).show();
 
         changeStatusBarColor();
     }
@@ -63,5 +50,26 @@ public class MenuUsuarios extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(this, NuevoUsuario.class);
+        switch (view.getId()) {
+            case R.id.menuUsu_imgUsuarioPlus:
+                intent = new Intent(this, NuevoUsuario.class);
+                intent.putExtra("cliente", cliente);
+                break;
+            case R.id.menuUsu_imgUsuarioUno:
+                intent = new Intent(this, SplashScreen3.class);
+                break;
+            case R.id.menuUsu_btnConfig:
+                intent = new Intent(this, Configuraciones.class);
+                //overridePendingTransition(R.anim.right_in, R.anim.right_out);
+                break;
+        }
+        startActivity(intent);
+        overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
+        finish();
     }
 }
