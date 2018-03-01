@@ -2,13 +2,14 @@ package com.development.espakio.appespakio.models;
 
 import android.annotation.SuppressLint;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Spectre 13-4107la on 20/02/2018.
  */
 
-public class Usuario {
+public class Usuario implements Serializable{
     private int idUsuario;
     private String nickName;
     private Date birthDate;
@@ -28,9 +29,24 @@ public class Usuario {
         logros = 0;
     }
 
-    public String toString() {
+    public Usuario(int idUsuario, String nickName, Date birthdate, String imagen, int vidas, int logros,  int idCliente){
+
+        this.idUsuario = idUsuario;
+        this.nickName = nickName;
+        this.birthDate = birthdate;
+        this.idCliente = idCliente;
+        this.imagen = imagen;
+        this.vidas = vidas;
+        this.logros = logros;
+    }
+   /* public String toString() {
         return "[ID: "+idUsuario+", Nickname: "+nickName+", Birthday: "+birthDate
                 +", Imagen: "+imagen+", Vidas: "+vidas+", Logros: "+logros+", idCliente: "+idCliente+"]";
-    }
+    }*/
+   public int getID() { return idUsuario;}
+
+   public String IDtoString() {
+       return  "[ID: "+idUsuario+"]";
+   }
 
 }

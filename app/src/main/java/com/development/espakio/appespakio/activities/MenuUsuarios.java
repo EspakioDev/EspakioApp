@@ -14,6 +14,7 @@ import android.content.pm.ActivityInfo;
 import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.models.BackgroundWorker;
 import com.development.espakio.appespakio.models.Cliente;
 
 public class MenuUsuarios extends AppCompatActivity implements View.OnClickListener{
@@ -39,7 +40,8 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
         btnConfig.setOnClickListener(this);
 
         cliente = (Cliente) getIntent().getExtras().getSerializable("cliente");
-        Toast.makeText(this, "La informacion que recibi"+cliente.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "La informacion que recibi"+cliente.IDtoString(), Toast.LENGTH_SHORT).show();
+        obtenerUsuarios();
 
         changeStatusBarColor();
     }
@@ -71,5 +73,12 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
         overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
         finish();
+    }
+
+    public void obtenerUsuarios() {
+        String type = "getUsers";
+        BackgroundWorker worker = new BackgroundWorker(this);
+        worker.setClient(cliente);
+        worker.execute(type, Integer.toString(cliente.getID()));
     }
 }

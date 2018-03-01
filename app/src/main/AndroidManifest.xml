@@ -31,8 +31,8 @@
         <activity android:name=".activities.MenuJuegos" />
         <activity android:name=".activities.SplashScreen3" />
         <activity android:name=".activities.DescripcionJuego" />
-        <activity android:name=".ImagenPerfilUsuario" />
-        <activity android:name=".PerfilUsuario"></activity>
+        <activity android:name=".activities.ImagenPerfilUsuario" />
+        <activity android:name=".activities.PerfilUsuario"></activity>
     </application>
 
 </manifest>

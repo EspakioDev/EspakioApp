@@ -1,4 +1,4 @@
-package com.development.espakio.appespakio;
+package com.development.espakio.appespakio.activities;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.development.espakio.appespakio.R;
 
 public class ImagenPerfilUsuario extends AppCompatActivity {
 

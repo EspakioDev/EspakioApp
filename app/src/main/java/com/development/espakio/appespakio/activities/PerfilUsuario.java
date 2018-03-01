@@ -1,7 +1,9 @@
-package com.development.espakio.appespakio;
+package com.development.espakio.appespakio.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.development.espakio.appespakio.R;
 
 public class PerfilUsuario extends AppCompatActivity {
 

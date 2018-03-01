@@ -10,14 +10,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.development.espakio.appespakio.PerfilUsuario;
 import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.models.Cliente;
+import com.development.espakio.appespakio.models.Usuario;
 
 public class MenuJuegos extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView btnJuegoUno,btnJuegoDos,btnJuegoTres;
     private Button btnConfig, btnPerfilUsuario;
+    private Cliente cliente;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,10 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
         btnJuegoTres.setOnClickListener(this);
         btnPerfilUsuario.setOnClickListener(this);
 
+        cliente = (Cliente) getIntent().getExtras().getSerializable("cliente");
+        usuario = (Usuario) getIntent().getExtras().getSerializable("usuario");
+        Toast.makeText(this, "Cliente que recibi"+ cliente.IDtoString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Usuario que recibi"+ usuario.IDtoString(), Toast.LENGTH_SHORT).show();
         changeStatusBarColor();
     }
     private void changeStatusBarColor() {

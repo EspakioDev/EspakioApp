@@ -11,6 +11,10 @@ import com.development.espakio.appespakio.activities.Ingresar;
 import com.development.espakio.appespakio.activities.MenuJuegos;
 import com.development.espakio.appespakio.activities.MenuUsuarios;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -22,6 +26,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Date;
+import java.util.Vector;
 
 /**
  * Created by Spectre 13-4107la on 15/02/2018.
@@ -34,11 +40,15 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     private String type;
     private Cliente cliente;
     private Usuario usuario;
+    private String[] datos;
 
     public BackgroundWorker (Activity activity) {
         this.activity = activity;
     }
 
+    public void setClient(Cliente client){
+        this.cliente = client;
+    }
     @Override
     protected String doInBackground(String... strings) {
         type = strings[0];
@@ -54,28 +64,32 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             OutputStream oStrem = urlConnection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(oStrem, "UTF-8"));
 
-            String post_data;
+            String post_data = "";
 
             switch (type)
             {
                 case "login":
+                    datos = new String[]{strings[1]};
                     post_data = URLEncoder.encode("user", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"
                             + URLEncoder.encode("pass", "UTF-8")+"="+URLEncoder.encode(strings[2], "UTF-8");
                     clase = MenuUsuarios.class;
                     break;
                 case "register":
+                    datos = new String[]{strings[1]};
                     post_data = URLEncoder.encode("user", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"
                             + URLEncoder.encode("pass", "UTF-8")+"="+URLEncoder.encode(strings[2], "UTF-8");
                     clase = MenuUsuarios.class;
                     break;
                 case "newUser":
+                    datos = new String[]{strings[1], strings[2]};
                     post_data = URLEncoder.encode("user", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"
                             + URLEncoder.encode("fecha", "UTF-8")+"="+URLEncoder.encode(strings[2], "UTF-8")+"&"
                             + URLEncoder.encode("idCliente", "UTF-8")+"="+URLEncoder.encode(strings[3], "UTF-8");
                     clase = MenuJuegos.class;
                     break;
-                default:
-                    post_data = "";
+                case "getUsers":
+                    post_data = URLEncoder.encode("idCliente", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8");
+                    break;
             }
 
             bufferedWriter.write(post_data);
@@ -86,7 +100,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             InputStream inputStream = urlConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
             String result = "";
-            String line = "";
+            String line;
             while ((line = bufferedReader.readLine()) != null)
             {
                 result += line;
@@ -110,29 +124,47 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        if(result.contains("failed") || result.contains("Error") || result.isEmpty())
-            Toast.makeText(activity, result, Toast.LENGTH_LONG).show();
-        else {
-            Intent intent = new Intent(activity, clase);
-            switch (type){
-                case "login":
-                    cliente = new Cliente(Integer.parseInt(result));
-                    intent.putExtra("cliente", cliente);
-                    break;
-                case "register":
-                    cliente = new Cliente(Integer.parseInt(result));
-                    intent.putExtra("cliente", cliente);
-                    break;
-                case "newUser":
-                    ;
-                    break;
-                default:
-                    ;
+    protected void onPostExecute(String string) {
+        try {
+            JSONObject jsonObject = new JSONObject(string);
+            String status = jsonObject.getString("status");
+            String message = jsonObject.getString("message");
+            if(status.contains("Failed") || status.contains("Error")) {
+                Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
             }
-            nextActivity(intent);
-            Toast.makeText(activity, result, Toast.LENGTH_LONG).show();
-        }
+            else {
+                switch (type){
+                    case "login":
+                        cliente = new Cliente(jsonObject.getInt("result"));
+                        nextActivity();
+                        break;
+                    case "register":
+                        cliente = new Cliente(jsonObject.getInt("result"));
+                        nextActivity();
+                        break;
+                    case "newUser":
+                        cliente.nuevoUsuario(jsonObject.getInt("result"), datos[0], datos[1]);
+                        usuario = cliente.ultimoUsuario();
+                        nextActivity();
+                        break;
+                    case "getUsers":
+                        String result = jsonObject.getString("result");
+                        String ids = "";
+                        JSONArray jsonArray = new JSONArray(result);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonOb = jsonArray.getJSONObject(i);
+                            cliente.nuevoUsuario(jsonOb.getInt("idUsuario"), jsonOb.getString("Usuario"),
+                                    jsonOb.getString("Fecha_Nacimiento"), jsonOb.getString("Imagen"),
+                                    jsonOb.getInt("Vidas"), jsonOb.getInt("Logros"));
+                            ids += jsonOb.getString("idUsuario") + ",";
+                        }
+                        Toast.makeText(activity, ids, Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        ;
+                }
+            }
+        } catch (JSONException e) {e.printStackTrace();}
     }
 
     @Override
@@ -140,9 +172,24 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         super.onProgressUpdate(values);
     }
 
-    private void nextActivity(Intent intent) {
+    private void nextActivity() {
+        Intent intent = new Intent(activity, clase);
+        switch (type) {
+            case "login":
+                intent.putExtra("cliente", cliente);
+                break;
+            case "register":
+                intent.putExtra("cliente", cliente);
+                break;
+            case "newUser":
+                intent.putExtra("cliente", cliente);
+                intent.putExtra("usuario", usuario);
+                break;
+        }
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.left_in, R.anim.left_out);
         activity.finish();
     }
+
+
 }

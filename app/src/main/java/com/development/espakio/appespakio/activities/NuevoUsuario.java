@@ -1,7 +1,6 @@
 package com.development.espakio.appespakio.activities;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.development.espakio.appespakio.ImagenPerfilUsuario;
 import com.development.espakio.appespakio.R;
 import com.development.espakio.appespakio.models.BackgroundWorker;
 import com.development.espakio.appespakio.models.Cliente;
@@ -30,7 +28,6 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
     private ImageView imagenPerfil;
     private EditText etxtNombre, etxtBirthday;
     private Cliente cliente;
-    private int idCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +43,13 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
 
 
         imagenPerfil = (ImageView) findViewById(R.id.IvImgUsuario);
-        imagenPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(NuevoUsuario.this, ImagenPerfilUsuario.class));
-                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
-            }
-        });
+        imagenPerfil.setOnClickListener(this);
 
         btnAceptar = (Button) findViewById(R.id.nuevoUsuario_btnAceptar);
         btnAceptar.setOnClickListener(this);
 
         cliente = (Cliente) getIntent().getExtras().getSerializable("cliente");
-        Toast.makeText(this, "La informacion que recibi"+cliente.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "La informacion que recibi"+cliente.IDtoString(), Toast.LENGTH_SHORT).show();
 
         changeStatusBarColor();
     }
@@ -88,15 +79,18 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
                     }
                 }, anio, mes, dia);
                 pickerDialog.show();
-
                 break;
             case R.id.nuevoUsuario_btnAceptar:
                 String username = etxtNombre.getText().toString();
                 String birthday = etxtBirthday.getText().toString();
                 String type = "newUser";
-
                 BackgroundWorker worker = new BackgroundWorker(this);
+                worker.setClient(cliente);
                 worker.execute(type, username, birthday, Integer.toString(cliente.getID()));
+                break;
+            case R.id.IvImgUsuario:
+                startActivity(new Intent(this, ImagenPerfilUsuario.class));
+                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
                 break;
         }
     }
