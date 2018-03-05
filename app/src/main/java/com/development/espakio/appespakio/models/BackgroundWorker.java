@@ -26,8 +26,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.Vector;
 
 /**
  * Created by Spectre 13-4107la on 15/02/2018.
@@ -49,6 +47,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     public void setClient(Cliente client){
         this.cliente = client;
     }
+    public Cliente getCliente(){return cliente;}
     @Override
     protected String doInBackground(String... strings) {
         type = strings[0];
@@ -134,10 +133,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             }
             else {
                 switch (type){
-                    case "login":
+                    /*case "login":
                         cliente = new Cliente(jsonObject.getInt("result"));
                         nextActivity();
-                        break;
+                        break;*/
                     case "register":
                         cliente = new Cliente(jsonObject.getInt("result"));
                         nextActivity();
@@ -148,17 +147,28 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         nextActivity();
                         break;
                     case "getUsers":
-                        String result = jsonObject.getString("result");
-                        String ids = "";
+                        /*String result = jsonObject.getString("result");
                         JSONArray jsonArray = new JSONArray(result);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonOb = jsonArray.getJSONObject(i);
                             cliente.nuevoUsuario(jsonOb.getInt("idUsuario"), jsonOb.getString("Usuario"),
                                     jsonOb.getString("Fecha_Nacimiento"), jsonOb.getString("Imagen"),
                                     jsonOb.getInt("Vidas"), jsonOb.getInt("Logros"));
-                            ids += jsonOb.getString("idUsuario") + ",";
+                        }*/
+
+                        break;
+                    case "login":
+
+                        String result = jsonObject.getString("result");
+                        JSONArray jsonArray = new JSONArray(result);
+                        cliente = new Cliente(jsonArray.getJSONObject(0).getInt("idCliente"));
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonOb = jsonArray.getJSONObject(i);
+                            cliente.nuevoUsuario(jsonOb.getInt("idUsuario"), jsonOb.getString("Usuario"),
+                                    jsonOb.getString("Fecha_Nacimiento"), jsonOb.getString("Imagen"),
+                                    jsonOb.getInt("Vidas"), jsonOb.getInt("Logros"));
                         }
-                        Toast.makeText(activity, ids, Toast.LENGTH_LONG).show();
+                        nextActivity();
                         break;
                     default:
                         ;

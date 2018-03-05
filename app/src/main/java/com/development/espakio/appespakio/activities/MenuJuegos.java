@@ -45,10 +45,12 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
 
         cliente = (Cliente) getIntent().getExtras().getSerializable("cliente");
         usuario = (Usuario) getIntent().getExtras().getSerializable("usuario");
-        Toast.makeText(this, "Cliente que recibi"+ cliente.IDtoString(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "Usuario que recibi"+ usuario.IDtoString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MenuJuegos.this, "Cliente que recibi" + cliente.IDtoString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MenuJuegos.this, "Usuario que recibi" + usuario.IDtoString(), Toast.LENGTH_SHORT).show();
         changeStatusBarColor();
     }
+
+
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();

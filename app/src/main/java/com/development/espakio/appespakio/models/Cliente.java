@@ -66,6 +66,14 @@ public class Cliente implements Serializable{
         return "[idCliente: "+id+"]";
     }
 
+    public int sizeUsuarios(){
+        return  Usuarios.size();
+    }
+
+    public Usuario getUsuario(int index){
+        return Usuarios.get(index);
+    }
+
     public String IDUsuarios() {
         String result = "";
         for (Usuario usuario: Usuarios) {
