@@ -24,9 +24,8 @@ public class SplashScreen2 extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                startActivity(new Intent(SplashScreen2.this, Inicio.class));
-                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
+                Intent intent = new Intent(SplashScreen2.this, Inicio.class);
+                startActivity(intent);
                 finish();
 
             }

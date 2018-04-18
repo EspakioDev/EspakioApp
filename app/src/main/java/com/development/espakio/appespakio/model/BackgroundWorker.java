@@ -1,4 +1,4 @@
-package com.development.espakio.appespakio.models;
+package com.development.espakio.appespakio.model;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -124,7 +124,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String string) {
-        try {
+        /*try {
             JSONObject jsonObject = new JSONObject(string);
             String status = jsonObject.getString("status");
             String message = jsonObject.getString("message");
@@ -133,10 +133,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             }
             else {
                 switch (type){
-                    /*case "login":
+                    case "login":
                         cliente = new Cliente(jsonObject.getInt("result"));
                         nextActivity();
-                        break;*/
+                        break;
                     case "register":
                         cliente = new Cliente(jsonObject.getInt("result"));
                         nextActivity();
@@ -147,18 +147,16 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         nextActivity();
                         break;
                     case "getUsers":
-                        /*String result = jsonObject.getString("result");
+                        String result = jsonObject.getString("result");
                         JSONArray jsonArray = new JSONArray(result);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonOb = jsonArray.getJSONObject(i);
                             cliente.nuevoUsuario(jsonOb.getInt("idUsuario"), jsonOb.getString("Usuario"),
                                     jsonOb.getString("Fecha_Nacimiento"), jsonOb.getString("Imagen"),
                                     jsonOb.getInt("Vidas"), jsonOb.getInt("Logros"));
-                        }*/
-
+                        }
                         break;
                     case "login":
-
                         String result = jsonObject.getString("result");
                         JSONArray jsonArray = new JSONArray(result);
                         cliente = new Cliente(jsonArray.getJSONObject(0).getInt("idCliente"));
@@ -166,7 +164,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                             JSONObject jsonOb = jsonArray.getJSONObject(i);
                             cliente.nuevoUsuario(jsonOb.getInt("idUsuario"), jsonOb.getString("Usuario"),
                                     jsonOb.getString("Fecha_Nacimiento"), jsonOb.getString("Imagen"),
-                                    jsonOb.getInt("Vidas"), jsonOb.getInt("Logros"));
+                                    jsonOb.getInt("Vidas"));
+                                    //jsonOb.getInt("Logros"));
                         }
                         nextActivity();
                         break;
@@ -174,7 +173,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                         ;
                 }
             }
-        } catch (JSONException e) {e.printStackTrace();}
+        } catch (JSONException e) {e.printStackTrace();}*/
     }
 
     @Override

@@ -12,41 +12,21 @@ import android.widget.Button;
 
 import com.development.espakio.appespakio.R;
 
-public class Inicio extends AppCompatActivity {
+public class Inicio extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnIngresar, btnRegistrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
+
         setContentView(R.layout.activity_inicio);
 
         btnIngresar = (Button) findViewById(R.id.btnIngresar);
-        btnIngresar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inicio.this, Ingresar.class));
-                overridePendingTransition(R.anim.left_in, R.anim.left_out);
-
-
-            }
-        });
+        btnIngresar.setOnClickListener(this);
 
         btnRegistrar = (Button) findViewById(R.id.btnRegistrar);
-        btnRegistrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               startActivity(new Intent(Inicio.this, Registrar.class));
-                overridePendingTransition(R.anim.left_in, R.anim.left_out);
-
-            }
-        });
-
-
-
+        btnRegistrar.setOnClickListener(this);
 
         changeStatusBarColor();
     }
@@ -56,6 +36,23 @@ public class Inicio extends AppCompatActivity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnIngresar:
+                startActivity(new Intent(Inicio.this, Ingresar.class));
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                break;
+            case R.id.btnRegistrar:
+                startActivity(new Intent(Inicio.this, Registrar.class));
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                break;
         }
     }
 }

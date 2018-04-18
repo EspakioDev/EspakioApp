@@ -13,22 +13,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
-import com.development.espakio.appespakio.models.Cliente;
-import com.development.espakio.appespakio.models.Usuario;
+import com.development.espakio.appespakio.model.Cliente;
+import com.development.espakio.appespakio.model.GamesMenuPresenter;
+import com.development.espakio.appespakio.model.Usuario;
+import com.development.espakio.appespakio.view.IGamesMenuView;
 
-public class MenuJuegos extends AppCompatActivity implements View.OnClickListener{
+public class MenuJuegos extends AppCompatActivity implements View.OnClickListener, IGamesMenuView{
 
     private ImageView btnJuegoUno,btnJuegoDos,btnJuegoTres;
     private Button btnConfig, btnPerfilUsuario;
-    private Cliente cliente;
-    private Usuario usuario;
+    private GamesMenuPresenter gamesMenuPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
         setContentView(R.layout.activity_menu_juegos);
 
         btnJuegoUno = (ImageView) findViewById(R.id.imgJuegoUno);
@@ -43,10 +41,9 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
         btnJuegoTres.setOnClickListener(this);
         btnPerfilUsuario.setOnClickListener(this);
 
-        cliente = (Cliente) getIntent().getExtras().getSerializable("cliente");
-        usuario = (Usuario) getIntent().getExtras().getSerializable("usuario");
-            //Toast.makeText(MenuJuegos.this, "Cliente que recibi" + cliente.IDtoString(), Toast.LENGTH_SHORT).show();
-            //Toast.makeText(MenuJuegos.this, "Usuario que recibi" + usuario.IDtoString(), Toast.LENGTH_SHORT).show();
+        gamesMenuPresenter = new GamesMenuPresenter(MenuJuegos.this, getApplicationContext());
+        gamesMenuPresenter.performGamesMenu();
+
         changeStatusBarColor();
     }
 
@@ -56,6 +53,9 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
     }
 
@@ -82,7 +82,11 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
                 startActivity(new Intent(MenuJuegos.this, PerfilUsuario.class));
                 overridePendingTransition(R.anim.right_in, R.anim.right_out);
                 break;
-
         }
+    }
+
+    @Override
+    public void getUserID(int id) {
+        Toast.makeText(MenuJuegos.this, "Usuario: " + id, Toast.LENGTH_SHORT).show();
     }
 }

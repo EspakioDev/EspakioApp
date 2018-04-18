@@ -20,28 +20,27 @@ import android.widget.TextView;
 
 import com.development.espakio.appespakio.R;
 
-public class WelcomeActivity extends AppCompatActivity {
+
+public class WelcomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener{
 
     private ViewPager viewPager;
-    private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
     private Button btnAtras, btnSiguiente;
     private PrefManager prefManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Revisar si la Pagina es Habierta por Primera Vez.
-        prefManager = new PrefManager(this);
+        //Revisar si la Pagina es abierta por Primera Vez.
+        /*prefManager = new PrefManager(this);
         if (!prefManager.isFirstTimeLaunch()) {
             prefManager.setFirstTimeLaunch(false);
             startActivity(new Intent(WelcomeActivity.this, SplashScreen2.class));
             finish();
-        }
+        }*/
 
         // Barra de Notificaciones Transparente
         if (Build.VERSION.SDK_INT >= 21) {
@@ -64,37 +63,15 @@ public class WelcomeActivity extends AppCompatActivity {
 
         changeStatusBarColor();
 
-        myViewPagerAdapter = new MyViewPagerAdapter();
-        viewPager.setAdapter(myViewPagerAdapter);
-        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+        //myViewPagerAdapter = new MyViewPagerAdapter();
+        //viewPager.setAdapter(myViewPagerAdapter);
+        viewPager.setAdapter(new MyViewPagerAdapter());
+        //viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+        viewPager.addOnPageChangeListener(this);
 
-        btnAtras.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int current = getItem(-1);
-                if (current < layouts.length) {
-                    // move to next screen
-                    viewPager.setCurrentItem(current);
-                }
+        btnAtras.setOnClickListener(this);
+        btnSiguiente.setOnClickListener(this);
 
-            }
-        });
-
-        btnSiguiente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // checking for last page
-                // if last page home screen will be launched
-                int current = getItem(+1);
-                if (current < layouts.length) {
-                    // move to next screen
-                    viewPager.setCurrentItem(current);
-                }else {
-                    startActivity(new Intent(WelcomeActivity.this, SplashScreen2.class));
-                }
-
-            }
-        });
     }
 
     private void addBottomDots(int currentPage) {
@@ -121,9 +98,7 @@ public class WelcomeActivity extends AppCompatActivity {
         return viewPager.getCurrentItem() + i;
     }
 
-
-
-    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+    /**ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
         public void onPageSelected(int position) {
@@ -165,13 +140,79 @@ public class WelcomeActivity extends AppCompatActivity {
         public void onPageScrollStateChanged(int arg0) {
 
         }
-    };
+    };*/
 
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        addBottomDots(position);
+
+        if (position == 0){
+            btnAtras.setEnabled(false);
+            btnSiguiente.setEnabled(true);
+            btnAtras.setVisibility(View.INVISIBLE);
+
+            btnSiguiente.setText("Siguiente");
+            btnAtras.setText("");
+
+        } else if(position == layouts.length - 1){
+            btnAtras.setEnabled(true);
+            btnSiguiente.setEnabled(true);
+            btnAtras.setVisibility(View.VISIBLE);
+
+            btnSiguiente.setText("Terminar");
+            btnAtras.setText("Atras");
+
+        }else {
+            btnAtras.setEnabled(true);
+            btnSiguiente.setEnabled(true);
+            btnAtras.setVisibility(View.VISIBLE);
+
+            btnSiguiente.setText("Siguiente");
+            btnAtras.setText("Atras");
+
+        }
+    }
+
+    @Override
+    public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int arg0) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_next:
+                // checking for last page
+                // if last page home screen will be launched
+                int current = getItem(+1);
+                if (current < layouts.length) {
+                    // move to next screen
+                    viewPager.setCurrentItem(current);
+                } else {
+                    startActivity(new Intent(WelcomeActivity.this, SplashScreen2.class));
+                    finish();
+                }
+                break;
+            case R.id.btn_skip:
+                int iCurrent = getItem(-1);
+                if (iCurrent < layouts.length) {
+                    // move to next screen
+                    viewPager.setCurrentItem(iCurrent);
+                }
+                break;
         }
     }
 
@@ -201,14 +242,12 @@ public class WelcomeActivity extends AppCompatActivity {
             return view == obj;
         }
 
-
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             View view = (View) object;
             container.removeView(view);
         }
     }
-
 
 }
 
