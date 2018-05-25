@@ -44,6 +44,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/Regresar"
         android:textAlignment="center"
+        android:textAllCaps="false"
         android:textColor="@color/Blanco"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/ingresar_imageView"

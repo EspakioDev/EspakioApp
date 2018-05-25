@@ -1,16 +1,15 @@
-package com.development.espakio.appespakio.model;
+package com.development.espakio.appespakio.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.util.Patterns;
 
+import com.development.espakio.appespakio.db.BackgroundWorker1;
 import com.development.espakio.appespakio.db.tblCliente;
-import com.development.espakio.appespakio.db.tblUsuarios;
+import com.development.espakio.appespakio.model.Cliente;
 import com.development.espakio.appespakio.presenter.IRegisterPresenter;
 import com.development.espakio.appespakio.view.IRegisterView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

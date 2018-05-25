@@ -3,12 +3,10 @@ package com.development.espakio.appespakio.activities;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,9 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
-import com.development.espakio.appespakio.model.BackgroundWorker;
-import com.development.espakio.appespakio.model.Cliente;
-import com.development.espakio.appespakio.model.NewUserPresenter;
+import com.development.espakio.appespakio.presenter.NewUserPresenter;
 import com.development.espakio.appespakio.view.INewUserView;
 
 import java.util.Calendar;
@@ -36,7 +32,6 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_nuevo_usuario);
 
         etxtNombre = (EditText) findViewById(R.id.nuevoUsuario_etxtNombre);
@@ -46,7 +41,6 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
         etxtBirthday.setOnClickListener(this);
         etxtBirthday.setOnFocusChangeListener(this);
 
-
         imagenPerfil = (ImageView) findViewById(R.id.IvImgUsuario);
         imagenPerfil.setOnClickListener(this);
 
@@ -54,18 +48,25 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
         btnAceptar.setOnClickListener(this);
 
         newUserPresenter = new NewUserPresenter(NuevoUsuario.this, getApplicationContext());
-        changeStatusBarColor();
+
+        fullScreen();
     }
 
-    private void changeStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
+    private void fullScreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int UI_OPTIONS = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+            getWindow().getDecorView().setSystemUiVisibility(UI_OPTIONS);
         }
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
+
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     @Override
@@ -78,7 +79,7 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
             case R.id.nuevoUsuario_btnAceptar:
                 String username = etxtNombre.getText().toString();
                 String birthday = etxtBirthday.getText().toString();
-                newUserPresenter.performAddUser(username,birthday);
+                newUserPresenter.performAddUser(username,birthday, "default.png");
                 break;
             case R.id.IvImgUsuario:
                 startActivity(new Intent(this, ImagenPerfilUsuario.class));
@@ -108,7 +109,7 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void newUserSuccess() {
-        Intent intent = new Intent(NuevoUsuario.this, MenuJuegos.class);
+        Intent intent = new Intent(NuevoUsuario.this, SplashScreen3.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);
@@ -116,12 +117,12 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void newUSerError() {
+    public void Error() {
         Toast.makeText(NuevoUsuario.this, "Ocurrio un error en la conexion de base de datos", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void newUserFailed() {
+    public void Failed() {
         Toast.makeText(NuevoUsuario.this, "Hubo un fallo en la conexion de base de datos", Toast.LENGTH_SHORT).show();
     }
 

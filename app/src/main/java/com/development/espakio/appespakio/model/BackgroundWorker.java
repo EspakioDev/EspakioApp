@@ -4,16 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
 import com.development.espakio.appespakio.activities.Ingresar;
 import com.development.espakio.appespakio.activities.MenuJuegos;
 import com.development.espakio.appespakio.activities.MenuUsuarios;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

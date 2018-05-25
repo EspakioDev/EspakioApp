@@ -15,15 +15,18 @@ public class Usuario implements Serializable{
     private Date birthDay;
     private String imagen;
     private int vidas;
+    //private int logros;
     private int IDCliente;
 
-    public Usuario(int ID, String nickName, String birthday, int IDCliente){
+
+    public Usuario(int ID, String nickName, String birthday, String imagen, int IDCliente){
         this.ID = ID;
         this.nickName = nickName;
         this.birthDay = stringToDate(birthday);
         this.IDCliente = IDCliente;
-        imagen = "Default.png";
-        vidas = 3;
+        this.imagen = imagen;
+        vidas = Constants.VIDAS;
+        //logros = 1;
     }
 
     public Usuario(int ID, String nickName, String birthday, String imagen, int vidas, int IDCliente){
@@ -33,27 +36,20 @@ public class Usuario implements Serializable{
         this.IDCliente = IDCliente;
         this.imagen = imagen;
         this.vidas = vidas;
+        //this.logros = logros;
     }
-   /* public String toString() {
+
+    /* public String toString() {
         return "[ID: "+ID+", Nickname: "+nickName+", Birthday: "+birthDate
                 +", Imagen: "+imagen+", Vidas: "+vidas+", Logros: "+logros+", IDCliente: "+IDCliente+"]";
     }*/
-   public int getID() { return ID;}
 
-   public String IDtoString() {
-       return  "[ID: "+ ID +"]";
-   }
 
-   private Date stringToDate(String date) {
-       SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-       Date fecha = null;
-       try {
-           fecha = sdf.parse(date);
-       } catch (ParseException e) {
-           e.printStackTrace();
-       }
-       return fecha;
-   }
+    public int getID() { return ID;}
+
+    public String IDtoString() {
+        return  "[ID: "+ ID +"]";
+    }
 
     public String getNickName() {
         return nickName;
@@ -71,7 +67,21 @@ public class Usuario implements Serializable{
         return vidas;
     }
 
+    //public int getLogros() {return logros;}
+
     public int getIDCliente() {
         return IDCliente;
     }
+
+    private Date stringToDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha = null;
+        try {
+            fecha = sdf.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return fecha;
+    }
+
 }

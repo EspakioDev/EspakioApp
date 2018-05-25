@@ -10,5 +10,6 @@ public interface ILoginView {
     void loginSuccess();
     void loginError();
     void loginFailed();
+    void loginAccesFailed();
     void idCliente(int id);
 }

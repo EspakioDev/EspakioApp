@@ -11,8 +11,8 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view"
-        android:layout_width="318dp"
-        android:layout_height="300dp"
+        android:layout_width="343dp"
+        android:layout_height="325dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -28,7 +28,7 @@
 
     <Button
         android:id="@+id/btnIngresar"
-        android:layout_width="316dp"
+        android:layout_width="137dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -39,25 +39,23 @@
         android:textColor="@color/Espacio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animation_view"
-        app:layout_constraintVertical_bias="0.385" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistrar"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnRegistrar"
-        android:layout_width="315dp"
+        android:layout_width="316dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/btnstyle"
+        android:layout_marginTop="92dp"
+        android:background="@drawable/btnstyle_amarillo"
         android:text="@string/Registrar"
-        android:textColor="@color/Espacio"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/Blanco"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnIngresar"
-        app:layout_constraintVertical_bias="0.122" />
+        app:layout_constraintTop_toBottomOf="@+id/animation_view" />
 
 </android.support.constraint.ConstraintLayout>

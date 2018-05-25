@@ -1,4 +1,4 @@
-package com.development.espakio.appespakio.model;
+package com.development.espakio.appespakio.db;
 
 import android.os.AsyncTask;
 
@@ -56,10 +56,16 @@ public class BackgroundWorker1 extends AsyncTask<String, Void, String> {
                 case "newUser":
                     post_data = URLEncoder.encode("user", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"
                             + URLEncoder.encode("fecha", "UTF-8")+"="+URLEncoder.encode(strings[2], "UTF-8")+"&"
-                            + URLEncoder.encode("idCliente", "UTF-8")+"="+URLEncoder.encode(strings[3], "UTF-8");
+                            + URLEncoder.encode("idCliente", "UTF-8")+"="+URLEncoder.encode(strings[3], "UTF-8")+"&"
+                            + URLEncoder.encode("imagen", "UTF-8")+"="+URLEncoder.encode(strings[4], "UTF-8")+"&"
+                            + URLEncoder.encode("vidas", "UTF-8")+"="+URLEncoder.encode(strings[5], "UTF-8")+"&"
+                            + URLEncoder.encode("noJuegos", "UTF-8")+"="+URLEncoder.encode(strings[6], "UTF-8");
                     break;
                 case "getUsers":
                     post_data = URLEncoder.encode("idCliente", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8");
+                    break;
+                case "getProgress":
+                    post_data = URLEncoder.encode("idUsuario", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8");
                     break;
             }
 

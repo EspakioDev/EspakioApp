@@ -12,10 +12,10 @@ import java.util.Vector;
  */
 
 public class tblUsuarios {
-    private InternalDB db;
+    private DataBase db;
 
     public  tblUsuarios(Context context) {
-        db = new InternalDB(context);
+        db = new DataBase(context);
     }
 
     public void insertUser(Usuario usuario) {
@@ -25,6 +25,7 @@ public class tblUsuarios {
         contentValues.put(DBConstants.TABLE_USUARIO_BIRTHDATE, usuario.getBirthDay().toString());
         contentValues.put(DBConstants.TABLE_USUARIO_IMAGEN, usuario.getImagen());
         contentValues.put(DBConstants.TABLE_USUARIO_VIDAS, usuario.getVidas());
+        //contentValues.put(DBConstants.TABLE_USUARIO_LOGROS, usuario.getLogros());
         contentValues.put(DBConstants.TABLE_USUARIO_ID_CLIENTE, usuario.getIDCliente());
         contentValues.put(DBConstants.TABLE_USUARIO_SELECT, 0);
         db.insert(DBConstants.TABLE_USUARIO, contentValues);
@@ -37,6 +38,7 @@ public class tblUsuarios {
         contentValues.put(DBConstants.TABLE_USUARIO_BIRTHDATE, usuario.getBirthDay().toString());
         contentValues.put(DBConstants.TABLE_USUARIO_IMAGEN, usuario.getImagen());
         contentValues.put(DBConstants.TABLE_USUARIO_VIDAS, usuario.getVidas());
+        //contentValues.put(DBConstants.TABLE_USUARIO_LOGROS, usuario.getLogros());
         contentValues.put(DBConstants.TABLE_USUARIO_ID_CLIENTE, usuario.getIDCliente());
         contentValues.put(DBConstants.TABLE_USUARIO_SELECT, 1);
         db.insert(DBConstants.TABLE_USUARIO, contentValues);
@@ -76,7 +78,7 @@ public class tblUsuarios {
                     registro.getString(2),     //Birthday
                     registro.getString(3),     //Image
                     registro.getInt(4),        //Vidas
-                    //registros.getInt(5),         //Logros
+                    //registro.getInt(5),         //Logros
                     registro.getInt(5));       //IDCliente
 
         return usuario;

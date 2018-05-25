@@ -12,9 +12,9 @@ import android.util.Log;
  * Created by Spectre 13-4107la on 06/03/2018.
  */
 
-public class InternalDB extends SQLiteOpenHelper {
+public class DataBase extends SQLiteOpenHelper {
 
-    public InternalDB(Context context) {
+    public DataBase(Context context) {
         super(context, DBConstants.DATABASE_NAME, null, DBConstants.DATABASE_VERSION);
     }
 
@@ -30,21 +30,42 @@ public class InternalDB extends SQLiteOpenHelper {
                 DBConstants.TABLE_USUARIO_BIRTHDATE + " DATE, " +
                 DBConstants.TABLE_USUARIO_IMAGEN + " TEXT, " +
                 DBConstants.TABLE_USUARIO_VIDAS + " INTEGER, " +
-                //DBConstants.TABLE_USUARIO_LOGROS + " INTEGER, " +
+                ///DBConstants.TABLE_USUARIO_LOGROS + " INTEGER, " +
                 DBConstants.TABLE_USUARIO_ID_CLIENTE + " INTEGER, " +
                 DBConstants.TABLE_USUARIO_SELECT + " INTEGER DEFAULT 0, "+
                 "FOREIGN KEY (" + DBConstants.TABLE_USUARIO_ID_CLIENTE + ") " +
                 "REFERENCES " + DBConstants.TABLE_CLIENTE + "(" + DBConstants.TABLE_CLIENTE_ID + ")" +
                 ")";
 
+        String queryCrearTablaJuegos = "CREATE TABLE " + DBConstants.TABLE_JUEGO + "(" +
+                DBConstants.TABLE_JUEGO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DBConstants.TABLE_JUEGO_NOMBRE + " TEXT, " +
+                DBConstants.TABLE_JUEGO_DESCRIPCION + " TEXT, " +
+                DBConstants.TABLE_JUEGO_HABILIDAD + " TEXT, " +
+                DBConstants.TABLE_JUEGO_PRUEBA + " INTEGER DEFAULT 0 "+
+                ")";
+
+        String queryCrearTablaAvance = "CREATE TABLE " + DBConstants.TABLE_AVANCE + "(" +
+                DBConstants.TABLE_AVANCE_ID + " INTEGER PRIMARY KEY, " +
+                DBConstants.TABLE_AVANCE_ID_JUEGO + " INTEGER, " +
+                DBConstants.TABLE_AVANCE_LOGRO + " INTEGER, " +
+                DBConstants.TABLE_AVANCE_PUNTAJE + " INTEGER, " +
+                "FOREIGN KEY (" + DBConstants.TABLE_AVANCE_ID_JUEGO+ ") " +
+                "REFERENCES " + DBConstants.TABLE_JUEGO + "(" + DBConstants.TABLE_JUEGO_ID + ")" +
+                ")";
+
         db.execSQL(queryCrearTablaCliente);
         db.execSQL(queryCrearTablaUsuario);
+        db.execSQL(queryCrearTablaJuegos);
+        db.execSQL(queryCrearTablaAvance);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DBConstants.TABLE_CLIENTE);
         db.execSQL("DROP TABLE IF EXISTS " + DBConstants.TABLE_USUARIO);
+        db.execSQL("DROP TABLE IF EXISTS " + DBConstants.TABLE_JUEGO);
+        db.execSQL("DROP TABLE IF EXISTS " + DBConstants.TABLE_AVANCE);
         onCreate(db);
     }
 

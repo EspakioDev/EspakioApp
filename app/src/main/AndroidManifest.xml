@@ -20,12 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.WelcomeActivity">
-
-        </activity>
-        <activity android:name=".activities.Inicio">
-
-        </activity>
+        <activity android:name=".activities.WelcomeActivity" />
+        <activity android:name=".activities.Inicio" />
         <activity android:name=".activities.SplashScreen2" />
         <activity android:name=".activities.Ingresar" />
         <activity android:name=".activities.Registrar" />
@@ -36,7 +32,9 @@
         <activity android:name=".activities.SplashScreen3" />
         <activity android:name=".activities.DescripcionJuego" />
         <activity android:name=".activities.ImagenPerfilUsuario" />
-        <activity android:name=".activities.PerfilUsuario"></activity>
+        <activity android:name=".activities.UsuarioPerfil" />
+        <activity android:name=".activities.JuegoUno" />
+        <activity android:name=".activities.AfterGame"></activity>
     </application>
 
 </manifest>

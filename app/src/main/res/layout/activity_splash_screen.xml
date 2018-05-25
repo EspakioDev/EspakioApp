@@ -8,6 +8,9 @@
     tools:context="com.development.espakio.appespakio.activities.SplashScreen"
     android:screenOrientation="portrait">
 
+
+
+
     <ImageView
         android:id="@+id/imgSplash"
         android:layout_width="137dp"
@@ -21,4 +24,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="343dp"
+        android:layout_height="540dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="confetti.json"
+        app:lottie_imageAssetsFolder="assets"
+        app:lottie_loop="false" />
 </android.support.constraint.ConstraintLayout>

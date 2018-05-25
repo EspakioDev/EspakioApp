@@ -7,5 +7,4 @@ package com.development.espakio.appespakio.presenter;
 public interface ILoginPresenter {
 
     void performLogin (String userName, String password);
-
 }

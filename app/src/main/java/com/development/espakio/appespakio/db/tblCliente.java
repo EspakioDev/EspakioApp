@@ -10,10 +10,10 @@ import com.development.espakio.appespakio.model.Cliente;
  */
 
 public class tblCliente {
-    private InternalDB db;
+    private DataBase db;
 
     public  tblCliente(Context context) {
-        db = new InternalDB(context);
+        db = new DataBase(context);
     }
 
     public void insertClient(Cliente cliente) {

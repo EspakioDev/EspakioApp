@@ -6,6 +6,6 @@ package com.development.espakio.appespakio.presenter;
 
 public interface INewUserPresenter {
 
-    void performAddUser (String userName, String birthday);
+    void performAddUser (String userName, String birthday, String imagen);
 
 }

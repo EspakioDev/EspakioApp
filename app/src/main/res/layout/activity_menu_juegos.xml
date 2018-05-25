@@ -7,119 +7,100 @@
     android:background="@drawable/fondo_menujuegos"
     tools:context="com.development.espakio.appespakio.activities.MenuJuegos">
 
-    <ImageView
-        android:id="@+id/imgUsuario"
-        android:layout_width="100dp"
-        android:layout_height="108dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listUno"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.054"
-        app:srcCompat="@drawable/img_usuario_1" />
-
-    <Button
-        android:id="@+id/btnPerfilUsuario"
-        android:layout_width="83dp"
-        android:layout_height="83dp"
-        android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@android:drawable/ic_menu_myplaces"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.956"
-        app:layout_constraintStart_toEndOf="@+id/btnConfig2"
-        app:layout_constraintTop_toBottomOf="@+id/imgJuegoTres"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/btnConfig2"
-        android:layout_width="83dp"
-        android:layout_height="83dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/icon_config_espakio"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.03"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/imgJuegoUno"
-        android:layout_width="100dp"
-        android:layout_height="93dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.021"
-        app:srcCompat="@drawable/img_luna" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2"
+        app:layout_constraintVertical_bias="0.0"></android.support.v7.widget.RecyclerView>
 
-    <ImageView
-        android:id="@+id/imgJuegoDos"
-        android:layout_width="100dp"
-        android:layout_height="94dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgJuegoUno"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.02"
-        app:srcCompat="@drawable/img_luna" />
-
-    <ImageView
-        android:id="@+id/imgJuegoTres"
-        android:layout_width="104dp"
-        android:layout_height="96dp"
-        android:layout_marginBottom="8dp"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="351dp"
+        android:layout_height="105dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="180dp"
+            android:layout_height="95dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="13dp"
+            app:srcCompat="@drawable/img_espakio" />
+
+        <ImageView
+            android:id="@+id/imgUsuario"
+            android:layout_width="80dp"
+            android:layout_height="95dp"
+
+            android:layout_alignTop="@+id/imageView2"
+            android:layout_marginStart="38dp"
+            android:layout_toEndOf="@+id/imageView2"
+            app:srcCompat="@drawable/img_luna" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="364dp"
+        android:layout_height="82dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toEndOf="@+id/imgJuegoDos"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.02"
-        app:srcCompat="@drawable/img_luna" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="140dp"
-        android:text="@string/Juego"
-        android:textColor="@color/Blanco"
-        android:textSize="20sp"
+        <ImageView
+            android:id="@+id/btnConfig2"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="12dp"
+            app:srcCompat="@drawable/icon_config_espakio" />
+
+        <ImageView
+            android:id="@+id/btnPerfilUsuario"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="11dp"
+            app:srcCompat="@drawable/ic_astronauta" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="331dp"
+        android:layout_height="34dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="188dp"
-        android:layout_height="89dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imgUsuario"
-        app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.056"
-        app:srcCompat="@drawable/img_espakio" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Habilidad"
+            android:textColor="@color/Blanco"
+            android:textSize="24sp" />
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

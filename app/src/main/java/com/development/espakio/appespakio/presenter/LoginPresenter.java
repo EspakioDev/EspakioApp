@@ -1,11 +1,14 @@
-package com.development.espakio.appespakio.model;
+package com.development.espakio.appespakio.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.development.espakio.appespakio.db.BackgroundWorker1;
 import com.development.espakio.appespakio.db.tblCliente;
 import com.development.espakio.appespakio.db.tblUsuarios;
+import com.development.espakio.appespakio.model.Cliente;
+import com.development.espakio.appespakio.model.Usuario;
 import com.development.espakio.appespakio.presenter.ILoginPresenter;
 import com.development.espakio.appespakio.view.ILoginView;
 
@@ -28,13 +31,13 @@ public class LoginPresenter implements ILoginPresenter{
     private Context context;
     private SharedPreferences preferences;
 
-   public LoginPresenter (ILoginView loginView, Context context) {
-       this.context = context;
-       this.loginView = loginView;
-       status = "";
-       idCliente = 0;
-       this.preferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-   }
+    public LoginPresenter (ILoginView loginView, Context context) {
+        this.context = context;
+        this.loginView = loginView;
+        status = "";
+        idCliente = 0;
+        this.preferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+    }
 
     @Override
     public void performLogin(String email, String password) {
@@ -113,6 +116,7 @@ public class LoginPresenter implements ILoginPresenter{
                             jsonOb.getString("Fecha_Nacimiento"),
                             jsonOb.getString("Imagen"),
                             jsonOb.getInt("Vidas"));
+                    //jsonOb.getInt("Logros"));
                 }
             }
         } catch (InterruptedException e) {e.printStackTrace();
@@ -121,12 +125,12 @@ public class LoginPresenter implements ILoginPresenter{
     }
 
     private void onSuccess() {
-       tblUsuarios tablaUsuario = new tblUsuarios(context);
-       tblCliente tablaCliente = new tblCliente(context);
+        tblUsuarios tablaUsuario = new tblUsuarios(context);
+        tblCliente tablaCliente = new tblCliente(context);
 
-       getUsers();
+        getUsers();
 
-       tablaCliente.insertClient(client);
+        tablaCliente.insertClient(client);
 
         for (Usuario user: client.getUsuarios()) {
             tablaUsuario.insertUser(user);

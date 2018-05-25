@@ -7,7 +7,8 @@ package com.development.espakio.appespakio.view;
 public interface INewUserView {
     void newUserEmptyFields();
     void newUserSuccess();
-    void newUSerError();
-    void newUserFailed();
+    void Error();
+    void Failed();
     void idUsuario(int id);
 }
+

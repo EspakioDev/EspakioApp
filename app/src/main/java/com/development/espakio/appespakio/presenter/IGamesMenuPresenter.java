@@ -6,4 +6,5 @@ package com.development.espakio.appespakio.presenter;
 
 public interface IGamesMenuPresenter {
     void performGamesMenu();
+    void putGameSelectPref(int i);
 }

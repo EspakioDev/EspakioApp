@@ -1,20 +1,18 @@
 package com.development.espakio.appespakio.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
-import com.development.espakio.appespakio.model.Cliente;
-import com.development.espakio.appespakio.model.GetUsersPresenter;
+import com.development.espakio.appespakio.presenter.GetUsersPresenter;
 import com.development.espakio.appespakio.view.IGetUsersView;
 
 public class MenuUsuarios extends AppCompatActivity implements View.OnClickListener, IGetUsersView{
@@ -47,18 +45,27 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
         getUsersPresenter = new GetUsersPresenter(MenuUsuarios.this, getApplicationContext());
         getUsersPresenter.performGetUsers();
 
-        changeStatusBarColor();
+        pantallaCompleta();
+
     }
 
-    private void changeStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
+    void pantallaCompleta(){
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int UI_OPTIONS = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+            getWindow().getDecorView().setSystemUiVisibility(UI_OPTIONS);
         }
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
+
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
+
     }
 
     @Override
@@ -87,10 +94,10 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
 
     }
 
-        /*Falta insertar los usuarios cuando es por primera vez en la db interna
-        actualizar usuarios en el host
-        Eliminar cuando desee salir
-        */
+       /*Falta insertar los usuarios cuando es por primera vez en la db interna
+       actualizar usuarios en el host
+       Eliminar cuando desee salir
+       */
 
     @Override
     public void getUsers(int sizeUsuarios) {
@@ -125,6 +132,9 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
+
+        //Quitare este Finish para poder regresar al menu de usuarios.
+
         finish();
     }
 
@@ -139,3 +149,4 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
     }
 
 }
+

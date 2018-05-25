@@ -8,7 +8,7 @@
     tools:context="com.development.espakio.appespakio.activities.DescripcionJuego">
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/btnPerfilUsuario"
         android:layout_width="331dp"
         android:layout_height="409dp"
         android:layout_marginBottom="8dp"
@@ -30,7 +30,7 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/btnstyle"
         android:text="@string/Jugar"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPerfilUsuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent" />
@@ -43,7 +43,7 @@
         android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/btnPerfilUsuario"
         app:srcCompat="@drawable/img_juego_ejemplo" />
 
     <TextView
@@ -59,9 +59,9 @@
         android:textColor="@color/Blanco"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="@+id/btnPerfilUsuario"
         app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/btnPerfilUsuario"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
         app:layout_constraintVertical_bias="0.3" />
 </android.support.constraint.ConstraintLayout>

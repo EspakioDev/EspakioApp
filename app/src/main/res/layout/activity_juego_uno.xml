@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_espakio"
+    tools:context="com.development.espakio.appespakio.activities.JuegoUno">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationTime"
+        android:layout_width="107dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.017"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="Timer.json"
+        app:lottie_imageAssetsFolder="assets"
+        app:lottie_loop="false" />
+
+    <ImageView
+        android:id="@+id/imgPausa"
+        android:layout_width="107dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/animationTime"
+        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.017"
+        app:srcCompat="@drawable/ic_pausa"
+
+        />
+
+    <Button
+        android:id="@+id/btnUno"
+        android:layout_width="244dp"
+        android:layout_height="71dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="164dp"
+        android:background="@drawable/btnstyle_amarillo"
+        android:textAlignment="center"
+        android:textColor="@color/Blanco"
+        android:textSize="45sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnDos"
+        android:layout_width="244dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/btnstyle_amarillo"
+        android:textAlignment="center"
+        android:textColor="@color/Blanco"
+        android:textSize="45sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnUno"
+        app:layout_constraintVertical_bias="0.057" />
+
+    <TextView
+        android:id="@+id/txtTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="00:60"
+        android:textColor="@color/Blanco"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/animationTime"
+        app:layout_constraintEnd_toEndOf="@+id/animationTime"
+        app:layout_constraintStart_toStartOf="@+id/animationTime"
+        app:layout_constraintTop_toTopOf="@+id/animationTime" />
+
+</android.support.constraint.ConstraintLayout>
