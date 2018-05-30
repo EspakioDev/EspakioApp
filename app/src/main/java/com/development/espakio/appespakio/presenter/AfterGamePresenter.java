@@ -23,13 +23,8 @@ public class AfterGamePresenter implements IAfterGamePresenter{
     }
 
     @Override
-    public void getValues(int idJuego, int score) {
+    public void checkScore(int idJuego, int score) {
         avance = tablaAvance.getNivelJuego(idJuego);
-        this.score = score;
-    }
-
-    @Override
-    public void checkScore() {
         if (avance.checkPuntaje(score)) {
             avance.checkLogro();
             tablaAvance.setAvance(avance);

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.presenter.AfterGamePresenter;
 import com.development.espakio.appespakio.view.IAfterGameView;
 
 public class AfterGame extends AppCompatActivity implements View.OnClickListener, IAfterGameView{
@@ -20,6 +21,7 @@ public class AfterGame extends AppCompatActivity implements View.OnClickListener
     private MediaPlayer mp;
     private Button btnAceptar;
     private TextView txtCorrectas;
+    private AfterGamePresenter afterGamePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +39,8 @@ public class AfterGame extends AppCompatActivity implements View.OnClickListener
 
         btnAceptar.setOnClickListener(this);
 
-
-
+        afterGamePresenter = new AfterGamePresenter(this, getApplicationContext());
+        afterGamePresenter.checkScore(0, 0);
     }
 
     @Override
