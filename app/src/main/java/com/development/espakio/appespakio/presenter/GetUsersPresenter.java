@@ -7,6 +7,7 @@ import com.development.espakio.appespakio.db.BackgroundWorker1;
 import com.development.espakio.appespakio.db.tblAvance;
 import com.development.espakio.appespakio.db.tblUsuarios;
 import com.development.espakio.appespakio.model.Avance;
+import com.development.espakio.appespakio.model.Constants;
 import com.development.espakio.appespakio.model.Usuario;
 import com.development.espakio.appespakio.view.IGetUsersView;
 
@@ -25,51 +26,33 @@ public class GetUsersPresenter implements IGetUsersPresenter{
 
     private IGetUsersView getUsersView;
     private Vector<Usuario> users;
-    private String status, result;
+    private String status;
     private tblUsuarios tablaUsuarios;
     private tblAvance tablaAvance;
     private SharedPreferences preferences;
     private Vector<Avance> avanceJuegos;
 
-    
     public GetUsersPresenter (IGetUsersView getUsersView, Context context) {
         this.preferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         this.getUsersView = getUsersView;
         avanceJuegos = new Vector<Avance>();
-        tablaUsuarios = new tblUsuarios(context);
         tablaAvance = new tblAvance(context);
+        tablaUsuarios = new tblUsuarios(context);
         users = tablaUsuarios.getUsers();
+        getUsersView.chargeUsers(users);
         status = "";
-        result = "";
     }
 
     @Override
-    public void performGetUsers() {
-        getUsersView.getUsers(getUsersSize());
-        getUsersView.getUsersIDs(getUserIDs());
-    }
-
-    private int getUsersSize() {
-        return tablaUsuarios.getSize();
-    }
-
-    private String getUserName(int i) {
-        return users.get(i).getNickName();
-    }
-
-    private String getUserIDs() {
-        String ids = "";
-        for (Usuario user: users) {
-            ids += user.IDtoString()+" ";
-        }
-        return ids;
-    }
-
     public void selectUser(int i){
-        tablaUsuarios.selectUser(users.get(i));
-        putSelectUserPreference();
-        getProgress(i);
-        saveProgress();
+        if(i != -1) {
+            tablaUsuarios.selectUser(users.get(i));
+            putSelectUserPreference();
+            getProgress(users.get(i).getID());
+            saveProgress();
+            getUsersView.goToGameMenu();
+        } else
+            getUsersView.goToNewUser();
     }
 
     private void getProgress(int idUsuario) {
@@ -81,7 +64,6 @@ public class GetUsersPresenter implements IGetUsersPresenter{
             status = jsonObject.getString("status");
             if(!onFailed() && !onError()) {
                 JSONArray jsonArray = new JSONArray(jsonObject.getString("result"));
-                int[] idJuegos = new int[jsonArray.length()];
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonOb = jsonArray.getJSONObject(i);
                     avanceJuegos.add(new Avance(jsonOb.getInt("idAvanceJuego"),
@@ -98,6 +80,7 @@ public class GetUsersPresenter implements IGetUsersPresenter{
     private void saveProgress(){
         if(!avanceJuegos.isEmpty())
             tablaAvance.getProgress(avanceJuegos);
+        //tablaAvance.print();
     }
 
     private void putSelectUserPreference(){

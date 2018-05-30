@@ -11,12 +11,11 @@ public class GetInfoGamePresenter implements  IGetInfoGamePresenter{
     private Context context;
     private SharedPreferences preferences;
     private IGetInfoGameView infoGameView;
-    private DescripcionJuego infoGames;
 
     public GetInfoGamePresenter(IGetInfoGameView infoGameView, Context context) {
         this.infoGameView = infoGameView;
         this.context = context;
-        this.preferences = context.getSharedPreferences("PrefGame", Context.MODE_PRIVATE);
+        this.preferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
     }
 
     public void performOpening() {

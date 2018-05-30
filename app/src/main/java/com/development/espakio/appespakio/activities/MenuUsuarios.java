@@ -9,15 +9,21 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.model.Usuario;
 import com.development.espakio.appespakio.presenter.GetUsersPresenter;
 import com.development.espakio.appespakio.view.IGetUsersView;
+
+import java.util.Vector;
 
 public class MenuUsuarios extends AppCompatActivity implements View.OnClickListener, IGetUsersView{
 
     private ImageView btnUsuarioUno, btnUsuarioDos, btnUsuarioTres, btnUsuarioPlus;
+    private TextView txtUsuarioUno, txtUsuarioDos, txtUsuarioTres;
     private Button btnConfig;
     private GetUsersPresenter getUsersPresenter;
 
@@ -39,14 +45,27 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
         btnUsuarioPlus = (ImageView) findViewById(R.id.menuUsu_imgUsuarioPlus);
         btnUsuarioPlus.setOnClickListener(this);
 
+        txtUsuarioUno = (TextView) findViewById(R.id.menuUsu_txtUsernameUno);
+        txtUsuarioUno.setOnClickListener(this);
+
+        txtUsuarioDos = (TextView) findViewById(R.id.menuUsu_txtUsernameDos);
+        txtUsuarioDos.setOnClickListener(this);
+
+        txtUsuarioTres = (TextView) findViewById(R.id.menuUsu_txtUsernameTres);
+        txtUsuarioTres.setOnClickListener(this);
+
         btnConfig = (Button) findViewById(R.id.menuUsu_btnConfig);
         btnConfig.setOnClickListener(this);
 
-        getUsersPresenter = new GetUsersPresenter(MenuUsuarios.this, getApplicationContext());
-        getUsersPresenter.performGetUsers();
+        getUsersPresenter = new GetUsersPresenter(this, getApplicationContext());
+        //getUsersPresenter.performGetUsers();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         pantallaCompleta();
-
     }
 
     void pantallaCompleta(){
@@ -72,25 +91,24 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.menuUsu_imgUsuarioPlus:
-                goToNewUser();
+                getUsersPresenter.selectUser(-1);
                 break;
             case R.id.menuUsu_imgUsuarioUno:
+            case R.id.menuUsu_txtUsernameUno:
                 getUsersPresenter.selectUser(0);
-                goToGameMenu();
                 break;
             case R.id.menuUsu_imgUsuarioDos:
+            case R.id.menuUsu_txtUsernameDos:
                 getUsersPresenter.selectUser(1);
-                goToGameMenu();
                 break;
             case R.id.menuUsu_imgUsuarioTres:
+            case R.id.menuUsu_txtUsernameTres:
                 getUsersPresenter.selectUser(2);
-                goToGameMenu();
                 break;
             case R.id.menuUsu_btnConfig:
                 goToConfiguration();
                 break;
         }
-
 
     }
 
@@ -100,34 +118,34 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
        */
 
     @Override
-    public void getUsers(int sizeUsuarios) {
-        switch (sizeUsuarios) {
-            case 0:
-                btnUsuarioUno.setVisibility(View.INVISIBLE);
-                btnUsuarioDos.setVisibility(View.INVISIBLE);
-                btnUsuarioTres.setVisibility(View.INVISIBLE);
-                break;
-            case 1:
-                btnUsuarioDos.setVisibility(View.INVISIBLE);
-                btnUsuarioTres.setVisibility(View.INVISIBLE);
-                break;
-            case 2:
-                btnUsuarioTres.setVisibility(View.INVISIBLE);
-                break;
+    public void chargeUsers(Vector<Usuario> users) {
+        if(users.size() < 3)
+            btnUsuarioPlus.setVisibility(View.VISIBLE);
+
+        switch (users.size()) {
             case 3:
-                btnUsuarioPlus.setVisibility(View.INVISIBLE);
+                txtUsuarioTres.setVisibility(View.VISIBLE);
+                btnUsuarioTres.setVisibility(View.VISIBLE);
+                txtUsuarioTres.setText(users.get(2).getNickName());
+                btnUsuarioTres.setImageResource(users.get(2).getImagen());
+            case 2:
+                txtUsuarioDos.setVisibility(View.VISIBLE);
+                btnUsuarioDos.setVisibility(View.VISIBLE);
+                txtUsuarioDos.setText(users.get(1).getNickName());
+                btnUsuarioDos.setImageResource(users.get(1).getImagen());
+            case 1:
+                txtUsuarioUno.setVisibility(View.VISIBLE);
+                btnUsuarioUno.setVisibility(View.VISIBLE);
+                txtUsuarioUno.setText(users.get(0).getNickName());
+                btnUsuarioUno.setImageResource(users.get(0).getImagen());
+
                 break;
             default:
                 Toast.makeText(MenuUsuarios.this, "HUBO UN ERROR CON LOS USUARIOS", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
-    public void getUsersIDs(String ids) {
-        Toast.makeText(MenuUsuarios.this, ids, Toast.LENGTH_SHORT).show();
-    }
-
-    private void goToGameMenu() {
+    public void goToGameMenu() {
         Intent intent = new Intent(MenuUsuarios.this, MenuJuegos.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -138,12 +156,12 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
-    private void goToConfiguration() {
+    public void goToConfiguration() {
         startActivity(new Intent(MenuUsuarios.this, Configuraciones.class));
         overridePendingTransition(R.anim.right_in, R.anim.right_out);
     }
 
-    private void goToNewUser() {
+    public void goToNewUser() {
         startActivity(new Intent(MenuUsuarios.this, NuevoUsuario.class));
         overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
     }

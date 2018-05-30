@@ -59,11 +59,19 @@ public class tblAvance {
 
     public void print() {
         db.printTable(DBConstants.TABLE_AVANCE);
+        //
     }
 
     public void getProgress(Vector<Avance> avanceJuegos) {
         for (Avance avance: avanceJuegos) {
             insertAvance(avance);
         }
+    }
+
+    public void setAvance(Avance avance) {
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.TABLE_AVANCE_PUNTAJE, avance.getPuntaje());
+        values.put(DBConstants.TABLE_AVANCE_LOGRO, avance.getLogro());
+        db.updateRow(DBConstants.TABLE_AVANCE, values, DBConstants.TABLE_AVANCE_ID_JUEGO, Integer.toString(avance.getIDJuego()));
     }
 }

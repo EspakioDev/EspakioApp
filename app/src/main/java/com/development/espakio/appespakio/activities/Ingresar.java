@@ -38,7 +38,11 @@ public class Ingresar extends AppCompatActivity implements View.OnClickListener,
         tvRegresar.setOnClickListener(this);
 
         loginPresenter = new LoginPresenter(Ingresar.this, getApplicationContext());
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         fullScreen();
     }
 

@@ -114,7 +114,7 @@ public class LoginPresenter implements ILoginPresenter{
                     client.nuevoUsuario(jsonOb.getInt("idUsuario"),
                             jsonOb.getString("Usuario"),
                             jsonOb.getString("Fecha_Nacimiento"),
-                            jsonOb.getString("Imagen"),
+                            jsonOb.getInt("Imagen"),
                             jsonOb.getInt("Vidas"));
                     //jsonOb.getInt("Logros"));
                 }

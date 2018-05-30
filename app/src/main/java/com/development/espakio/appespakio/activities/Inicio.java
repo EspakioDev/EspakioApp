@@ -28,6 +28,11 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener{
         btnRegistrar = (Button) findViewById(R.id.btnRegistrar);
         btnRegistrar.setOnClickListener(this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         fullScreen();
     }
 

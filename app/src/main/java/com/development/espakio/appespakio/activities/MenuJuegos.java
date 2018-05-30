@@ -31,10 +31,8 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_juegos);
-        pantallaCompleta();
 
-
-        btnPerfilUsuario = (ImageView) findViewById(R.id.btnPerfilUsuario);
+        btnPerfilUsuario = (ImageView) findViewById(R.id.menuJuegos_imgUserPerfil);
         btnConfig = (ImageView) findViewById(R.id.btnConfig2);
 
         btnConfig.setOnClickListener(this);
@@ -65,6 +63,12 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        pantallaCompleta();
+    }
+
     void pantallaCompleta(){
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -92,7 +96,7 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
                 startActivity(new Intent(MenuJuegos.this, Configuraciones.class));
                 overridePendingTransition(R.anim.right_in, R.anim.right_out);
                 break;
-            case R.id.btnPerfilUsuario:
+            case R.id.menuJuegos_imgUserPerfil:
                 startActivity(new Intent(MenuJuegos.this, UsuarioPerfil.class));
                 overridePendingTransition(R.anim.right_in, R.anim.right_out);
                 break;
@@ -140,6 +144,11 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
                 iGameSelect = -1;
         }
         gamesMenuPresenter.putGameSelectPref(iGameSelect);*/
+    }
+
+    @Override
+    public void putUserImage(int idImage) {
+        btnPerfilUsuario.setImageResource(idImage);
     }
 
 

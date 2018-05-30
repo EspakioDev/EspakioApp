@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.development.espakio.appespakio.db.tblAvance;
 import com.development.espakio.appespakio.db.tblUsuarios;
+import com.development.espakio.appespakio.model.Constants;
 import com.development.espakio.appespakio.model.DescripcionJuego;
 import com.development.espakio.appespakio.model.Usuario;
 import com.development.espakio.appespakio.view.IGamesMenuView;
@@ -19,15 +20,24 @@ public class GamesMenuPresenter  implements IGamesMenuPresenter{
     private SharedPreferences preferences;
     private IGamesMenuView gamesMenuView;
     private Usuario user;
+    private int idImage;
 
     public GamesMenuPresenter(IGamesMenuView gamesMenuView, Context context) {
         this.gamesMenuView = gamesMenuView;
         this.context = context;
-        this.preferences = context.getSharedPreferences("PrefGame", Context.MODE_PRIVATE);
+        this.preferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        this.idImage = isAlredySelectImageUser();
+    }
+
+    private int isAlredySelectImageUser() {
+        tblUsuarios tabla = new tblUsuarios(context);
+        user = tabla.getUserSelec();
+        return user.getImagen();
     }
 
     @Override
     public void performGamesMenu() {
+        gamesMenuView.putUserImage(idImage);
         getUserID();
         getDataGames();
         getProgress();
@@ -41,8 +51,6 @@ public class GamesMenuPresenter  implements IGamesMenuPresenter{
     }
 
     private void getUserID() {
-        tblUsuarios tabla = new tblUsuarios(context);
-        user = tabla.getUserSelec();
         gamesMenuView.getUserID(user.getID());
     }
 

@@ -30,6 +30,11 @@ public class SplashScreen3 extends AppCompatActivity {
         },3000);
         setContentView(R.layout.activity_splash_screen3);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         fullScreen();
     }
 

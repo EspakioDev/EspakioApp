@@ -57,7 +57,7 @@ public class tblUsuarios {
             Usuario usuarioActual = new Usuario(registros.getInt(0),        //IDUsuario
                     registros.getString(1),     //UserName
                     registros.getString(2),     //Birthday
-                    registros.getString(3),     //Image
+                    registros.getInt(3),     //Image
                     registros.getInt(4),        //Vidas
                     //registros.getInt(5),         //Logros
                     registros.getInt(5));       //IDCliente
@@ -76,7 +76,7 @@ public class tblUsuarios {
             usuario =new Usuario(registro.getInt(0),        //IDUsuario
                     registro.getString(1),     //UserName
                     registro.getString(2),     //Birthday
-                    registro.getString(3),     //Image
+                    registro.getInt(3),     //Image
                     registro.getInt(4),        //Vidas
                     //registro.getInt(5),         //Logros
                     registro.getInt(5));       //IDCliente
@@ -92,6 +92,10 @@ public class tblUsuarios {
         values = new ContentValues();
         values.put(DBConstants.TABLE_USUARIO_SELECT, 1);
         db.updateRow(DBConstants.TABLE_USUARIO, values, DBConstants.TABLE_USUARIO_ID, Integer.toString(usuario.getID()));
+    }
+
+    public void updateUser(Usuario usuario){
+
     }
 
     public void print() {

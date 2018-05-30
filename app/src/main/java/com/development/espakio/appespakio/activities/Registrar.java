@@ -41,6 +41,11 @@ public class Registrar extends AppCompatActivity implements View.OnClickListener
 
         registerPresenter = new RegisterPresenter(Registrar.this, getApplicationContext());
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         fullScreen();
     }
 

@@ -28,7 +28,7 @@ public class DataBase extends SQLiteOpenHelper {
                 DBConstants.TABLE_USUARIO_ID + " INTEGER PRIMARY KEY, " +
                 DBConstants.TABLE_USUARIO_USERNAME + " TEXT, " +
                 DBConstants.TABLE_USUARIO_BIRTHDATE + " DATE, " +
-                DBConstants.TABLE_USUARIO_IMAGEN + " TEXT, " +
+                DBConstants.TABLE_USUARIO_IMAGEN + " INTEGER, " +
                 DBConstants.TABLE_USUARIO_VIDAS + " INTEGER, " +
                 ///DBConstants.TABLE_USUARIO_LOGROS + " INTEGER, " +
                 DBConstants.TABLE_USUARIO_ID_CLIENTE + " INTEGER, " +

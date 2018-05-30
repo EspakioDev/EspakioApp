@@ -41,14 +41,19 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
         etxtBirthday.setOnClickListener(this);
         etxtBirthday.setOnFocusChangeListener(this);
 
-        imagenPerfil = (ImageView) findViewById(R.id.IvImgUsuario);
+        imagenPerfil = (ImageView) findViewById(R.id.nuevoUsuario_imgUserPerfil);
         imagenPerfil.setOnClickListener(this);
 
         btnAceptar = (Button) findViewById(R.id.nuevoUsuario_btnAceptar);
         btnAceptar.setOnClickListener(this);
 
         newUserPresenter = new NewUserPresenter(NuevoUsuario.this, getApplicationContext());
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        newUserPresenter.performChargeImage();
         fullScreen();
     }
 
@@ -79,9 +84,9 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
             case R.id.nuevoUsuario_btnAceptar:
                 String username = etxtNombre.getText().toString();
                 String birthday = etxtBirthday.getText().toString();
-                newUserPresenter.performAddUser(username,birthday, "default.png");
+                newUserPresenter.performAddUser(username, birthday);
                 break;
-            case R.id.IvImgUsuario:
+            case R.id.nuevoUsuario_imgUserPerfil:
                 startActivity(new Intent(this, ImagenPerfilUsuario.class));
                 overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
                 break;
@@ -100,6 +105,11 @@ public class NuevoUsuario extends AppCompatActivity implements View.OnClickListe
             }
         }, anio, mes, dia);
         pickerDialog.show();
+    }
+
+    @Override
+    public void putUserImage(int idImage) {
+        imagenPerfil.setImageResource(idImage);
     }
 
     @Override

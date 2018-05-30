@@ -13,37 +13,44 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.view.IAfterGameView;
 
-public class AfterGame extends AppCompatActivity {
+public class AfterGame extends AppCompatActivity implements View.OnClickListener, IAfterGameView{
 
-
-    MediaPlayer mp;
-    Button btnAceptar;
-    TextView txtCorrectas;
+    private MediaPlayer mp;
+    private Button btnAceptar;
+    private TextView txtCorrectas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_game);
-        pantallaCompleta();
 
         mp = MediaPlayer.create(this, R.raw.win);
 
         btnAceptar = (Button) findViewById(R.id.btnAceptar);
         txtCorrectas = (TextView) findViewById(R.id.txtCorrectas);
-        Bundle bundle = getIntent().getExtras();
-        txtCorrectas.setText(String.valueOf(bundle.getInt("correctos")));
+        //Bundle bundle = getIntent().getExtras();
+        txtCorrectas.setText("Algo");
+        //txtCorrectas.setText(String.valueOf(bundle.getInt("correctos")));
         mp.start();
 
-        btnAceptar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AfterGame.this, MenuJuegos.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
-                finish();
-            }
-        });
+        btnAceptar.setOnClickListener(this);
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        pantallaCompleta();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 
     void pantallaCompleta() {
@@ -65,4 +72,20 @@ public class AfterGame extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnAceptar:
+                startActivity( new Intent(AfterGame.this, MenuJuegos.class));
+                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
+                finish();
+                break;
+        }
+
+    }
+
+    @Override
+    public void chargeValues(int scoreMax) {
+
+    }
 }

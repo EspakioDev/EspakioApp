@@ -11,6 +11,7 @@ public class Avance {
         IDJuego = idJuego;
         logro = 0;
         puntaje = 0;
+        //
     }
 
     public Avance(int id, int idJuego, int logro, int puntaje) {

@@ -29,7 +29,11 @@ public class SplashScreen2 extends AppCompatActivity {
             }
         },3000);
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         fullScreen();
     }
 

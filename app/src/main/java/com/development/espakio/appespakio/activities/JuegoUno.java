@@ -18,43 +18,43 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.presenter.GamePresenter;
+import com.development.espakio.appespakio.view.IGameView;
 
-public class JuegoUno extends AppCompatActivity implements View.OnClickListener {
+public class JuegoUno extends AppCompatActivity implements View.OnClickListener, IGameView {
 
-    MediaPlayer mp, fondo;
+    private MediaPlayer mp, fondo;
 
-
-    Button btnUno, btnDos;
-    ImageView pausa;
+    private Button btnUno, btnDos;
+    private ImageView pausa;
 
     //Timer
-    TextView txtTimer, txtNivel;
-    CountDownTimer timer;
-    long timeleftinMilliseconds = 60000;
-    boolean timeRunning = true;
+    private TextView txtTimer, txtNivel;
+    private CountDownTimer timer;
+    private long timeleftinMilliseconds = 60000;
+    private boolean timeRunning = true;
     //
 
-    int niveles = 0, sec = 0;
-    int numUno = 0, numDos = 0;
-    int numOprA = 0, numOprA2 = 0, numOprB = 0, numOprB2 = 0;
-    int correctas = 0;
-    int psBandera = 0;
+    private int niveles = 0, sec = 0;
+    private int numUno = 0, numDos = 0;
+    private int numOprA = 0, numOprA2 = 0, numOprB = 0, numOprB2 = 0;
+    private int correctas = 0;
+    //private int psBandera = 0;
 
-    LottieAnimationView animationView;
+    private LottieAnimationView animationView;
 
     //Pause Boton
-    Dialog pausapopup;
+    private Dialog pausapopup;
 
+    private GamePresenter gamePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego_uno);
 
-        pantallaCompleta();
         mp = MediaPlayer.create(this, R.raw.botonsound);
         fondo = MediaPlayer.create(this, R.raw.sonido_fondo);
-
 
         //Timer
         txtTimer = (TextView)findViewById(R.id.txtTimer);
@@ -67,37 +67,19 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
 
         btnUno.setOnClickListener(this);
         btnDos.setOnClickListener(this);
-
-
         btnUno.setText(String.valueOf(numAleatorioA(1)));
         btnDos.setText(String.valueOf(numAleatorioA(2)));
 
         //Dialog
         pausapopup = new Dialog(this);
 
-
         animationView = (LottieAnimationView)findViewById(R.id.animationTime);
         fondo.start();
 
         starStop();
-        pausa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(psBandera == 0){
-                    animationView.pauseAnimation();
-                    psBandera = 1;
-                    timeRunning = false;
-                    starStop();
-                    showpopup(view);
-                }else if(psBandera == 1){
-                    animationView.playAnimation();
-                    psBandera = 0;
-                    timeRunning = true;
-                    starStop();
-                }
+        pausa.setOnClickListener(this);
 
-            }
-        });
+        gamePresenter = new GamePresenter(this, getApplicationContext());
     }
 
     public void showpopup(View v){
@@ -106,35 +88,9 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         btnReiniciar = (Button)pausapopup.findViewById(R.id.btnReanudar);
         btnInicio = (Button)pausapopup.findViewById(R.id.btnInicio);
         btnReanudar = (Button)pausapopup.findViewById(R.id.btnRegreso);
-        btnInicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(JuegoUno.this,SplashScreen3.class);
-                startActivity(intent);
-                fondo.reset();
-                finish();
-            }
-        });
-        btnReiniciar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(JuegoUno.this,JuegoUno.class);
-                startActivity(intent);
-                fondo.reset();
-                finish();
-            }
-        });
-        btnReanudar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                animationView.playAnimation();
-                psBandera = 0;
-                timeRunning = true;
-                starStop();
-                pausapopup.cancel();
-
-            }
-        });
+        btnInicio.setOnClickListener(this);
+        btnReiniciar.setOnClickListener(this);
+        btnReanudar.setOnClickListener(this);
         pausapopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pausapopup.show();
 
@@ -146,6 +102,11 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        pantallaCompleta();
+    }
 
     void pantallaCompleta(){
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -167,7 +128,6 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
     }
 
     void starStop(){
-
         if(timeRunning){
             starTimer();
         }else{
@@ -209,10 +169,8 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         leftTime += segundos;
 
         if(segundos == 1){
-            Intent intent = new Intent(JuegoUno.this,AfterGame.class);
-            intent.putExtra("correctos", correctas);
-            //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            gamePresenter.checkScore(correctas);
+            startActivity(new Intent(this, AfterGame.class));
             overridePendingTransition(R.anim.left_in, R.anim.left_out);
             fondo.reset();
             finish();
@@ -222,7 +180,51 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-    int numAleatorioA(int boton){
+    @Override
+    public void onClick(View view) {
+        mp.start();
+        switch (view.getId()) {
+            case R.id.btnUno:
+                checkButtomOne();
+                break;
+            case R.id.btnDos:
+                checkButtomTwo();
+                break;
+            case R.id.btnReanudar:
+                startActivity(new Intent(this,JuegoUno.class));
+                fondo.reset();
+                finish();
+                break;
+            case R.id.btnInicio:
+                startActivity(new Intent(this,SplashScreen3.class));
+                fondo.reset();
+                finish();
+                break;
+            case R.id.btnRegreso:
+                animationView.playAnimation();
+                //psBandera = 0;
+                timeRunning = true;
+                starStop();
+                pausapopup.cancel();
+                break;
+            case R.id.imgPausa:
+                //if(psBandera == 0){
+                    animationView.pauseAnimation();
+                    //psBandera = 1;
+                    timeRunning = false;
+                    starStop();
+                    showpopup(view);
+                /*}else if(psBandera == 1){
+                    animationView.playAnimation();
+                    psBandera = 0;
+                    timeRunning = true;
+                    starStop();
+                }*/
+                break;
+        }
+    }
+
+    private int numAleatorioA(int boton){
         int opc1 = (int) (Math.random() * 25) + 1;
         if(boton == 1){
             numUno = opc1;
@@ -232,7 +234,7 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         return  opc1;
     }
 
-    int numAleatorioB(int boton){
+    private int numAleatorioB(int boton){
         int opc1 = (int) (Math.random() * (50 - 25 + 1)) + 25;
         if(boton == 1){
             numUno = opc1;
@@ -242,7 +244,7 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         return  opc1;
     }
 
-    int numAleatorioSuma(int ran){
+    private  int numAleatorioSuma(int ran){
         int opc1 = 0;
         if(ran == 1){
             opc1 = (int) (Math.random() * 10) + 1;
@@ -255,166 +257,119 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         return  opc1;
     }
 
+    private void seccUno(){
+        String txtUno = "", txtDos = "";
+        numUno = 0;
+        numDos = 0;
 
-    @Override
-    public void onClick(View view) {
-        mp.start();
-        switch (view.getId()) {
-            case R.id.btnUno:
+        if(niveles <= 7){
+            txtUno = String.valueOf(numAleatorioA(1));
+            txtDos = String.valueOf(numAleatorioA(2));
+        }else if(niveles>7 && niveles<=15){
+            txtUno = String.valueOf(numAleatorioB(1));
+            txtDos = String.valueOf(numAleatorioB(2));
+        }else {
+            sec = 1;
+            numOprA = numAleatorioSuma(1);
+            numOprA2 = numAleatorioSuma(1);
+            txtUno = String.valueOf(numOprA) + " + " +String.valueOf(numOprA2);
+            numOprB = numAleatorioSuma(1);
+            numOprB2 = numAleatorioSuma(1);
+            txtDos = String.valueOf(numOprB) + " + " +String.valueOf(numOprB2);
+            niveles = 0;
+        }
+        btnUno.setText(txtUno);
+        btnDos.setText(txtDos);
+    }
 
-                if(sec == 0){
-                    if(numUno > numDos || numUno == numDos){
-                        //Toast.makeText(JuegoUno.this, "Ganaste", Toast.LENGTH_SHORT).show();
-                        correctas++;
-                    }else {
-                        //Toast.makeText(JuegoUno.this, "Perdiste", Toast.LENGTH_SHORT).show();
-                        if(niveles<=7){
-                            niveles = 0;
-                        }else if(niveles > 7 && niveles <= 15){
-                            niveles = 8;
-                        }
-                    }
+    private void seccDos(){
+        numOprA = 0;
+        numOprA2 = 0;
+        numOprB = 0;
+        numOprB2 = 0;
 
-                    numUno = 0;
-                    numDos = 0;
+        if (niveles <= 7){
+            numOprA = numAleatorioSuma(1);
+            numOprA2 = numAleatorioSuma(1);
 
-                    if(niveles <= 7){
-                        btnUno.setText(String.valueOf(numAleatorioA(1)));
-                        btnDos.setText(String.valueOf(numAleatorioA(2)));
-                    }else if(niveles>7 && niveles<=15){
-                        btnUno.setText(String.valueOf(numAleatorioB(1)));
-                        btnDos.setText(String.valueOf(numAleatorioB(2)));
-                    }else {
-                        sec = 1;
-                        numOprA = numAleatorioSuma(1);
-                        numOprA2 = numAleatorioSuma(1);
-                        btnUno.setText(String.valueOf(numOprA) + " + " +String.valueOf(numOprA2));
-                        numOprB = numAleatorioSuma(1);
-                        numOprB2 = numAleatorioSuma(1);
-                        btnDos.setText(String.valueOf(numOprB) + " + " +String.valueOf(numOprB2));
-                        niveles = 0;
-                    }
-                    niveles++;
-                } else if(sec == 1){
-                    if(numOprA2 + numOprA > numOprB2 + numOprB || numOprA2 + numOprA == numOprB2 + numOprB){
-                        //Toast.makeText(JuegoUno.this, "Ganaste", Toast.LENGTH_SHORT).show();
-                        correctas++;
-                    }else{
-                        //Toast.makeText(JuegoUno.this, "Perdiste", Toast.LENGTH_SHORT).show();
-                    }
+            numOprB = numAleatorioSuma(1);
+            numOprB2 = numAleatorioSuma(1);
 
-                    numOprA = 0;
-                    numOprA2 = 0;
-                    numOprB = 0;
-                    numOprB2 = 0;
+        }else if(niveles > 7 && niveles <= 15){
+            numOprA = numAleatorioSuma(2);
+            numOprA2 = numAleatorioSuma(2);
 
-                    if (niveles <= 7){
-                        numOprA = numAleatorioSuma(1);
-                        numOprA2 = numAleatorioSuma(1);
-                        btnUno.setText(String.valueOf(numOprA) + " + " +String.valueOf(numOprA2));
-                        numOprB = numAleatorioSuma(1);
-                        numOprB2 = numAleatorioSuma(1);
-                        btnDos.setText(String.valueOf(numOprB) + " + " +String.valueOf(numOprB2));
-                    }else if(niveles > 7 && niveles <= 15){
-                        numOprA = numAleatorioSuma(2);
-                        numOprA2 = numAleatorioSuma(2);
-                        btnUno.setText(String.valueOf(numOprA) + " + " +String.valueOf(numOprA2));
-                        numOprB = numAleatorioSuma(2);
-                        numOprB2 = numAleatorioSuma(2);
-                        btnDos.setText(String.valueOf(numOprB) + " + " +String.valueOf(numOprB2));
-                    }else if(niveles > 15){
-                        numOprA = numAleatorioSuma(3);
-                        numOprA2 = numAleatorioSuma(3);
-                        btnUno.setText(String.valueOf(numOprA) + " + " +String.valueOf(numOprA2));
-                        numOprB = numAleatorioSuma(3);
-                        numOprB2 = numAleatorioSuma(3);
-                        btnDos.setText(String.valueOf(numOprB) + " + " +String.valueOf(numOprB2));
-                    }
-                    niveles++;
-                }
+            numOprB = numAleatorioSuma(2);
+            numOprB2 = numAleatorioSuma(2);
 
+        }else if(niveles > 15){
+            numOprA = numAleatorioSuma(3);
+            numOprA2 = numAleatorioSuma(3);
 
-
-                break;
-            case R.id.btnDos:
-                if(sec == 0){
-                    if(numDos > numUno || numDos == numUno){
-                        //Toast.makeText(JuegoUno.this, "Ganaste", Toast.LENGTH_SHORT).show();
-                        correctas++;
-                    }else {
-                        //Toast.makeText(JuegoUno.this, "Perdiste", Toast.LENGTH_SHORT).show();
-                        if(niveles<=7){
-                            niveles = 0;
-                        }else if(niveles > 7 && niveles <= 15){
-                            niveles = 8;
-                        }
-                    }
-                    numUno = 0;
-                    numDos = 0;
-
-                    if(niveles <= 7){
-                        btnUno.setText(String.valueOf(numAleatorioA(1)));
-                        btnDos.setText(String.valueOf(numAleatorioA(2)));
-                    }else if(niveles>7 && niveles<=15){
-                        btnUno.setText(String.valueOf(numAleatorioB(1)));
-                        btnDos.setText(String.valueOf(numAleatorioB(2)));
-                    }else{
-                        sec = 1;
-                        sec = 1;
-                        numOprA = numAleatorioSuma(1);
-                        numOprA2 = numAleatorioSuma(1);
-                        btnUno.setText(String.valueOf(numOprA) + " + " +String.valueOf(numOprA2));
-                        numOprB = numAleatorioSuma(1);
-                        numOprB2 = numAleatorioSuma(1);
-                        btnDos.setText(String.valueOf(numOprB) + " + " +String.valueOf(numOprB2));
-                        niveles = 0;
-                        niveles = 0;
-                    }
-                    niveles++;
-                }else if(sec == 1){
-                    if(numOprB + numOprB2 > numOprA2 + numOprA || numOprA2 + numOprA == numOprB2 + numOprB){
-                        //Toast.makeText(JuegoUno.this, "Ganaste", Toast.LENGTH_SHORT).show();
-                        correctas++;
-                    }else{
-                        //Toast.makeText(JuegoUno.this, "Perdiste", Toast.LENGTH_SHORT).show();
-                    }
-
-                    numOprA = 0;
-                    numOprA2 = 0;
-                    numOprB = 0;
-                    numOprB2 = 0;
-
-                    if (niveles <= 7){
-                        numOprA = numAleatorioSuma(1);
-                        numOprA2 = numAleatorioSuma(1);
-                        btnUno.setText(String.valueOf(numOprA) + " + " +String.valueOf(numOprA2));
-                        numOprB = numAleatorioSuma(1);
-                        numOprB2 = numAleatorioSuma(1);
-                        btnDos.setText(String.valueOf(numOprB) + " + " +String.valueOf(numOprB2));
-                    }else if(niveles > 7 && niveles <= 15){
-                        numOprA = numAleatorioSuma(2);
-                        numOprA2 = numAleatorioSuma(2);
-                        btnUno.setText(String.valueOf(numOprA) + " + " +String.valueOf(numOprA2));
-                        numOprB = numAleatorioSuma(2);
-                        numOprB2 = numAleatorioSuma(2);
-                        btnDos.setText(String.valueOf(numOprB) + " + " +String.valueOf(numOprB2));
-                    }else if(niveles > 15){
-                        numOprA = numAleatorioSuma(3);
-                        numOprA2 = numAleatorioSuma(3);
-                        btnUno.setText(String.valueOf(numOprA) + " + " +String.valueOf(numOprA2));
-                        numOprB = numAleatorioSuma(3);
-                        numOprB2 = numAleatorioSuma(3);
-                        btnDos.setText(String.valueOf(numOprB) + " + " +String.valueOf(numOprB2));
-                    }
-                    niveles++;
-
-                }
-
-                break;
-
+            numOprB = numAleatorioSuma(3);
+            numOprB2 = numAleatorioSuma(3);
 
         }
+        btnUno.setText(String.valueOf(numOprA) + " + " +String.valueOf(numOprA2));
+        btnDos.setText(String.valueOf(numOprB) + " + " +String.valueOf(numOprB2));
     }
+
+    private void checkButtomOne() {
+        if(sec == 0){
+            if(numUno > numDos || numUno == numDos){
+                //Toast.makeText(JuegoUno.this, "Ganaste", Toast.LENGTH_SHORT).show();
+                correctas++;
+            }else {
+                //Toast.makeText(JuegoUno.this, "Perdiste", Toast.LENGTH_SHORT).show();
+                if(niveles<=7){
+                    niveles = 0;
+                }else if(niveles > 7 && niveles <= 15){
+                    niveles = 8;
+                }
+            }
+            seccUno();
+
+        } else if(sec == 1){
+            if(numOprA2 + numOprA > numOprB2 + numOprB || numOprA2 + numOprA == numOprB2 + numOprB){
+                //Toast.makeText(JuegoUno.this, "Ganaste", Toast.LENGTH_SHORT).show();
+                correctas++;
+            }else{
+                //Toast.makeText(JuegoUno.this, "Perdiste", Toast.LENGTH_SHORT).show();
+            }
+
+            seccDos();
+
+        }
+        niveles++;
+    }
+
+    private void checkButtomTwo() {
+        if(sec == 0){
+            if(numDos > numUno || numDos == numUno){
+                //Toast.makeText(JuegoUno.this, "Ganaste", Toast.LENGTH_SHORT).show();
+                correctas++;
+            }else {
+                //Toast.makeText(JuegoUno.this, "Perdiste", Toast.LENGTH_SHORT).show();
+                if(niveles<=7){
+                    niveles = 0;
+                }else if(niveles > 7 && niveles <= 15){
+                    niveles = 8;
+                }
+            }
+            seccUno();
+        }else if(sec == 1){
+            if(numOprB + numOprB2 > numOprA2 + numOprA || numOprA2 + numOprA == numOprB2 + numOprB){
+                //Toast.makeText(JuegoUno.this, "Ganaste", Toast.LENGTH_SHORT).show();
+                correctas++;
+            }else{
+                //Toast.makeText(JuegoUno.this, "Perdiste", Toast.LENGTH_SHORT).show();
+            }
+
+            seccDos();
+        }
+        niveles++;
+    }
+
 }
 
 

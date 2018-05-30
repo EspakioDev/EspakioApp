@@ -43,14 +43,14 @@
             app:srcCompat="@drawable/img_espakio" />
 
         <ImageView
-            android:id="@+id/imgUsuario"
-            android:layout_width="80dp"
+            android:id="@+id/imgLogoEspakio"
+            android:layout_width="104dp"
             android:layout_height="95dp"
 
             android:layout_alignTop="@+id/imageView2"
             android:layout_marginStart="38dp"
             android:layout_toEndOf="@+id/imageView2"
-            app:srcCompat="@drawable/img_luna" />
+            app:srcCompat="@mipmap/ic_launcher_round" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -72,7 +72,7 @@
             app:srcCompat="@drawable/icon_config_espakio" />
 
         <ImageView
-            android:id="@+id/btnPerfilUsuario"
+            android:id="@+id/menuJuegos_imgUserPerfil"
             android:layout_width="82dp"
             android:layout_height="82dp"
             android:layout_alignParentEnd="true"

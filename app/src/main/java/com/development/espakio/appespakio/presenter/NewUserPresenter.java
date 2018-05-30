@@ -34,6 +34,7 @@ public class NewUserPresenter implements INewUserPresenter{
     int iJuegos;
     private Context context;
     private SharedPreferences preferences;
+    private int idImagen;
 
     public NewUserPresenter(INewUserView newUserView, Context context) {
         this.preferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
@@ -43,22 +44,28 @@ public class NewUserPresenter implements INewUserPresenter{
         idsJuegos = new int[iJuegos];
         status = "";
         idUsuario = 0;
+        idImagen = Constants.IMAGEN_DEFAULT;
     }
 
     @Override
-    public void performAddUser(String userName, String birthday, String imagen) {
+    public void performChargeImage() {
+        idImagen = isAlredySelectImageUser();
+        newUserView.putUserImage(idImagen);
+    }
 
+    @Override
+    public void performAddUser(String userName, String birthday) {
         if(isEmptyField(userName, birthday)) {
             newUserView.newUserEmptyFields();
 
         } else {
-            registerUser(userName, birthday, imagen);
+            registerUser(userName, birthday, idImagen);
             if(onFailed()) {
                 newUserView.Failed();
             } else if (onError()) {
                 newUserView.Error();
             } else {
-                onSuccess(userName, birthday, imagen);
+                onSuccess(userName, birthday, idImagen);
                 putSelectUserPreference();
                 newUserView.idUsuario(idUsuario);
                 newUserView.newUserSuccess();
@@ -72,14 +79,14 @@ public class NewUserPresenter implements INewUserPresenter{
         return false;
     }
 
-    private void registerUser(String userName, String birthday, String imagen) {
+    private void registerUser(String userName, String birthday, int imagen) {
         String type = "newUser";
         BackgroundWorker1 worker = new BackgroundWorker1();
 
         tblCliente tablaCliente = new tblCliente(context);
         idCliente = tablaCliente.getClient().getID();
 
-        worker.execute(type,  userName, birthday, Integer.toString(idCliente), imagen, Integer.toString(Constants.VIDAS), Integer.toString(iJuegos));
+        worker.execute(type,  userName, birthday, Integer.toString(idCliente), Integer.toString(imagen), Integer.toString(Constants.VIDAS), Integer.toString(iJuegos));
 
         try {
             String result = worker.get();
@@ -110,7 +117,7 @@ public class NewUserPresenter implements INewUserPresenter{
         return false;
     }
 
-    private void onSuccess(String userName, String birthday, String imagen) {
+    private void onSuccess(String userName, String birthday, int imagen) {
         tblUsuarios tablaUsuario = new tblUsuarios(context);
         tblAvance tablaAvance = new tblAvance(context);
         Usuario user = new Usuario(idUsuario, userName, birthday, imagen, idCliente);
@@ -127,5 +134,9 @@ public class NewUserPresenter implements INewUserPresenter{
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isAlredySelectUser", true);
         editor.apply();
+    }
+
+    private int isAlredySelectImageUser() {
+        return preferences.getInt("ImageUser", Constants.IMAGEN_DEFAULT);
     }
 }

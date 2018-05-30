@@ -1,23 +1,22 @@
 package com.development.espakio.appespakio.activities;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.presenter.UserImagePresenter;
+import com.development.espakio.appespakio.view.IUserImageView;
 
-public class ImagenPerfilUsuario extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class ImagenPerfilUsuario extends AppCompatActivity implements AdapterView.OnItemClickListener, IUserImageView{
 
     private int[] imgUsuario;
     private GridView gridView;
+    private UserImagePresenter userImagePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,6 @@ public class ImagenPerfilUsuario extends AppCompatActivity implements AdapterVie
                 R.drawable.img_usuario_luna,
                 R.drawable.img_usuario_rosa,
                 R.drawable.img_usuario_astronauta
-
         };
 
         gridView.setOnItemClickListener(this);
@@ -41,6 +39,12 @@ public class ImagenPerfilUsuario extends AppCompatActivity implements AdapterVie
         MyAdapter adapter =  new MyAdapter(this, R.layout.gridview, imgUsuario);
         gridView.setAdapter(adapter);
 
+        userImagePresenter = new UserImagePresenter(this, getApplicationContext());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         fullScreen();
     }
 
@@ -61,11 +65,10 @@ public class ImagenPerfilUsuario extends AppCompatActivity implements AdapterVie
         decorView.setSystemUiVisibility(uiOptions);
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if ( i == 1){
-            startActivity(new Intent(ImagenPerfilUsuario.this, NuevoUsuario.class));
-        }
+        userImagePresenter.setImageUser(imgUsuario[i]);
+        // startActivity(new Intent(ImagenPerfilUsuario.this, NuevoUsuario.class));
+        finish();
     }
 }

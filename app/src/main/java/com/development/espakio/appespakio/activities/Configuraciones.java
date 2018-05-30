@@ -16,7 +16,11 @@ public class Configuraciones extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuraciones);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         fullScreen();
     }
 

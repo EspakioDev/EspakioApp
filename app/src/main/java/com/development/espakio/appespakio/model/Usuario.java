@@ -13,13 +13,18 @@ public class Usuario implements Serializable{
     private int ID;
     private String nickName;
     private Date birthDay;
-    private String imagen;
+    private int imagen;
     private int vidas;
     //private int logros;
     private int IDCliente;
 
+    public Usuario(int ID, String nickName, int imagen){
+        this.ID = ID;
+        this.nickName = nickName;
+        this.imagen = imagen;
+    }
 
-    public Usuario(int ID, String nickName, String birthday, String imagen, int IDCliente){
+    public Usuario(int ID, String nickName, String birthday, int imagen, int IDCliente){
         this.ID = ID;
         this.nickName = nickName;
         this.birthDay = stringToDate(birthday);
@@ -29,7 +34,7 @@ public class Usuario implements Serializable{
         //logros = 1;
     }
 
-    public Usuario(int ID, String nickName, String birthday, String imagen, int vidas, int IDCliente){
+    public Usuario(int ID, String nickName, String birthday, int imagen, int vidas, int IDCliente){
         this.ID = ID;
         this.nickName = nickName;
         this.birthDay = stringToDate(birthday);
@@ -59,8 +64,12 @@ public class Usuario implements Serializable{
         return birthDay;
     }
 
-    public String getImagen() {
+    public int getImagen() {
         return imagen;
+    }
+
+    public void setImagen(int imagen) {
+        this.imagen = imagen;
     }
 
     public int getVidas() {

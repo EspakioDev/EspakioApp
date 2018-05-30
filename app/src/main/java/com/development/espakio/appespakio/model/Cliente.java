@@ -27,7 +27,7 @@ public class Cliente implements Serializable{
         Usuarios.add(new Usuario(idUsuario, nickName, birthday, id));
     }*/
 
-    public void nuevoUsuario(int idUsuario, String nickName, String birthday, String imagen, int vidas){
+    public void nuevoUsuario(int idUsuario, String nickName, String birthday, int imagen, int vidas){
 
         Usuarios.add(new Usuario(idUsuario, nickName, birthday, imagen, vidas, id));
     }

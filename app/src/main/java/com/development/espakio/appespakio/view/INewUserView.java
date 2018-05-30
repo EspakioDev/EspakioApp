@@ -5,6 +5,7 @@ package com.development.espakio.appespakio.view;
  */
 
 public interface INewUserView {
+    void putUserImage(int idImage);
     void newUserEmptyFields();
     void newUserSuccess();
     void Error();
