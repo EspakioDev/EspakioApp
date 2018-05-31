@@ -122,6 +122,7 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
         if(users.size() < 3)
             btnUsuarioPlus.setVisibility(View.VISIBLE);
 
+        //Aqui puedes checar el id de la imagen
         //int id = R.drawable.img_usuario_verde;
 
         switch (users.size()) {
