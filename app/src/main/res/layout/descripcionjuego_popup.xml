@@ -3,104 +3,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/Espacio">
+    android:layout_height="match_parent">
 
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="370dp"
-        android:layout_height="436dp"
-        android:layout_marginBottom="8dp"
+    <RelativeLayout
+        android:id="@+id/rlDescJuego"
+        android:layout_width="368dp"
+        android:layout_height="381dp"
+        android:layout_marginBottom="93dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/Espacio"
-        android:padding="20dp"
+        android:layout_marginTop="93dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.495"
-        app:srcCompat="@drawable/img_planeta_azul" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="187dp"
-        android:layout_height="191dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
-        app:srcCompat="@drawable/img_juego_ejemplo" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="360dp"
+            android:layout_height="360dp"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_planetaazul" />
 
-    <TextView
-        android:id="@+id/txtDescripcion"
-        android:layout_width="291dp"
-        android:layout_height="35dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textColor="@color/Blanco"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        <ImageView
+            android:id="@+id/imglogoJuego"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/img_juego_ejemplo" />
 
-    <TextView
-        android:id="@+id/txtNombreJuego"
-        android:layout_width="291dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Nombre Juego"
-        android:textAlignment="center"
-        android:textColor="@color/Blanco"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.162" />
+        <Button
+            android:id="@+id/btnPlay"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="46dp"
+            android:background="@drawable/btnstyle"
+            android:text="PLAY"
+            android:textColor="@color/Espacio" />
 
-    <Button
-        android:id="@+id/btnPlay"
-        android:layout_width="137dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/btnstyle"
-        android:text="Jugar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDescripcion" />
+        <TextView
+            android:id="@+id/txtCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="21dp"
+            android:text="Cancelar"
+            android:textColor="@color/Blanco" />
 
-    <TextView
-        android:id="@+id/txtCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Cancelar"
-        android:textAlignment="center"
-        android:textColor="@color/Blanco"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPlay"
-        app:layout_constraintVertical_bias="0.0" />
+        <LinearLayout
+            android:layout_width="296dp"
+            android:layout_height="110dp"
+            android:layout_below="@+id/imglogoJuego"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtDescJuego"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Descripcion"
+                android:textAlignment="center"
+                android:textColor="@color/Blanco"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

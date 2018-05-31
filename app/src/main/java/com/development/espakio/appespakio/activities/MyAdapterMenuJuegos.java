@@ -3,11 +3,14 @@ package com.development.espakio.appespakio.activities;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,16 +29,16 @@ public class MyAdapterMenuJuegos extends RecyclerView.Adapter<MyAdapterMenuJuego
     private int[] imgJuegos;
     private ArrayList<String> nombresJuegos;
     private Context context;
-    private Dialog playgame;
-    private int habilidad;
-    private int position;
+    int habilidad = 0;
+    Dialog desJuego;
+
 
     public MyAdapterMenuJuegos(Context context, int[] imgJuegos, ArrayList<String> nombresJuegos, int habilidad) {
         this.imgJuegos = imgJuegos;
         this.nombresJuegos = nombresJuegos;
         this.context = context;
         this.habilidad = habilidad;
-        playgame = new Dialog(context);
+        desJuego = new Dialog(context);
     }
 
 
@@ -55,37 +58,76 @@ public class MyAdapterMenuJuegos extends RecyclerView.Adapter<MyAdapterMenuJuego
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (habilidad == 1){
-                    switch (position){
-                        case 0: //primera lunita
-                            context.startActivity( new Intent(context, JuegoUno.class));
-                            break;
-                        case 1: //segunda lunita
-                            break;
-                        case 2: //tercera lunita
-                            break;
-                    }
-                }
+                showpopup(view, habilidad, position);
             }
         });
     }
 
-    /*public  void showpopup(final Context context, int position){
-        Button btnplay, btnCancelar;
-        TextView txtNombre, txtDescripcion;
+    public  void showpopup(View view, final int habilidad, int position){
+        Button btnPlay;
+        TextView txtCancelar, txtDescripcio;
+        ImageView imgLogoJuego;
+        desJuego.setContentView(R.layout.descripcionjuego_popup);
+        btnPlay = (Button)desJuego.findViewById(R.id.btnPlay);
+        txtCancelar = (TextView)desJuego.findViewById(R.id.txtCancelar);
+        txtDescripcio = (TextView)desJuego.findViewById(R.id.txtDescJuego);
+        imgLogoJuego = (ImageView) desJuego.findViewById(R.id.imglogoJuego);
+        if (habilidad == 1){
+            switch (position){
+                case 0:
 
-        playgame.setContentView(R.layout.descripcionjuego_popup);
+                    break;
+                case 1:
 
-        txtNombre = (TextView)  playgame.findViewById(R.id.txtDescripcion);
-        txtDescripcion = (TextView) playgame.findViewById(R.id.txtNombreJuego);
-        btnplay = (Button) playgame.findViewById(R.id.btnPlay);
+                    break;
+            }
+        }else if(habilidad == 2){
+            switch (position){
+                case 0: //primera lunita
+                    imgLogoJuego.setImageResource(R.drawable.img_juego_colores);
+                    txtDescripcio.setText("Selecciona el color que dice en el texo, no su color ¿Podras hacerlo?.");
+                    btnPlay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(context,JuegoTres.class);
+                            context.startActivities(new Intent[]{intent});
+                            desJuego.hide();
+                        }
+                    });
+                    break;
+                case 1: //segunda lunita
+                    break;
+                case 2:
+                    break;
+            }
+        }else if(habilidad == 3){
+            switch (position){
+                case 0: //primera lunita
+                    imgLogoJuego.setImageResource(R.drawable.img_juego_uno);
+                    txtDescripcio.setText("¿Cual número es mayor? Descubre tus habilidades con este juego que desafaria tu intelecto.");
+                    btnPlay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(context,JuegoUno.class);
+                            context.startActivities(new Intent[]{intent});
+                            desJuego.hide();
+                        }
+                    });
+                    break;
+                case 1: //segunda lunita
+                    break;
+            }
+        }
+        txtCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                desJuego.cancel();
+            }
+        });
+        desJuego.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        desJuego.show();
 
-        txtNombre.setText(nombresJuegos.get(position));
-
-        btnplay.setOnClickListener(this);
-        playgame.show();
-
-    }*/
+    }
 
     @Override
     public int getItemCount() {
@@ -94,15 +136,6 @@ public class MyAdapterMenuJuegos extends RecyclerView.Adapter<MyAdapterMenuJuego
 
     @Override
     public void onClick(View view) {
-        /*switch (view.getId()){
-            case R.id.btnPlay:
-                playgame.hide();
-                context.startActivity(new Intent(context,JuegoUno.class));
-                break;
-            case R.id.imgGridView:
-                //view.
-                break;
-        }*/
 
     }
 

@@ -51,6 +51,7 @@ public class tblAvance {
 
         if (registro.moveToFirst())
             avance = new Avance(registro.getInt(0),        //IDAvanceJuego
+                    registro.getInt(1),
                     registro.getInt(2),     //Logro
                     registro.getInt(3));    //Puntaje
 

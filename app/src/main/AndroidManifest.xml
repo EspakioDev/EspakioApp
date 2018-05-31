@@ -34,7 +34,8 @@
         <activity android:name=".activities.ImagenPerfilUsuario" />
         <activity android:name=".activities.UsuarioPerfil" />
         <activity android:name=".activities.JuegoUno" />
-        <activity android:name=".activities.AfterGame"></activity>
+        <activity android:name=".activities.AfterGame" />
+        <activity android:name=".activities.JuegoTres"></activity>
     </application>
 
 </manifest>

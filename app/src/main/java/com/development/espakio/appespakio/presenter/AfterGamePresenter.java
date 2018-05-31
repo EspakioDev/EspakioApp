@@ -24,17 +24,19 @@ public class AfterGamePresenter implements IAfterGamePresenter{
 
     public AfterGamePresenter(IAfterGameView afterGameView, Context context) {
         this.afterGameView = afterGameView;
-        tblAvance tablaAvance = new tblAvance(context);
+        tablaAvance = new tblAvance(context);
         this.preferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
     }
 
     @Override
     public void checkScore(int idJuego, int score) {
         avance = tablaAvance.getNivelJuego(idJuego);
+        afterGameView.chargeValues(avance.getPuntaje());
         if (avance.checkPuntaje(score)) {
             avance.checkLogro();
             tablaAvance.setAvance(avance);
-            saveProgress();
+            afterGameView.newScore();
+            //saveProgress();
         }
     }
 

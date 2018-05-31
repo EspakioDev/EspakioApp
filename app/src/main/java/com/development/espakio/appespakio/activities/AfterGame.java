@@ -1,4 +1,7 @@
 package com.development.espakio.appespakio.activities;
+import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.presenter.AfterGamePresenter;
+import com.development.espakio.appespakio.view.IAfterGameView;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -6,22 +9,26 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.development.espakio.appespakio.R;
-import com.development.espakio.appespakio.presenter.AfterGamePresenter;
-import com.development.espakio.appespakio.view.IAfterGameView;
+import android.widget.Toast;
 
 public class AfterGame extends AppCompatActivity implements View.OnClickListener, IAfterGameView{
 
     private MediaPlayer mp;
     private Button btnAceptar;
-    private TextView txtCorrectas;
+    private TextView txtCorrectas, txtMaxPun;
+    private int correct = 0;
+    private int nomJuego = 0;
     private AfterGamePresenter afterGamePresenter;
+    //Animacion Interfaz
+    private Animation uptodown, downtoup;
+    private RelativeLayout rlTrofeo, rlFelicidades, rlPuntajes, rlBoton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +37,37 @@ public class AfterGame extends AppCompatActivity implements View.OnClickListener
 
         mp = MediaPlayer.create(this, R.raw.win);
 
-        btnAceptar = (Button) findViewById(R.id.btnAceptar);
-        txtCorrectas = (TextView) findViewById(R.id.txtCorrectas);
-        //Bundle bundle = getIntent().getExtras();
-        txtCorrectas.setText("Algo");
-        //txtCorrectas.setText(String.valueOf(bundle.getInt("correctos")));
+        btnAceptar = (Button)findViewById(R.id.btnAceptar);
+        txtCorrectas = (TextView)findViewById(R.id.txtCorrectas);
+        txtMaxPun = (TextView)findViewById(R.id.txtMaxPun);
+
+        // Relatives Layouts Animations
+        rlTrofeo = (RelativeLayout) findViewById(R.id.rlTrofeo);
+        rlFelicidades = (RelativeLayout) findViewById(R.id.rlFelicidades);
+        rlPuntajes = (RelativeLayout) findViewById(R.id.rlPuntajes);
+        rlBoton = (RelativeLayout) findViewById(R.id.rlBoton);
+        uptodown = AnimationUtils.loadAnimation(this, R.anim.uptodown);
+        downtoup = AnimationUtils.loadAnimation(this, R.anim.downtoup);
+        rlTrofeo.setAnimation(uptodown);
+        rlFelicidades.setAnimation(uptodown);
+        rlPuntajes.setAnimation(downtoup);
+        rlBoton.setAnimation(downtoup);
+
+
+        Bundle bundle = getIntent().getExtras();
+        correct = bundle.getInt("correctos");
+        nomJuego = bundle.getInt("juego");      // ------------- DE QUE JUEGO VIENE  -------------------
+        for (int i = 0; i<=correct; i++){
+
+            txtCorrectas.setText(String.valueOf(i));
+
+        }
         mp.start();
 
         btnAceptar.setOnClickListener(this);
 
         afterGamePresenter = new AfterGamePresenter(this, getApplicationContext());
-        afterGamePresenter.checkScore(0, 0);
+        afterGamePresenter.checkScore(nomJuego, correct);
     }
 
     @Override
@@ -49,13 +76,7 @@ public class AfterGame extends AppCompatActivity implements View.OnClickListener
         pantallaCompleta();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
-    void pantallaCompleta() {
+    void pantallaCompleta(){
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             int UI_OPTIONS = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
@@ -83,11 +104,16 @@ public class AfterGame extends AppCompatActivity implements View.OnClickListener
                 finish();
                 break;
         }
-
     }
 
     @Override
     public void chargeValues(int scoreMax) {
-
+        txtMaxPun.setText(scoreMax+"");
     }
+
+    @Override
+    public void newScore() {
+        Toast.makeText(this, "Superaste tu puntuación!", Toast.LENGTH_SHORT).show();
+    }
+
 }

@@ -24,8 +24,10 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
     private ImageView btnPerfilUsuario, btnConfig;
     private GamesMenuPresenter gamesMenuPresenter;
 
-    private int[] imgJuegos;
-    private ArrayList<String> nombreJuegos = new ArrayList<>();
+    private int[] imgJuegosMemoria, imgJuegosAtencion, getImgJuegosAgilidad;
+    private ArrayList<String> nombreJuegosMemoria = new ArrayList<>();
+    private ArrayList<String> nombreJuegosAtencion = new ArrayList<>();
+    private ArrayList<String> nombreJuegosAgilidad = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +45,52 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
         // a imgJuego y a NombresJuegos es donde debes agregarle informacion
 
 
-        imgJuegos = new int[]{
-                R.drawable.img_juego_uno,
+        imgJuegosMemoria = new int[]{
+                R.drawable.img_luna,
+                R.drawable.img_luna,
+        };
+
+        imgJuegosAtencion = new int[]{
+                R.drawable.img_juego_colores,
                 R.drawable.img_luna,
                 R.drawable.img_luna
         };
 
-        nombreJuegos.add("Juego Uno");
-        nombreJuegos.add("Juego Dos");
-        nombreJuegos.add("Juego Tres");
+        getImgJuegosAgilidad = new int[]{
+                R.drawable.img_juego_uno,
+                R.drawable.img_luna,
+        };
 
-        //recuerda que deben ser del mismo tamaño
+        nombreJuegosMemoria.add("Juego Uno");
+        nombreJuegosMemoria.add("Juego Dos");
 
+        nombreJuegosAtencion.add("Colores");
+        nombreJuegosAtencion.add("Juego Cuatro");
+        nombreJuegosAtencion.add("Juego Cinco");
+
+        nombreJuegosAgilidad.add("¿Cual es mayor");
+        nombreJuegosAgilidad.add("Juego Dos");
+
+        //Lista Juegos de Memoria
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.listUno);
         recyclerView.setLayoutManager(layoutManager);
-        MyAdapterMenuJuegos adapter = new MyAdapterMenuJuegos(this, imgJuegos, nombreJuegos, 1);
+        MyAdapterMenuJuegos adapter = new MyAdapterMenuJuegos(this, imgJuegosMemoria, nombreJuegosMemoria, 1);
         recyclerView.setAdapter(adapter);
+
+        //Lista Juegos de Atencion
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView2 = findViewById(R.id.lisDos);
+        recyclerView2.setLayoutManager(layoutManager2);
+        MyAdapterMenuJuegos adapter2 = new MyAdapterMenuJuegos(this, imgJuegosAtencion, nombreJuegosAtencion, 2);
+        recyclerView2.setAdapter(adapter2);
+
+        //Lista de Juegos de Agilidad
+        LinearLayoutManager layoutManager3 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView3 = findViewById(R.id.lisTres);
+        recyclerView3.setLayoutManager(layoutManager3);
+        MyAdapterMenuJuegos adapter3 = new MyAdapterMenuJuegos(this, getImgJuegosAgilidad, nombreJuegosAgilidad, 3);
+        recyclerView3.setAdapter(adapter3);
 
     }
 
@@ -110,7 +141,7 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void getUserID(int id) {
-        Toast.makeText(MenuJuegos.this, "Usuario: " + id, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MenuJuegos.this, "Usuario: " + id, Toast.LENGTH_SHORT).show();
     }
 
     @Override

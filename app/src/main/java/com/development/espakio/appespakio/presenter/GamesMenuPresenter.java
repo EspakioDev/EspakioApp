@@ -18,13 +18,11 @@ public class GamesMenuPresenter  implements IGamesMenuPresenter{
     private SharedPreferences preferences;
     private IGamesMenuView gamesMenuView;
     private Usuario user;
-    private int idImage;
 
     public GamesMenuPresenter(IGamesMenuView gamesMenuView, Context context) {
         this.gamesMenuView = gamesMenuView;
         this.context = context;
         this.preferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        this.idImage = isAlredySelectImageUser();
     }
 
     private int isAlredySelectImageUser() {
@@ -33,18 +31,16 @@ public class GamesMenuPresenter  implements IGamesMenuPresenter{
         return user.getImagen();
     }
 
-
-
     @Override
     public void performGamesMenu() {
-        getUserID();
+        //getUserID();
         //getDataGames();
         getProgress();
     }
 
     @Override
     public void chargeImage() {
-        gamesMenuView.putUserImage(idImage);
+        gamesMenuView.putUserImage(isAlredySelectImageUser());
     }
 
     @Override

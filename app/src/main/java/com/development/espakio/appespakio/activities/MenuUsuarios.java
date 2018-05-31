@@ -122,6 +122,8 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
         if(users.size() < 3)
             btnUsuarioPlus.setVisibility(View.VISIBLE);
 
+        //int id = R.drawable.img_usuario_verde;
+
         switch (users.size()) {
             case 3:
                 txtUsuarioTres.setVisibility(View.VISIBLE);
@@ -150,8 +152,6 @@ public class MenuUsuarios extends AppCompatActivity implements View.OnClickListe
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
-
-        //Quitare este Finish para poder regresar al menu de usuarios.
 
         finish();
     }

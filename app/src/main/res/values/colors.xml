@@ -16,5 +16,17 @@
     <color name="Blanco">#ffffff</color>
     <color name="GrisBajo">#cecece</color>
 
+    <array name="juegoTres">
+        <item name="azul">#1d8b9e</item>
+        <item name="rojo">#A4181A</item>
+        <item name="gris">#999999</item>
+        <item name="verde">#159615</item>
+        <item name="negro">#000000</item>
+        <item name="amarillo">#de9f33</item>
+        <item name="morado">#A30798</item>
+        <item name="rosa">#F40851</item>
+        <item name="naranja">#EA7E34</item>
+    </array>
+
 
 </resources>

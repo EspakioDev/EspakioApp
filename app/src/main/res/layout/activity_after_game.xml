@@ -7,72 +7,151 @@
     android:background="@drawable/fondo_espakio"
     tools:context="com.development.espakio.appespakio.activities.AfterGame">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animationTime"
-        android:layout_width="236dp"
-        android:layout_height="221dp"
-        android:layout_marginBottom="8dp"
+
+    <RelativeLayout
+        android:id="@+id/rlTrofeo"
+        android:layout_width="304dp"
+        android:layout_height="222dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75"
-        app:layout_constraintVertical_chainStyle="spread"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="trophy.json"
-        app:lottie_imageAssetsFolder="assets"
-        app:lottie_loop="false" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btnAceptar"
-        android:layout_width="242dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationTime"
+            android:layout_width="222dp"
+            android:layout_height="222dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="trophy.json"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_loop="false" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlFelicidades"
+        android:layout_width="304dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/btnstyle_amarillo"
-        android:text="Aceptar"
-        android:textColor="@color/Blanco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlTrofeo">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="!Felicidades!"
+            android:textColor="@color/Blanco"
+            android:textSize="36sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlPuntajes"
+        android:layout_width="304dp"
+        android:layout_height="144dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlFelicidades">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_planetarojo" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="144dp"
+            android:layout_height="140dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            app:srcCompat="@drawable/ic_planetaazul" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/imageView6"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="18dp"
+            android:text="Mejor Puntaje"
+            android:textColor="@color/Blanco" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView10"
+            android:layout_alignBottom="@+id/textView10"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="47dp"
+            android:text="Puntaje"
+            android:textColor="@color/Blanco" />
+
+        <TextView
+            android:id="@+id/txtCorrectas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/textView12"
+            android:layout_centerVertical="true"
+            android:text="60"
+            android:textColor="@color/Blanco"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/txtMaxPun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="52dp"
+            android:text="60"
+            android:textColor="@color/Blanco"
+            android:textSize="40sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlBoton"
+        android:layout_width="304dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCorrectas"
-        app:layout_constraintVertical_bias="0.473" />
+        app:layout_constraintTop_toBottomOf="@+id/rlPuntajes">
 
-    <TextView
-        android:id="@+id/txtCorrectas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="104dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="20"
-        android:textColor="@color/Blanco"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.881" />
+        <Button
+            android:id="@+id/btnAceptar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btnstyle_amarillo"
+            android:text="Aceptar"
+            android:textColor="@color/Blanco" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="¡ Felicidades !"
-        android:textColor="@color/Blanco"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtCorrectas"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
