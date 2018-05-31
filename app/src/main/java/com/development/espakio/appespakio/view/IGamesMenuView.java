@@ -6,7 +6,6 @@ package com.development.espakio.appespakio.view;
 
 public interface IGamesMenuView {
     void getUserID(int id);
-    void getHabilitiesGames(String[] Habilities);
     void setGameSelect(int id);
     void putUserImage(int idImage);
 }

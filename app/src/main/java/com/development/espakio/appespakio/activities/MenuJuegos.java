@@ -67,6 +67,7 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         pantallaCompleta();
+        gamesMenuPresenter.chargeImage();
     }
 
     void pantallaCompleta(){
@@ -110,12 +111,6 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
     @Override
     public void getUserID(int id) {
         Toast.makeText(MenuJuegos.this, "Usuario: " + id, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void getHabilitiesGames(String[] Habilities) {
-        /*txtHabilidadUno.setText(Habilities[0]);
-        txtHabilidadDos.setText(Habilities[1]);*/
     }
 
     @Override

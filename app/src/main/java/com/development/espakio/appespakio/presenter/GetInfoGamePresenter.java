@@ -2,8 +2,6 @@ package com.development.espakio.appespakio.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.development.espakio.appespakio.model.DescripcionJuego;
 import com.development.espakio.appespakio.view.IGetInfoGameView;
 
 public class GetInfoGamePresenter implements  IGetInfoGamePresenter{
@@ -22,7 +20,8 @@ public class GetInfoGamePresenter implements  IGetInfoGamePresenter{
         int iGameSelect = getGameSelect();
 
         if(iGameSelect != -1)
-            infoGameView.showInfoGame(getInfoGame(iGameSelect));
+            //infoGameView.showInfoGame(getInfoGame(iGameSelect));
+            ;
         else
             infoGameView.failed();
     }
@@ -31,7 +30,7 @@ public class GetInfoGamePresenter implements  IGetInfoGamePresenter{
         return preferences.getInt("GameSelect", -1);
     }
 
-    private String[] getInfoGame(int i) {
+    /*private String[] getInfoGame(int i) {
         return DescripcionJuego.getJuego(i);
-    }
+    }*/
 }

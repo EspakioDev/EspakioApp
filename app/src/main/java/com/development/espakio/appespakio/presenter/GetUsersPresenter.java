@@ -3,11 +3,10 @@ package com.development.espakio.appespakio.presenter;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.development.espakio.appespakio.db.BackgroundWorker1;
+import com.development.espakio.appespakio.db.BackgroundWorker;
 import com.development.espakio.appespakio.db.tblAvance;
 import com.development.espakio.appespakio.db.tblUsuarios;
 import com.development.espakio.appespakio.model.Avance;
-import com.development.espakio.appespakio.model.Constants;
 import com.development.espakio.appespakio.model.Usuario;
 import com.development.espakio.appespakio.view.IGetUsersView;
 
@@ -48,6 +47,7 @@ public class GetUsersPresenter implements IGetUsersPresenter{
         if(i != -1) {
             tablaUsuarios.selectUser(users.get(i));
             putSelectUserPreference();
+            cleanProgress();
             getProgress(users.get(i).getID());
             saveProgress();
             getUsersView.goToGameMenu();
@@ -56,7 +56,7 @@ public class GetUsersPresenter implements IGetUsersPresenter{
     }
 
     private void getProgress(int idUsuario) {
-        BackgroundWorker1 worker = new BackgroundWorker1();
+        BackgroundWorker worker = new BackgroundWorker();
         worker.execute("getProgress", Integer.toString(idUsuario));
         try {
             String result = worker.get();
@@ -99,5 +99,9 @@ public class GetUsersPresenter implements IGetUsersPresenter{
         if(status.contains("Error"))
             return true;
         return false;
+    }
+
+    private void cleanProgress(){
+        tablaAvance.clean();
     }
 }

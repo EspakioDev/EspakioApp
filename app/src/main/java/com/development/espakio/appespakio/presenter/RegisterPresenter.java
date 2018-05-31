@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.development.espakio.appespakio.db.BackgroundWorker1;
+import com.development.espakio.appespakio.db.BackgroundWorker;
 import com.development.espakio.appespakio.db.tblCliente;
 import com.development.espakio.appespakio.model.Cliente;
-import com.development.espakio.appespakio.presenter.IRegisterPresenter;
 import com.development.espakio.appespakio.view.IRegisterView;
 
 import org.json.JSONException;
@@ -83,7 +82,7 @@ public class RegisterPresenter implements IRegisterPresenter {
 
     private void getResult(String email, String password) {
         String type = "register";
-        BackgroundWorker1 worker = new BackgroundWorker1();
+        BackgroundWorker worker = new BackgroundWorker();
         worker.execute(type, email, password);
         try {
             String result = worker.get();

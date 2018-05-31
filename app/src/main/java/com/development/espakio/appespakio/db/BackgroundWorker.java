@@ -22,7 +22,7 @@ import java.net.URLEncoder;
  * Created by Spectre 13-4107la on 15/02/2018.
  */
 
-public class BackgroundWorker1 extends AsyncTask<String, Void, String> {
+public class BackgroundWorker extends AsyncTask<String, Void, String> {
 
     private String type;
 
@@ -67,6 +67,14 @@ public class BackgroundWorker1 extends AsyncTask<String, Void, String> {
                 case "getProgress":
                     post_data = URLEncoder.encode("idUsuario", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8");
                     break;
+                case "setProgress":
+                    post_data = URLEncoder.encode("idAvance", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"
+                            + URLEncoder.encode("logros", "UTF-8")+"="+URLEncoder.encode(strings[2], "UTF-8")+"&"
+                            + URLEncoder.encode("puntaje", "UTF-8")+"="+URLEncoder.encode(strings[3], "UTF-8");
+                    break;
+                case "setImage":
+                    post_data = URLEncoder.encode("idUsuario", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"
+                            + URLEncoder.encode("Image", "UTF-8")+"="+URLEncoder.encode(strings[2], "UTF-8");
             }
 
             bufferedWriter.write(post_data);

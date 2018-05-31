@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
 import com.development.espakio.appespakio.presenter.UserPerfilPresenter;
@@ -28,10 +29,13 @@ public class UsuarioPerfil extends AppCompatActivity implements View.OnClickList
         txtUsername = (TextView) findViewById(R.id.txtUsername);
         imgUser = (ImageView) findViewById(R.id.perfil_imgUserPerfil);
         changeUser = (ImageView) findViewById(R.id.imgChangeUser);
-        //changeImage = (ImageView) findViewById(R.id.imgChangeImage);
+        changeImage = (ImageView) findViewById(R.id.imgChangeImage);
+
+        changeUser.setOnClickListener(this);
+        changeImage.setOnClickListener(this);
 
         perfilPresenter = new UserPerfilPresenter(this, getApplicationContext());
-        perfilPresenter.performCharge();
+
 
     }
 
@@ -39,6 +43,7 @@ public class UsuarioPerfil extends AppCompatActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         pantallaCompleta();
+        perfilPresenter.performCharge();
     }
 
     public void pantallaCompleta(){
@@ -65,8 +70,10 @@ public class UsuarioPerfil extends AppCompatActivity implements View.OnClickList
         switch (view.getId()){
             case R.id.imgChangeUser:
                 goToUsersMenu();
-            /*case R.id.perfil_imgUserPerfil:
-                goToImagesPerfil();*/
+                break;
+            case R.id.imgChangeImage:
+                goToImagesPerfil();
+                break;
         }
     }
 
@@ -84,5 +91,10 @@ public class UsuarioPerfil extends AppCompatActivity implements View.OnClickList
     @Override
     public void goToImagesPerfil() {
         startActivity(new Intent(this, ImagenPerfilUsuario.class));
+    }
+
+    @Override
+    public void onSuccesToChangeImage() {
+        Toast.makeText(this, "Se cambio la imagen excitosamente ;)", Toast.LENGTH_SHORT).show();
     }
 }

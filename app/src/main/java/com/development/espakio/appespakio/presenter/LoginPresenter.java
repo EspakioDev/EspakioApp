@@ -4,12 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.development.espakio.appespakio.db.BackgroundWorker1;
+import com.development.espakio.appespakio.db.BackgroundWorker;
 import com.development.espakio.appespakio.db.tblCliente;
 import com.development.espakio.appespakio.db.tblUsuarios;
 import com.development.espakio.appespakio.model.Cliente;
 import com.development.espakio.appespakio.model.Usuario;
-import com.development.espakio.appespakio.presenter.ILoginPresenter;
 import com.development.espakio.appespakio.view.ILoginView;
 
 import org.json.JSONArray;
@@ -74,7 +73,7 @@ public class LoginPresenter implements ILoginPresenter{
 
     private void getResult(String email, String password) {
         String type = "login";
-        BackgroundWorker1 worker = new BackgroundWorker1();
+        BackgroundWorker worker = new BackgroundWorker();
         worker.execute(type, email, password);
         try {
             String result = worker.get();
@@ -101,7 +100,7 @@ public class LoginPresenter implements ILoginPresenter{
 
     private void getUsers() {
         client = new Cliente(idCliente);
-        BackgroundWorker1 worker = new BackgroundWorker1();
+        BackgroundWorker worker = new BackgroundWorker();
         worker.execute("getUsers", Integer.toString(idCliente));
         try {
             String result = worker.get();

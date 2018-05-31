@@ -95,11 +95,17 @@ public class tblUsuarios {
     }
 
     public void updateUser(Usuario usuario){
-
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.TABLE_USUARIO_IMAGEN, usuario.getImagen());
+        values.put(DBConstants.TABLE_USUARIO_VIDAS, usuario.getVidas());
+        db.updateRow(DBConstants.TABLE_USUARIO, values, DBConstants.TABLE_USUARIO_ID, Integer.toString(usuario.getID()));
     }
 
     public void print() {
         db.printTable(DBConstants.TABLE_USUARIO);
     }
 
+    public void clean() {
+        db.cleanTable(DBConstants.TABLE_USUARIO);
+    }
 }

@@ -4,13 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.development.espakio.appespakio.db.BackgroundWorker1;
+import com.development.espakio.appespakio.db.BackgroundWorker;
 import com.development.espakio.appespakio.db.tblAvance;
 import com.development.espakio.appespakio.db.tblCliente;
 import com.development.espakio.appespakio.db.tblUsuarios;
 import com.development.espakio.appespakio.model.Avance;
 import com.development.espakio.appespakio.model.Constants;
-import com.development.espakio.appespakio.model.DescripcionJuego;
 import com.development.espakio.appespakio.model.Usuario;
 import com.development.espakio.appespakio.view.INewUserView;
 
@@ -31,7 +30,7 @@ public class NewUserPresenter implements INewUserPresenter{
     private int idUsuario;
     private int idCliente;
     private int[] idsJuegos;
-    int iJuegos;
+    private int iJuegos;
     private Context context;
     private SharedPreferences preferences;
     private int idImagen;
@@ -40,7 +39,7 @@ public class NewUserPresenter implements INewUserPresenter{
         this.preferences = context.getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         this.context = context;
         this.newUserView = newUserView;
-        iJuegos = DescripcionJuego.noJuegos();
+        iJuegos = Constants.NO_JUEGOS;
         idsJuegos = new int[iJuegos];
         status = "";
         idUsuario = 0;
@@ -81,7 +80,7 @@ public class NewUserPresenter implements INewUserPresenter{
 
     private void registerUser(String userName, String birthday, int imagen) {
         String type = "newUser";
-        BackgroundWorker1 worker = new BackgroundWorker1();
+        BackgroundWorker worker = new BackgroundWorker();
 
         tblCliente tablaCliente = new tblCliente(context);
         idCliente = tablaCliente.getClient().getID();
@@ -137,6 +136,8 @@ public class NewUserPresenter implements INewUserPresenter{
     }
 
     private int isAlredySelectImageUser() {
-        return preferences.getInt("ImageUser", Constants.IMAGEN_DEFAULT);
+        int idImage = preferences.getInt("ImageUser", Constants.IMAGEN_DEFAULT);
+        preferences.edit().remove("ImageUser").commit();
+        return idImage;
     }
 }

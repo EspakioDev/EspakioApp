@@ -50,7 +50,7 @@ public class tblAvance {
         Avance avance = null;
 
         if (registro.moveToFirst())
-            avance = new Avance(registro.getInt(1),        //IDJuego
+            avance = new Avance(registro.getInt(0),        //IDAvanceJuego
                     registro.getInt(2),     //Logro
                     registro.getInt(3));    //Puntaje
 
@@ -72,6 +72,10 @@ public class tblAvance {
         ContentValues values = new ContentValues();
         values.put(DBConstants.TABLE_AVANCE_PUNTAJE, avance.getPuntaje());
         values.put(DBConstants.TABLE_AVANCE_LOGRO, avance.getLogro());
-        db.updateRow(DBConstants.TABLE_AVANCE, values, DBConstants.TABLE_AVANCE_ID_JUEGO, Integer.toString(avance.getIDJuego()));
+        db.updateRow(DBConstants.TABLE_AVANCE, values, DBConstants.TABLE_AVANCE_ID, Integer.toString(avance.getID()));
+    }
+
+    public void clean() {
+        db.cleanTable(DBConstants.TABLE_AVANCE);
     }
 }

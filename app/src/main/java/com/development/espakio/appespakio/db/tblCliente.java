@@ -37,4 +37,7 @@ public class tblCliente {
         return cliente;
     }
 
+    public void clean() {
+        db.cleanTable(DBConstants.TABLE_CLIENTE);
+    }
 }
