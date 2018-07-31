@@ -1,5 +1,6 @@
 package com.development.espakio.appespakio.activities;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -63,6 +64,8 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
         adapter.setOnClick(this);
 
         //inicializar popup
+
+        desJuego = new Dialog(this);
 
         desJuego.setContentView(R.layout.descripcionjuego_popup);
 
