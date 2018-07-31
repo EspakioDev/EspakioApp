@@ -1,33 +1,40 @@
 package com.development.espakio.appespakio.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.model.GameInfo;
 import com.development.espakio.appespakio.presenter.GamesMenuPresenter;
 import com.development.espakio.appespakio.view.IGamesMenuView;
 
-import java.util.ArrayList;
-
-public class MenuJuegos extends AppCompatActivity implements View.OnClickListener, IGamesMenuView{
-
+public class MenuJuegos extends AppCompatActivity implements View.OnClickListener, IGamesMenuView, HorizontalHabilidadAdapter.OnItemClickListenerRV{
 
     private ImageView btnPerfilUsuario, btnConfig;
     private GamesMenuPresenter gamesMenuPresenter;
+    private Dialog desJuego;
+    private int idJuego;
+    private GameInfo juegos;
 
-    private int[] imgJuegosMemoria, imgJuegosAtencion, getImgJuegosAgilidad;
-    private ArrayList<String> nombreJuegosMemoria = new ArrayList<>();
-    private ArrayList<String> nombreJuegosAtencion = new ArrayList<>();
-    private ArrayList<String> nombreJuegosAgilidad = new ArrayList<>();
+    private TextView txtDescripcio;
+    private ImageView imgLogoJuego;
+
+    RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,59 +46,34 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
 
         btnConfig.setOnClickListener(this);
         btnPerfilUsuario.setOnClickListener(this);
-        gamesMenuPresenter = new GamesMenuPresenter(MenuJuegos.this, getApplicationContext());
+
+        //desJuego = new Dialog(getApplicationContext());
+
+        gamesMenuPresenter = new GamesMenuPresenter(this, getApplicationContext());
         gamesMenuPresenter.performGamesMenu();
 
         // a imgJuego y a NombresJuegos es donde debes agregarle informacion
 
-
-        imgJuegosMemoria = new int[]{
-                R.drawable.img_luna,
-                R.drawable.img_luna,
-        };
-
-        imgJuegosAtencion = new int[]{
-                R.drawable.img_juego_colores,
-                R.drawable.img_luna,
-                R.drawable.img_luna
-        };
-
-        getImgJuegosAgilidad = new int[]{
-                R.drawable.img_juego_uno,
-                R.drawable.img_luna,
-        };
-
-        nombreJuegosMemoria.add("Juego Uno");
-        nombreJuegosMemoria.add("Juego Dos");
-
-        nombreJuegosAtencion.add("Colores");
-        nombreJuegosAtencion.add("Juego Cuatro");
-        nombreJuegosAtencion.add("Juego Cinco");
-
-        nombreJuegosAgilidad.add("¿Cual es mayor");
-        nombreJuegosAgilidad.add("Juego Dos");
-
-        //Lista Juegos de Memoria
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView = findViewById(R.id.listUno);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView = findViewById(R.id.listJuegos);
         recyclerView.setLayoutManager(layoutManager);
-        MyAdapterMenuJuegos adapter = new MyAdapterMenuJuegos(this, imgJuegosMemoria, nombreJuegosMemoria, 1);
+        juegos = new GameInfo();
+        MyAdapterMenuJuegos adapter = new MyAdapterMenuJuegos(this, juegos.getGamesInfo());
         recyclerView.setAdapter(adapter);
+        adapter.setOnClick(this);
 
-        //Lista Juegos de Atencion
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView2 = findViewById(R.id.lisDos);
-        recyclerView2.setLayoutManager(layoutManager2);
-        MyAdapterMenuJuegos adapter2 = new MyAdapterMenuJuegos(this, imgJuegosAtencion, nombreJuegosAtencion, 2);
-        recyclerView2.setAdapter(adapter2);
+        //inicializar popup
 
-        //Lista de Juegos de Agilidad
-        LinearLayoutManager layoutManager3 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView3 = findViewById(R.id.lisTres);
-        recyclerView3.setLayoutManager(layoutManager3);
-        MyAdapterMenuJuegos adapter3 = new MyAdapterMenuJuegos(this, getImgJuegosAgilidad, nombreJuegosAgilidad, 3);
-        recyclerView3.setAdapter(adapter3);
+        desJuego.setContentView(R.layout.descripcionjuego_popup);
 
+        Button btnPlay = (Button)desJuego.findViewById(R.id.btnPlay);
+        TextView txtCancelar = (TextView)desJuego.findViewById(R.id.txtCancelar);
+        txtDescripcio = (TextView)desJuego.findViewById(R.id.txtDescJuego);
+        imgLogoJuego = (ImageView) desJuego.findViewById(R.id.imglogoJuego);
+
+        btnPlay.setOnClickListener(this);
+        txtCancelar.setOnClickListener(this);
+        desJuego.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     @Override
@@ -101,7 +83,7 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
         gamesMenuPresenter.chargeImage();
     }
 
-    void pantallaCompleta(){
+    private void pantallaCompleta(){
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             int UI_OPTIONS = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
@@ -125,17 +107,19 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
         switch (view.getId()) {
 
             case R.id.btnConfig2:
-                startActivity(new Intent(MenuJuegos.this, Configuraciones.class));
+                startActivity(new Intent(this, Configuraciones.class));
                 overridePendingTransition(R.anim.right_in, R.anim.right_out);
                 break;
             case R.id.menuJuegos_imgUserPerfil:
-                startActivity(new Intent(MenuJuegos.this, UsuarioPerfil.class));
+                startActivity(new Intent(this, UsuarioPerfil.class));
                 overridePendingTransition(R.anim.right_in, R.anim.right_out);
                 break;
-           /* default:
-                setGameSelect(view.getId());
-                startActivity(new Intent(MenuJuegos.this, DescripcionJuego.class));
-                overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);*/
+            case R.id.txtCancelar:
+                desJuego.cancel();
+                break;
+            case R.id.btnPlay:
+                selectGame();
+                break;
         }
     }
 
@@ -145,37 +129,74 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
-    public void setGameSelect(int id) {
-        /*int iGameSelect;
-        switch (id) {
-            case R.id.imgJuego11:
-                iGameSelect = 0;
-                break;
-            case R.id.imgJuego12:
-                iGameSelect = 1;
-                break;
-            case R.id.imgJuego13:
-                iGameSelect = 2;
-                break;
-            case R.id.imgJuego21:
-                iGameSelect = 3;
-                break;
-            case R.id.imgJuego22:
-                iGameSelect = 4;
-                break;
-            case R.id.imgJuego23:
-                iGameSelect = 5;
-                break;
-            default:
-                iGameSelect = -1;
-        }
-        gamesMenuPresenter.putGameSelectPref(iGameSelect);*/
-    }
-
-    @Override
     public void putUserImage(int idImage) {
         btnPerfilUsuario.setImageResource(idImage);
     }
 
+    @Override
+    public void onItemClick(int childPosition, int parentPosition) {
+        Toast.makeText(this, parentPosition + " " + childPosition, Toast.LENGTH_SHORT).show();
+        switch (parentPosition){
+            case 0:
+                if(childPosition == 0)
+                    idJuego = 1;
+                if(childPosition == 1)
+                    idJuego = 2;
+                break;
+            case 1:
+                if(childPosition == 0)
+                    idJuego = 3;
+                if(childPosition == 1)
+                    idJuego = 4;
+                if(childPosition == 2)
+                    idJuego = 5;
+                break;
+            case 2:
+                if(childPosition == 0)
+                    idJuego = 6;
+                if(childPosition == 1)
+                    idJuego = 7;
+                break;
+        }
+        showpopup(childPosition, parentPosition);
+    }
+
+    public void selectGame() {
+        switch (idJuego) {
+            case 1:
+                Toast.makeText(this, "Juego 1", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, JuegoTres.class));
+                break;
+            case 2:
+                Toast.makeText(this, "Juego 2", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, JuegoUno.class));
+                break;
+            case 3:
+                //Toast.makeText(this, "Juego 3", Toast.LENGTH_SHORT).show();
+                break;
+            case 4:
+                //Toast.makeText(this, "Juego 4", Toast.LENGTH_SHORT).show();
+                break;
+            case 5:
+                //Toast.makeText(this, "Juego 5", Toast.LENGTH_SHORT).show();
+                break;
+            case 6:
+                //Toast.makeText(this, "Juego 6", Toast.LENGTH_SHORT).show();
+                break;
+            case 7:
+                //Toast.makeText(this, "Juego 7", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+        overridePendingTransition(R.anim.right_in, R.anim.right_out);
+    }
+
+    public  void showpopup(int childPosition, int parentPosition){
+        GameInfo.Juego j = juegos.getGamesInfo().get(parentPosition).getNombreJuegos().get(childPosition);
+        imgLogoJuego.setImageResource(j.getIdImagen());
+        txtDescripcio.setText(j.getDescripcion());
+
+        desJuego.show();
+    }
 
 }
