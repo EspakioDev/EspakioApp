@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import com.development.espakio.appespakio.db.BackgroundWorker;
 import com.development.espakio.appespakio.db.tblAvance;
 import com.development.espakio.appespakio.db.tblUsuarios;
-import com.development.espakio.appespakio.model.Constants;
 import com.development.espakio.appespakio.model.Usuario;
 import com.development.espakio.appespakio.view.IUserPerfilView;
 
@@ -15,7 +14,7 @@ import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
-public class UserPerfilPresenter implements IUserPerfilPresenter{
+public class UserPerfilPresenter implements IUserPerfilPresenter {
 
     private IUserPerfilView userPerfilView;
     private tblUsuarios tableUsers;
@@ -40,7 +39,7 @@ public class UserPerfilPresenter implements IUserPerfilPresenter{
     }
 
     private int isAlredySelectImageUser() {
-        return preferences.getInt("ImageUser", user.getImagen());
+        return preferences.getInt("ImageUser", user.getIdImagen());
     }
 
     private boolean selectImage() {
@@ -59,7 +58,7 @@ public class UserPerfilPresenter implements IUserPerfilPresenter{
         tableUsers.updateUser(user);
 
         BackgroundWorker worker = new BackgroundWorker();
-        worker.execute("setImage", user.getID()+"", user.getImagen()+"");
+        worker.execute("setImage", user.getID()+"", user.getIdImagen()+"");
         try {
             String result = worker.get();
             JSONObject jsonObject = new JSONObject(result);

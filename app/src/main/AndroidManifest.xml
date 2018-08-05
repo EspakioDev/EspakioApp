@@ -35,7 +35,14 @@
         <activity android:name=".activities.UsuarioPerfil" />
         <activity android:name=".activities.JuegoUno" />
         <activity android:name=".activities.AfterGame" />
-        <activity android:name=".activities.JuegoTres"></activity>
+        <activity android:name=".activities.JuegoTres" />
+        <activity android:name=".activities.JuegoSiete" />
+        <activity android:name=".activities.JuegoSeis" />
+        <activity android:name=".activities.JuegoDos" />
+        <activity android:name=".activities.JuegoCinco" />
+        <activity android:name=".activities.SplashScreen4" />
+        <activity android:name=".activities.Graficas" />
+        <activity android:name=".activities.JuegoOcho"></activity>
     </application>
 
 </manifest>

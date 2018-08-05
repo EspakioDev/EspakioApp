@@ -38,11 +38,16 @@ public class Avance {
     public int getPuntaje() { return puntaje; }
 
     public boolean checkLogro() {
-         if ( (logro == 0 && puntaje > 19) || (logro == 1 && puntaje > 39) || (logro == 2 && puntaje > 59)){
-             logro++;
-             return true;
-         } else
-             return false;
+        if(puntaje > 19){
+            logro = 1;
+            if(puntaje> 39) {
+                logro = 2;
+                if (puntaje > 59)
+                    logro = 3;
+            }
+            return true;
+        } else
+            return false;
     }
 
     public boolean checkPuntaje(int puntaje) {

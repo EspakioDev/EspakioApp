@@ -3,6 +3,7 @@ package com.development.espakio.appespakio.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+
 import com.development.espakio.appespakio.model.Usuario;
 
 import java.util.Vector;
@@ -23,7 +24,7 @@ public class tblUsuarios {
         contentValues.put(DBConstants.TABLE_USUARIO_ID, usuario.getID());
         contentValues.put(DBConstants.TABLE_USUARIO_USERNAME, usuario.getNickName());
         contentValues.put(DBConstants.TABLE_USUARIO_BIRTHDATE, usuario.getBirthDay().toString());
-        contentValues.put(DBConstants.TABLE_USUARIO_IMAGEN, usuario.getImagen());
+        contentValues.put(DBConstants.TABLE_USUARIO_IMAGEN, usuario.getIdImagen());
         contentValues.put(DBConstants.TABLE_USUARIO_VIDAS, usuario.getVidas());
         //contentValues.put(DBConstants.TABLE_USUARIO_LOGROS, usuario.getLogros());
         contentValues.put(DBConstants.TABLE_USUARIO_ID_CLIENTE, usuario.getIDCliente());
@@ -36,7 +37,7 @@ public class tblUsuarios {
         contentValues.put(DBConstants.TABLE_USUARIO_ID, usuario.getID());
         contentValues.put(DBConstants.TABLE_USUARIO_USERNAME, usuario.getNickName());
         contentValues.put(DBConstants.TABLE_USUARIO_BIRTHDATE, usuario.getBirthDay().toString());
-        contentValues.put(DBConstants.TABLE_USUARIO_IMAGEN, usuario.getImagen());
+        contentValues.put(DBConstants.TABLE_USUARIO_IMAGEN, usuario.getIdImagen());
         contentValues.put(DBConstants.TABLE_USUARIO_VIDAS, usuario.getVidas());
         //contentValues.put(DBConstants.TABLE_USUARIO_LOGROS, usuario.getLogros());
         contentValues.put(DBConstants.TABLE_USUARIO_ID_CLIENTE, usuario.getIDCliente());
@@ -96,7 +97,7 @@ public class tblUsuarios {
 
     public void updateUser(Usuario usuario){
         ContentValues values = new ContentValues();
-        values.put(DBConstants.TABLE_USUARIO_IMAGEN, usuario.getImagen());
+        values.put(DBConstants.TABLE_USUARIO_IMAGEN, usuario.getIdImagen());
         values.put(DBConstants.TABLE_USUARIO_VIDAS, usuario.getVidas());
         db.updateRow(DBConstants.TABLE_USUARIO, values, DBConstants.TABLE_USUARIO_ID, Integer.toString(usuario.getID()));
     }

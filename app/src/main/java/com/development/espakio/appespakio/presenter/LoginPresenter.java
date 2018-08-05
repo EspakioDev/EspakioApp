@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
  * Created by Spectre 13-4107la on 05/03/2018.
  */
 
-public class LoginPresenter implements ILoginPresenter{
+public class LoginPresenter implements ILoginPresenter {
 
     private ILoginView loginView;
     private String status;

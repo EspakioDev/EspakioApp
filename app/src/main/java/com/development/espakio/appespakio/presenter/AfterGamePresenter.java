@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
-public class AfterGamePresenter implements IAfterGamePresenter{
+public class AfterGamePresenter implements IAfterGamePresenter {
 
     private IAfterGameView afterGameView;
     private tblAvance tablaAvance;
@@ -33,16 +33,17 @@ public class AfterGamePresenter implements IAfterGamePresenter{
         avance = tablaAvance.getNivelJuego(idJuego);
         afterGameView.chargeValues(avance.getPuntaje());
         if (avance.checkPuntaje(score)) {
-            avance.checkLogro();
+            if (avance.checkLogro())
+                afterGameView.newAward(avance.getLogro());
             tablaAvance.setAvance(avance);
             afterGameView.newScore();
-            //saveProgress();
+            saveProgress();
         }
     }
 
     public void saveProgress() {
         BackgroundWorker worker = new BackgroundWorker();
-        worker.execute("setProgress", avance.getID()+"", avance.checkLogro()+"", avance.getPuntaje()+"");
+        worker.execute("setProgress", avance.getID()+"", avance.getLogro()+"", avance.getPuntaje()+"");
         try {
             String result = worker.get();
             JSONObject jsonObject = new JSONObject(result);

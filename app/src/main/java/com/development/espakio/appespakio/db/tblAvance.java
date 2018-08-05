@@ -6,7 +6,6 @@ import android.database.Cursor;
 
 import com.development.espakio.appespakio.model.Avance;
 
-
 import java.util.Vector;
 
 public class tblAvance {

@@ -90,6 +90,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:padding="10dp"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/menuUsu_imgUsuarioTres"
         app:srcCompat="@drawable/img_usuarioplus"
         tools:layout_editor_absoluteY="256dp" />

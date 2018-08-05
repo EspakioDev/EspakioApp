@@ -1,14 +1,10 @@
 package com.development.espakio.appespakio.activities;
-import com.development.espakio.appespakio.R;
-import com.development.espakio.appespakio.presenter.AfterGamePresenter;
-import com.development.espakio.appespakio.view.IAfterGameView;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -18,7 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AfterGame extends AppCompatActivity implements View.OnClickListener, IAfterGameView{
+import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.presenter.AfterGamePresenter;
+import com.development.espakio.appespakio.view.IAfterGameView;
+
+public class AfterGame extends AppCompatActivity implements View.OnClickListener, IAfterGameView {
 
     private MediaPlayer mp;
     private Button btnAceptar;
@@ -32,8 +32,11 @@ public class AfterGame extends AppCompatActivity implements View.OnClickListener
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        pantallaCompleta();
         setContentView(R.layout.activity_after_game);
+
 
         mp = MediaPlayer.create(this, R.raw.win);
 
@@ -48,6 +51,7 @@ public class AfterGame extends AppCompatActivity implements View.OnClickListener
         rlBoton = (RelativeLayout) findViewById(R.id.rlBoton);
         uptodown = AnimationUtils.loadAnimation(this, R.anim.uptodown);
         downtoup = AnimationUtils.loadAnimation(this, R.anim.downtoup);
+
         rlTrofeo.setAnimation(uptodown);
         rlFelicidades.setAnimation(uptodown);
         rlPuntajes.setAnimation(downtoup);
@@ -55,17 +59,16 @@ public class AfterGame extends AppCompatActivity implements View.OnClickListener
 
 
         Bundle bundle = getIntent().getExtras();
-        correct = bundle.getInt("correctos");
-        nomJuego = bundle.getInt("juego");      // ------------- DE QUE JUEGO VIENE  -------------------
-        for (int i = 0; i<=correct; i++){
-
-            txtCorrectas.setText(String.valueOf(i));
-
+        if(bundle != null) {
+            correct = bundle.getInt("correctos");
+            nomJuego = bundle.getInt("juego");
         }
+          // ------------- DE QUE JUEGO VIENE  -------------------
+        txtCorrectas.setText(correct + "");
+
         mp.start();
 
         btnAceptar.setOnClickListener(this);
-
         afterGamePresenter = new AfterGamePresenter(this, getApplicationContext());
         afterGamePresenter.checkScore(nomJuego, correct);
     }
@@ -99,7 +102,7 @@ public class AfterGame extends AppCompatActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnAceptar:
-                startActivity( new Intent(AfterGame.this, MenuJuegos.class));
+                //startActivity( new Intent(AfterGame.this, MenuJuegos.class));
                 overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
                 finish();
                 break;
@@ -114,6 +117,11 @@ public class AfterGame extends AppCompatActivity implements View.OnClickListener
     @Override
     public void newScore() {
         Toast.makeText(this, "Superaste tu puntuación!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void newAward(int logro) {
+        Toast.makeText(this, "Lograste nivel " + logro, Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -2,10 +2,6 @@ package com.development.espakio.appespakio.db;
 
 import android.os.AsyncTask;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -71,6 +67,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                     post_data = URLEncoder.encode("idAvance", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"
                             + URLEncoder.encode("logros", "UTF-8")+"="+URLEncoder.encode(strings[2], "UTF-8")+"&"
                             + URLEncoder.encode("puntaje", "UTF-8")+"="+URLEncoder.encode(strings[3], "UTF-8");
+                    break;
+                case "getTest":
+                    post_data = URLEncoder.encode("idUsuario", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"
+                            + URLEncoder.encode("fecha", "UTF-8")+"="+URLEncoder.encode(strings[2], "UTF-8");
                     break;
                 case "setImage":
                     post_data = URLEncoder.encode("idUsuario", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"

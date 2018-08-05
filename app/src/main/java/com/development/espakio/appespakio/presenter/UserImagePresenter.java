@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.development.espakio.appespakio.view.IUserImageView;
 
-public class UserImagePresenter implements IUserImagePresenter{
+public class UserImagePresenter implements IUserImagePresenter {
 
     private Context context;
     private SharedPreferences preferences;

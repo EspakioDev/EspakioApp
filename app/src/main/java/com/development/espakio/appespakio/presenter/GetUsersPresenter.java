@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
  * Created by Spectre 13-4107la on 08/03/2018.
  */
 
-public class GetUsersPresenter implements IGetUsersPresenter{
+public class GetUsersPresenter implements IGetUsersPresenter {
 
     private IGetUsersView getUsersView;
     private Vector<Usuario> users;

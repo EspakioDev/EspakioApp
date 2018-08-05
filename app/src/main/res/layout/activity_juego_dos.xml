@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_espakio"
+    tools:context=".activities.JuegoDos">
+
+    <RelativeLayout
+        android:id="@+id/rlHead"
+        android:layout_width="314dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgPausa"
+            android:layout_width="95dp"
+            android:layout_height="107dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@drawable/ic_pausa"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationTime"
+            android:layout_width="95dp"
+            android:layout_height="107dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.017"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="Timer.json"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_loop="false" />
+
+        <TextView
+            android:id="@+id/txtTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/animationTime"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:text="00:60"
+            android:textColor="@color/Blanco"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/txtDesc"
+        android:layout_width="314dp"
+        android:layout_height="230dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlHeadDos">
+
+        <ImageView
+            android:id="@+id/imgPicture"
+            android:layout_width="266dp"
+            android:layout_height="223dp"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_astronauta" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/transicion"
+            android:layout_width="269dp"
+            android:layout_height="219dp"
+            android:layout_centerInParent="true"
+            app:layout_constraintEnd_toEndOf="@+id/imgPicture"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="@+id/imgPicture"
+            app:layout_constraintTop_toTopOf="@+id/imgPicture"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="transicion.json"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_loop="false" />
+
+        <ImageView
+            android:id="@+id/imgUno"
+            android:layout_width="150sp"
+            android:layout_height="160sp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="42dp"
+            app:srcCompat="@drawable/ic_insignia002_" />
+
+        <ImageView
+            android:id="@+id/imgDos"
+            android:layout_width="150sp"
+            android:layout_height="160sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/imgUno"
+            app:srcCompat="@drawable/ic_insignia002_" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlBottom"
+        android:layout_width="314dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="44dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDesc"
+        app:layout_constraintVertical_bias="0.25">
+
+        <Button
+            android:id="@+id/btnSi"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btnstyle_amarillo"
+            android:text="Si"
+            android:textColor="@color/Blanco" />
+
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/btnstyle_amarillo"
+            android:text="No "
+            android:textColor="@color/Blanco" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlHeadDos"
+        android:layout_width="314dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlHead">
+
+        <TextView
+            android:id="@+id/txtPregunta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="¿Esta imagen es igual a..."
+            android:textColor="@color/Blanco"
+            android:textSize="25sp" />
+
+
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>

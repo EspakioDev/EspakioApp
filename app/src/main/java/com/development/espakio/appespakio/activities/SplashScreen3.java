@@ -1,13 +1,11 @@
 package com.development.espakio.appespakio.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 
 import com.development.espakio.appespakio.R;
@@ -23,7 +21,7 @@ public class SplashScreen3 extends AppCompatActivity {
             public void run() {
 
                 startActivity(new Intent(SplashScreen3.this, MenuJuegos.class));
-                overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
                 finish();
 
             }

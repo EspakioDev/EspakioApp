@@ -1,5 +1,4 @@
 package com.development.espakio.appespakio.activities;
-import com.development.espakio.appespakio.R;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -7,23 +6,23 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.airbnb.lottie.LottieAnimationView;
+import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.presenter.ConfiguracionPresenter;
 
 public class JuegoUno extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,8 +30,9 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
     int juego = 1;
     //
     //Musica
+    boolean conMusica, conSonido;
+    ConfiguracionPresenter configuracionPresenter;
     MediaPlayer msIncorrecto, msCorrecto, fondo, fondo2, fondo3,fondo4, go, nivelPasado;
-
     //
 
     //Interfaz
@@ -57,6 +57,8 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
     int points = 0;
     int psBandera = 0, revDialog = 0;
     boolean notsame = false;
+    boolean Prube = true;
+    int idJuego = 5;
     //
 
     //Animacion Timer
@@ -65,26 +67,26 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
     //Popups
     Dialog pausapopup, inicioJuego, nivelAnim;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego_uno);
         pantallaCompleta();
 
+        //Configuracion
+        configuracionPresenter = new ConfiguracionPresenter(this);
+        conMusica = configuracionPresenter.getConfig_Musica();
+        conSonido = configuracionPresenter.getConfig_Sonido();
+
         //Musica del Juego
         msIncorrecto = MediaPlayer.create(this, R.raw.botonsound);
         msCorrecto = MediaPlayer.create(this, R.raw.correct);
+        nivelPasado = MediaPlayer.create(this, R.raw.nuevo_nivel);
+        go = MediaPlayer.create(this, R.raw.go);
         fondo = MediaPlayer.create(this, R.raw.sonido_fondo);
         fondo2 = MediaPlayer.create(this, R.raw.sonido_fondo_niveldos);
         fondo3 = MediaPlayer.create(this, R.raw.sonido_fondo_niveltres);
         fondo4 = MediaPlayer.create(this, R.raw.sonido_fondo_nivelfinal);
-        nivelPasado = MediaPlayer.create(this, R.raw.nuevo_nivel);
-        go = MediaPlayer.create(this, R.raw.go);
-
-
         //
 
 
@@ -106,8 +108,6 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         btnSame.setEnabled(false);
         //
 
-
-
         //Animacion Interfaz
         l1 = (RelativeLayout) findViewById(R.id.rlHead);
         l2 = (RelativeLayout) findViewById(R.id.rlBotones);
@@ -117,8 +117,6 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         l2.setVisibility(View.GONE);
         l3.setVisibility(View.GONE);
         btnSame.setVisibility(View.GONE);
-
-
 
         //Dialog
         pausapopup = new Dialog(this);
@@ -134,14 +132,6 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         downtoup = AnimationUtils.loadAnimation(this, R.anim.downtoup);
 
         //
-
-
-        //Juego
-        procesoAleatorio();
-
-
-
-
 
         pausa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +156,37 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Prube = false;
+        Intent intent = new Intent(JuegoUno.this,MenuJuegos.class);
+        startActivity(intent);
+        fondo.reset();
+        fondo2.reset();
+        fondo3.reset();
+        fondo4.reset();
+        finish();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(psBandera == 0){
+            animationView.pauseAnimation();
+            psBandera = 1;
+            timeRunning = false;
+            starStop();
+            showpopup(new View(this));
+        }else if(psBandera == 1){
+            animationView.playAnimation();
+            psBandera = 0;
+            timeRunning = true;
+            starStop();
+        }
+
+    }
+
     public void showpopup(View v){
         Button btnReanudar, btnReiniciar, btnInicio;
         pausapopup.setContentView(R.layout.pausapopup);
@@ -175,6 +196,7 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         btnInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Prube = false;
                 //Intent intent = new Intent(JuegoUno.this,MenuJuegos.class);
                 //startActivity(intent);
                 fondo.reset();
@@ -187,6 +209,7 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         btnReiniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Prube = false;
                 Intent intent = new Intent(JuegoUno.this,JuegoUno.class);
                 startActivity(intent);
                 fondo.reset();
@@ -220,26 +243,37 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
 
     public void showpopupdos(View v){
 
-        go.start();
-        inicioJuego.setContentView(R.layout.inicio_juegos);
-        inicioJuego.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        inicioJuego.show();
-
         new Handler().postDelayed(new Runnable(){
             public void run(){
-                l1.setVisibility(View.VISIBLE);
-                l2.setVisibility(View.VISIBLE);
-                l3.setVisibility(View.VISIBLE);
-                l1.setAnimation(uptodown);
-                l2.setAnimation(downtoup);
-                l3.setAnimation(uptodown);
-                inicioJuego.cancel();
-                animationView.playAnimation();
-                go.pause();
-                starStop();
-                fondo.start();
+
+                inicioJuego.setContentView(R.layout.inicio_juegos);
+                inicioJuego.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                inicioJuego.show();
+                if(conSonido)
+                    go.start();
+
+                new Handler().postDelayed(new Runnable(){
+                    public void run(){
+                        l1.setVisibility(View.VISIBLE);
+                        l2.setVisibility(View.VISIBLE);
+                        l3.setVisibility(View.VISIBLE);
+                        l1.setAnimation(uptodown);
+                        l2.setAnimation(downtoup);
+                        l3.setAnimation(uptodown);
+                        inicioJuego.cancel();
+                        animationView.playAnimation();
+                        go.pause();
+                        starStop();
+                        if(conMusica)
+                            fondo.start();
+                        starGame();
+                        pantallaCompleta();
+                    };
+                }, 6000);
             };
-        }, 6000);
+        }, 2000);
+
+
 
     }
 
@@ -252,8 +286,8 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         starStop();
         //
 
-
-        nivelPasado.start();
+        if(conSonido)
+            nivelPasado.start();
         if(nivel == 1){
             //Detenemos Musica
             fondo.reset();
@@ -284,11 +318,11 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
                 timeRunning = true;
                 starStop();
                 //
-                if(nivel == 1){
+                if(nivel == 1 && conMusica==true){
                     fondo2.start();
-                } else if (nivel == 2){
+                } else if (nivel == 2 && conMusica==true){
                     fondo3.start();
-                } else if(nivel == 3){
+                } else if(nivel == 3 && conMusica==true){
                     fondo4.start();
                 }
                 nivelAnim.cancel();
@@ -357,18 +391,23 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         if(segundos < 10) leftTime += "0";
         leftTime += segundos;
 
-        if(segundos == 1){
-            Intent intent = new Intent(JuegoUno.this,AfterGame.class);
-            intent.putExtra("correctos", points);
-            intent.putExtra("juego", juego);
-            startActivity(intent);
-            overridePendingTransition(R.anim.left_in, R.anim.left_out);
-            fondo.reset();
-            fondo2.reset();
-            fondo3.reset();
-            fondo4.reset();
-            finish();
+        if(Prube == true){
+            if(segundos == 55){
+                Prube = false;
+                Intent intent = new Intent(this,AfterGame.class);
+                intent.putExtra("correctos", points);
+                intent.putExtra("juego", idJuego);
+                startActivity(intent);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                fondo.reset();
+                fondo2.reset();
+                fondo3.reset();
+                fondo4.reset();
+                finish();
+            }
         }
+
+
 
         txtTimer.setText(leftTime);
 
@@ -427,23 +466,34 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
     }
 
     void revisarNievel(){
-        if (points == 5 && revDialog == 0){
+        if (points == 5 && nivel == 0){
             nivel = 1;
-            revDialog = 1;
             showpopupNiveles(new View(this));
-        }else if(points == 10 && revDialog == 1){
+        }else if(points == 10 && nivel == 1){
             nivel = 2;
-            revDialog = 2;
             showpopupNiveles(new View(this));
         }
-        else if(points == 15 && revDialog == 2){
-
+        else if(points == 15 && nivel == 2){
             nivel = 3;
             showpopupNiveles(new View(this));
-            btnSame.setVisibility(new View(this).VISIBLE);
+            btnSame.setVisibility(View.VISIBLE);
             btnSame.setEnabled(true);
-
         }
+    }
+
+    void starGame(){
+
+        revisarNievel();
+        procesoAleatorio();
+    }
+
+    void cleanVariables(){
+        numUno = 0;
+        numDos = 0;
+        numOprA = 0;
+        numOprA2 = 0;
+        numOprB = 0;
+        numOprB2 = 0;
     }
 
 
@@ -453,108 +503,136 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
         revisarNievel();
         switch (view.getId()) {
             case R.id.btnUno:
+                btnUno.setBackgroundResource(R.drawable.btnstyle);
+                btnUno.setTextColor(getResources().getColor(R.color.Espacio));
                 if(nivel == 1 || nivel == 2){
                     if(numUno > numDos){
-                        msCorrecto.start();
+                        if(conSonido)
+                            msCorrecto.start();
+                        txtPregunta.setText("¡ CORRECTO !");
                         points++;
-                        numUno = 0;
-                        numDos = 0;
-                        procesoAleatorio();
                     }else if(numUno < numDos){
-                        msIncorrecto.start();
-                        numUno = 0;
-                        numDos = 0;
-                        procesoAleatorio();
+                        if(conSonido)
+                            msIncorrecto.start();
+                        txtPregunta.setText("¡ INCORRECTO !");
                     }
+
+                    new Handler().postDelayed(new Runnable(){
+                        public void run(){
+                            txtPregunta.setText("¿Cúal número es el más grande?");
+                            btnUno.setBackgroundResource(R.drawable.btnstyle_amarillo);
+                            btnUno.setTextColor(getResources().getColor(R.color.Blanco));
+                            cleanVariables();
+                            starGame();
+                        };
+                    }, 1000);
+
                 }else if(nivel == 3) {
                     if (numOprA + numOprA2 > numOprB + numOprB2) {
-                        msCorrecto.start();
+                        if(conSonido)
+                            msCorrecto.start();
+                        txtPregunta.setText("¡ CORRECTO !");
                         points++;
-                        numOprA = 0;
-                        numOprA2 = 0;
-                        numOprB = 0;
-                        numOprB2 = 0;
-                        procesoAleatorio();
                     } else if (numOprA + numOprA2 < numOprB + numOprB2) {
-                        msIncorrecto.start();
-                        numOprA = 0;
-                        numOprA2 = 0;
-                        numOprB = 0;
-                        numOprB2 = 0;
-                        procesoAleatorio();
+                        if(conSonido)
+                            msIncorrecto.start();
+                        txtPregunta.setText("¡ INCORRECTO !");
                     } else if ((numOprA + numOprA2) == (numOprB + numOprB2)) {
-                        msIncorrecto.start();
-                        points++;
-                        numOprA = 0;
-                        numOprA2 = 0;
-                        numOprB = 0;
-                        numOprB2 = 0;
-                        procesoAleatorio();
+                        if(conSonido)
+                            msCorrecto.start();
+                        txtPregunta.setText("¡ SON IGUALES !");
                     }
+
+                    new Handler().postDelayed(new Runnable(){
+                        public void run(){
+                            txtPregunta.setText("¿Cual de las dos sumas dan el resultado mas grande?");
+                            btnUno.setBackgroundResource(R.drawable.btnstyle_amarillo);
+                            btnUno.setTextColor(getResources().getColor(R.color.Blanco));
+                            cleanVariables();
+                            starGame();
+                        };
+                    }, 1000);
                 }
                 break;
             case R.id.btnDos:
+                btnDos.setBackgroundResource(R.drawable.btnstyle);
+                btnDos.setTextColor(getResources().getColor(R.color.Espacio));
                 if(nivel == 1 || nivel == 2){
                     if(numUno < numDos){
-                        msCorrecto.start();
+                        if(conSonido)
+                            msCorrecto.start();
+                        txtPregunta.setText("¡ CORRECTO !");
                         points++;
-                        numUno = 0;
-                        numDos = 0;
-                        procesoAleatorio();
                     }else if(numUno > numDos){
-                        msIncorrecto.start();
-                        numUno = 0;
-                        numDos = 0;
-                        procesoAleatorio();
+                        if(conSonido)
+                            msIncorrecto.start();
+                        txtPregunta.setText("¡ INCORRECTO !");
                     }
+
+                    new Handler().postDelayed(new Runnable(){
+                        public void run(){
+                            txtPregunta.setText("¿Cúal número es el más grande?");
+                            btnDos.setBackgroundResource(R.drawable.btnstyle_amarillo);
+                            btnDos.setTextColor(getResources().getColor(R.color.Blanco));
+                            cleanVariables();
+                            starGame();
+                        };
+                    }, 1000);
+
                 }else if(nivel == 3) {
                     if (numOprA + numOprA2 < numOprB + numOprB2) {
-                        msCorrecto.start();
+                        if(conSonido)
+                            msCorrecto.start();
+                        txtPregunta.setText("¡ CORRECTO !");
                         points++;
-                        numOprA = 0;
-                        numOprA2 = 0;
-                        numOprB = 0;
-                        numOprB2 = 0;
-                        procesoAleatorio();
                     } else if (numOprA + numOprA2 > numOprB + numOprB2) {
-                        msIncorrecto.start();
-                        numOprA = 0;
-                        numOprA2 = 0;
-                        numOprB = 0;
-                        numOprB2 = 0;
-                        procesoAleatorio();
+                        if(conSonido)
+                            msIncorrecto.start();
+                        txtPregunta.setText("¡ INCORRECTO !");
                     } else if ((numOprA + numOprA2) == (numOprB + numOprB2)) {
-                        msIncorrecto.start();
-                        points++;
-                        numOprA = 0;
-                        numOprA2 = 0;
-                        numOprB = 0;
-                        numOprB2 = 0;
-                        procesoAleatorio();
+                        if(conSonido)
+                            msCorrecto.start();
+                        txtPregunta.setText("¡ SON IGUALES !");
                     }
+
+                    new Handler().postDelayed(new Runnable(){
+                        public void run(){
+                            txtPregunta.setText("¿Cual de las dos sumas dan el resultado mas grande?");
+                            btnDos.setBackgroundResource(R.drawable.btnstyle_amarillo);
+                            btnDos.setTextColor(getResources().getColor(R.color.Blanco));
+                            cleanVariables();
+                            starGame();
+                        };
+                    }, 1000);
                 }
                 break;
+
             case R.id.btnSame:
-                if ((numOprA + numOprA2) == (numOprB + numOprB2)){
-                    msCorrecto.start();
-                    points++;
-                    numOprA = 0;
-                    numOprA2 = 0;
-                    numOprB = 0;
-                    numOprB2 = 0;
-                    procesoAleatorio();
-                }else {
-                    msIncorrecto.start();
-                    numOprA = 0;
-                    numOprA2 = 0;
-                    numOprB = 0;
-                    numOprB2 = 0;
-                    procesoAleatorio();
+                btnSame.setBackgroundResource(R.drawable.btnstyle_amarillo);
+                btnSame.setTextColor(getResources().getColor(R.color.Blanco));
+                if(nivel == 3){
+                    if ((numOprA + numOprA2) == (numOprB + numOprB2)) {
+                        if(conSonido)
+                            msCorrecto.start();
+                        points++;
+                        txtPregunta.setText("¡ CORRECTO !");
+                    }else {
+                        if(conSonido)
+                            msIncorrecto.start();
+                        txtPregunta.setText("¡ INCORRECTO !");
+                    }
+
+                    new Handler().postDelayed(new Runnable(){
+                        public void run(){
+                            txtPregunta.setText("¿Cual de las dos sumas dan el resultado mas grande?");
+                            btnSame.setBackgroundResource(R.drawable.btnstyle);
+                            btnSame.setTextColor(getResources().getColor(R.color.Espacio));
+                            cleanVariables();
+                            starGame();
+                        };
+                    }, 1000);
                 }
-
                 break;
-
-
         }
     }
 }

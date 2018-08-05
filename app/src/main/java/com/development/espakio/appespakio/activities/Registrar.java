@@ -2,8 +2,8 @@ package com.development.espakio.appespakio.activities;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -15,7 +15,7 @@ import com.development.espakio.appespakio.R;
 import com.development.espakio.appespakio.presenter.RegisterPresenter;
 import com.development.espakio.appespakio.view.IRegisterView;
 
-public class Registrar extends AppCompatActivity implements View.OnClickListener, IRegisterView{
+public class Registrar extends AppCompatActivity implements View.OnClickListener, IRegisterView {
 
     private Button btnAceptar;
     private TextView tvRegresar;

@@ -7,7 +7,7 @@ import com.development.espakio.appespakio.db.tblAvance;
 import com.development.espakio.appespakio.model.Avance;
 import com.development.espakio.appespakio.view.IGameView;
 
-public class GamePresenter implements IGamePresenter{
+public class GamePresenter implements IGamePresenter {
     private IGameView gameView;
     private SharedPreferences preferences;
     private tblAvance tablaAvance;

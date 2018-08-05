@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
  * Created by Spectre 13-4107la on 15/03/2018.
  */
 
-public class NewUserPresenter implements INewUserPresenter{
+public class NewUserPresenter implements INewUserPresenter {
 
     private INewUserView newUserView;
     private String status;
@@ -49,7 +49,7 @@ public class NewUserPresenter implements INewUserPresenter{
     @Override
     public void performChargeImage() {
         idImagen = isAlredySelectImageUser();
-        newUserView.putUserImage(idImagen);
+        newUserView.putUserImage(Constants.ID_IMAGEN[idImagen]);
     }
 
     @Override
@@ -58,13 +58,13 @@ public class NewUserPresenter implements INewUserPresenter{
             newUserView.newUserEmptyFields();
 
         } else {
-            registerUser(userName, birthday, idImagen);
+            registerUser(userName, birthday);
             if(onFailed()) {
                 newUserView.Failed();
             } else if (onError()) {
                 newUserView.Error();
             } else {
-                onSuccess(userName, birthday, idImagen);
+                onSuccess(userName, birthday);
                 putSelectUserPreference();
                 newUserView.idUsuario(idUsuario);
                 newUserView.newUserSuccess();
@@ -78,14 +78,14 @@ public class NewUserPresenter implements INewUserPresenter{
         return false;
     }
 
-    private void registerUser(String userName, String birthday, int imagen) {
+    private void registerUser(String userName, String birthday ) {
         String type = "newUser";
         BackgroundWorker worker = new BackgroundWorker();
 
         tblCliente tablaCliente = new tblCliente(context);
         idCliente = tablaCliente.getClient().getID();
 
-        worker.execute(type,  userName, birthday, Integer.toString(idCliente), Integer.toString(imagen), Integer.toString(Constants.VIDAS), Integer.toString(iJuegos));
+        worker.execute(type,  userName, birthday, Integer.toString(idCliente), Integer.toString(idImagen), Integer.toString(Constants.VIDAS), Integer.toString(iJuegos));
 
         try {
             String result = worker.get();
@@ -116,10 +116,10 @@ public class NewUserPresenter implements INewUserPresenter{
         return false;
     }
 
-    private void onSuccess(String userName, String birthday, int imagen) {
+    private void onSuccess(String userName, String birthday) {
         tblUsuarios tablaUsuario = new tblUsuarios(context);
         tblAvance tablaAvance = new tblAvance(context);
-        Usuario user = new Usuario(idUsuario, userName, birthday, imagen, idCliente);
+        Usuario user = new Usuario(idUsuario, userName, birthday, idImagen, idCliente);
 
         for (int i = 0; i < iJuegos; i++) {
             tablaAvance.insertAvance(new Avance(idsJuegos[i], i));
@@ -136,8 +136,6 @@ public class NewUserPresenter implements INewUserPresenter{
     }
 
     private int isAlredySelectImageUser() {
-        int idImage = preferences.getInt("ImageUser", Constants.IMAGEN_DEFAULT);
-        preferences.edit().remove("ImageUser").commit();
-        return idImage;
+        return preferences.getInt("ImageUser", Constants.IMAGEN_DEFAULT);
     }
 }

@@ -22,46 +22,49 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.development.espakio.appespakio.R;
+import com.development.espakio.appespakio.presenter.ConfiguracionPresenter;
 
 public class JuegoTres extends AppCompatActivity implements View.OnClickListener {
 
-    //Nombre del Juego
-    int juego = 0;
 
     //Interfaz del Juego
-    private TextView txtColor;
-    private ImageView btnPausa,imgColor, btnUno, btnDos;
+    TextView txtColor;
+    ImageView btnPausa,imgColor, btnUno, btnDos;
     //
 
     //Animacion Interfaz
-    private Animation uptodown, downtoup;
-    private RelativeLayout head, body, bottom;
+    Animation uptodown, downtoup;
+    RelativeLayout head, body, bottom;
     //
 
     //Timer
-    private TextView txtTimer, txtNivel;
-    private CountDownTimer timer;
-    private long timeleftinMilliseconds = 60000;
-    private boolean timeRunning = true;
-    private int psBandera = 0;
-    private LottieAnimationView animationView; //Lottie Time Animation
+    TextView txtTimer, txtNivel;
+    CountDownTimer timer;
+    long timeleftinMilliseconds = 60000;
+    boolean timeRunning = true;
+    int psBandera = 0;
+    LottieAnimationView animationView; //Lottie Time Animation
     //
 
     //Musica
-    private MediaPlayer msIncorrecto, msCorrecto, fondo, fondo2, fondo3,fondo4, go, nivelPasado;
+    boolean conMusica, conSonido;
+    ConfiguracionPresenter configuracionPresenter;
+    MediaPlayer msIncorrecto, msCorrecto, fondo, fondo2, fondo3,fondo4, go, nivelPasado;
     //
 
     //Dialogs
-    private Dialog pausapopup, inicioJuegopopup, nivelAnim;
+    Dialog pausapopup, inicioJuegopopup, nivelAnim;
     //
 
     //Juego
-    private int correctas;
-    private String[] colores = {"AZUL", "ROJO", "GRIS", "VERDE", "NEGR0", "AMARILLO","MORADO", "ROSA", "NARANJA" };
-    private int[] imgColores = {R.drawable.ic_planetaazul, R.drawable.ic_planetarojo, R.drawable.ic_planetagris, R.drawable.ic_planetaverde, R.drawable.ic_planetanegro, R.drawable.ic_planetaamarillo, R.drawable.ic_planetamorado, R.drawable.ic_planetarosa, R.drawable.ic_planetanaranja};
-    private int posColor = 0 , posRandom = 0, posboton = 0, correcta = 0, points = 0, nivel = 0;
-    private int[] colors;
-    private boolean notsmame = false;
+    int correctas;
+    String[] colores = {"AZUL", "ROJO", "GRIS", "VERDE", "NEGR0", "AMARILLO","MORADO", "ROSA", "NARANJA" };
+    int[] imgColores = {R.drawable.ic_planetaazul, R.drawable.ic_planetarojo, R.drawable.ic_planetagris, R.drawable.ic_planetaverde, R.drawable.ic_planetanegro, R.drawable.ic_planetaamarillo, R.drawable.ic_planetamorado, R.drawable.ic_planetarosa, R.drawable.ic_planetanaranja};
+    int posColor = 0 , posRandom = 0, posboton = 0, correcta = 0, points = 0, nivel = 0;
+    int[] colors;
+    boolean notsmame = false;
+    int idJuego = 2;
+    boolean Prube = true;
     //
 
     @Override
@@ -85,13 +88,15 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
 
         //Animacion Interfaz
         head = (RelativeLayout) findViewById(R.id.rlHead);
-        body = (RelativeLayout) findViewById(R.id.rlBody);
+        body = (RelativeLayout) findViewById(R.id.txtDesc);
         bottom = (RelativeLayout) findViewById(R.id.rlBottom);
         uptodown = AnimationUtils.loadAnimation(this, R.anim.uptodown);
         downtoup = AnimationUtils.loadAnimation(this, R.anim.downtoup);
-        head.setAnimation(uptodown);
-        body.setAnimation(downtoup);
-        bottom.setAnimation(downtoup);
+
+        head.setVisibility(View.GONE);
+        body.setVisibility(View.GONE);
+        bottom.setVisibility(View.GONE);
+
         //
 
         //Timer
@@ -105,6 +110,11 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
         nivelAnim = new Dialog(this);
 
         //
+
+        //Configuracion
+        configuracionPresenter = new ConfiguracionPresenter(this);
+        conMusica = configuracionPresenter.getConfig_Musica();
+        conSonido = configuracionPresenter.getConfig_Sonido();
 
         //Musica
         msIncorrecto = MediaPlayer.create(this, R.raw.botonsound);
@@ -145,6 +155,34 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(JuegoTres.this,MenuJuegos.class);
+        startActivity(intent);
+        fondo.reset();
+        fondo2.reset();
+        fondo3.reset();
+        fondo4.reset();
+        finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(psBandera == 0){
+            animationView.pauseAnimation();
+            psBandera = 1;
+            timeRunning = false;
+            starStop();
+            showpopup(new View(this));
+        }else if(psBandera == 1){
+            animationView.playAnimation();
+            psBandera = 0;
+            timeRunning = true;
+            starStop();
+        }
+    }
+
     void pantallaCompleta(){
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -173,8 +211,9 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
         btnInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(JuegoTres.this,MenuJuegos.class);
-                startActivity(intent);
+                Prube = false;
+                //Intent intent = new Intent(JuegoTres.this,MenuJuegos.class);
+                //startActivity(intent);
                 fondo.reset();
                 fondo2.reset();
                 fondo3.reset();
@@ -185,6 +224,7 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
         btnReiniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Prube = false;
                 Intent intent = new Intent(JuegoTres.this,JuegoTres.class);
                 startActivity(intent);
                 fondo.reset();
@@ -214,20 +254,35 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
     //Intro Juego
     public void showpopupdos(View v){
 
-        go.start();
-        inicioJuegopopup.setContentView(R.layout.inicio_juegos);
-        inicioJuegopopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        inicioJuegopopup.show();
-
         new Handler().postDelayed(new Runnable(){
             public void run(){
-                inicioJuegopopup.cancel();
-                animationView.playAnimation();
-                go.pause();
-                starStop();
-                fondo.start();
+
+                inicioJuegopopup.setContentView(R.layout.inicio_juegos);
+                inicioJuegopopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                inicioJuegopopup.show();
+                if(conSonido)
+                    go.start();
+
+                new Handler().postDelayed(new Runnable(){
+                    public void run(){
+                        head.setVisibility(View.VISIBLE);
+                        body.setVisibility(View.VISIBLE);
+                        bottom.setVisibility(View.VISIBLE);
+                        head.setAnimation(uptodown);
+                        body.setAnimation(downtoup);
+                        bottom.setAnimation(downtoup);
+                        inicioJuegopopup.cancel();
+                        animationView.playAnimation();
+                        go.pause();
+                        starStop();
+                        if(conMusica)
+                            fondo.start();
+                        pantallaCompleta();
+                    };
+                }, 6000);
             };
-        }, 6000);
+        }, 2000);
+
 
     }
 
@@ -241,7 +296,8 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
         starStop();
         //
 
-        nivelPasado.start();
+        if(conSonido)
+            nivelPasado.start();
         if(nivel == 1){
             //Detenemos Musica
             fondo.reset();
@@ -270,14 +326,15 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
                 timeRunning = true;
                 starStop();
                 //
-                if(nivel == 1){
+                if(nivel == 1 && conMusica==true){
                     fondo2.start();
-                } else if (nivel == 2){
+                } else if (nivel == 2 && conMusica==true){
                     fondo3.start();
-                } else if(nivel == 3){
+                } else if(nivel == 3 && conMusica==true){
                     fondo4.start();
                 }
                 nivelAnim.cancel();
+                pantallaCompleta();
             };
         }, 3000);
     }
@@ -324,18 +381,22 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
         if(segundos < 10) leftTime += "0";
         leftTime += segundos;
 
-        if(segundos == 2){
-            Intent intent = new Intent(JuegoTres.this,AfterGame.class);
-            intent.putExtra("correctos", points);
-            intent.putExtra("juego", juego);
-            startActivity(intent);
-            overridePendingTransition(R.anim.left_in, R.anim.left_out);
-            fondo.reset();
-            fondo2.reset();
-            fondo3.reset();
-            fondo4.reset();
-            finish();
+        if(Prube == true){
+            if(segundos == 2){
+                Intent intent = new Intent(JuegoTres.this,AfterGame.class);
+                intent.putExtra("correctos", points);
+                intent.putExtra("juego", idJuego);
+                startActivity(intent);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                fondo.reset();
+                fondo2.reset();
+                fondo3.reset();
+                fondo4.reset();
+                finish();
+            }
         }
+
+
 
         txtTimer.setText(leftTime);
 
@@ -393,14 +454,14 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
 
     //Revisa los aciertos
     void revisarNievel(){
-        if (points == 15){
+        if (points == 15 && nivel == 0){
             nivel = 1;
             showpopupNiveles(new View(this));
-        }else if(points == 30){
+        }else if(points == 30 && nivel == 1){
             nivel = 2;
             showpopupNiveles(new View(this));
         }
-        else if(points == 60){
+        else if(points == 60 && nivel == 2){
             nivel = 3;
             showpopupNiveles(new View(this));
         }
@@ -415,13 +476,16 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
         switch (view.getId()){
             case R.id.imgUno:
                 if(posColor == posRandom){
-                    msCorrecto.start();
+                    if (conSonido)
+                        msCorrecto.start();
                     points++;
                 }else if(posboton == 1 && correcta == 1){
-                    msCorrecto.start();
+                    if (conSonido)
+                        msCorrecto.start();
                     points++;
                 }else {
-                    msIncorrecto.start();
+                    if (conSonido)
+                        msIncorrecto.start();
                 }
 
                 posColor = 0;
@@ -434,13 +498,16 @@ public class JuegoTres extends AppCompatActivity implements View.OnClickListener
                 break;
             case R.id.imgDos:
                 if(posColor == posRandom){
-                    msCorrecto.start();
+                    if (conSonido)
+                        msCorrecto.start();
                     points++;
                 }else if(posboton == 2 && correcta == 2){
-                    msCorrecto.start();
+                    if (conSonido)
+                        msCorrecto.start();
                     points++;
                 }else {
-                    msIncorrecto.start();
+                    if (conSonido)
+                        msIncorrecto.start();
                 }
 
                 posColor = 0;

@@ -12,7 +12,7 @@ import com.development.espakio.appespakio.view.IGamesMenuView;
  * Created by Spectre 13-4107la on 19/03/2018.
  */
 
-public class GamesMenuPresenter  implements IGamesMenuPresenter{
+public class GamesMenuPresenter  implements IGamesMenuPresenter {
 
     private Context context;
     private SharedPreferences preferences;

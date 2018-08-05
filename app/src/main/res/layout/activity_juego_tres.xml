@@ -7,6 +7,7 @@
     android:background="@drawable/fondo_espakio"
     tools:context=".activities.JuegoTres">
 
+
     <RelativeLayout
         android:id="@+id/rlHead"
         android:layout_width="314dp"
@@ -54,7 +55,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rlBody"
+        android:id="@+id/txtDesc"
         android:layout_width="304dp"
         android:layout_height="227dp"
         android:layout_marginEnd="8dp"
@@ -90,29 +91,38 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rlBody">
+        app:layout_constraintTop_toBottomOf="@+id/txtDesc">
 
         <ImageView
             android:id="@+id/imgUno"
             android:layout_width="140dp"
-            android:layout_height="180dp"
+            android:layout_height="140dp"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="2dp"
             app:srcCompat="@drawable/ic_insignia011" />
 
         <ImageView
             android:id="@+id/imgDos"
             android:layout_width="140dp"
-            android:layout_height="180dp"
+            android:layout_height="140dp"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/imgUno"
             android:layout_marginRight="2dp"
             app:srcCompat="@drawable/ic_insignia013" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Selecciona el color que DICE la palabra"
+            android:textAlignment="center"
+            android:textColor="@color/Blanco"
+            android:textSize="20sp" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

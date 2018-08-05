@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class MyAdapterMenuJuegos extends RecyclerView.Adapter<MyAdapterMenuJuegos.SimpleViewHolder> {
 
     private final Context mContext;

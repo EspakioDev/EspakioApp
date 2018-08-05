@@ -55,8 +55,9 @@
 
     <RelativeLayout
         android:id="@+id/rlBotones"
-        android:layout_width="304dp"
-        android:layout_height="336dp"
+        android:layout_width="314dp"
+        android:layout_height="257dp"
+        android:layout_marginBottom="116dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -108,14 +109,15 @@
 
     <RelativeLayout
         android:id="@+id/rlPregunta"
-        android:layout_width="304dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="314dp"
+        android:layout_height="67dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/rlBotones"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rlHead">
 
@@ -123,9 +125,12 @@
             android:id="@+id/txtPregunta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp"
             android:text="¿Cúal número es el más grande?"
             android:textAlignment="center"
             android:textColor="@color/Blanco"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -3,8 +3,8 @@ package com.development.espakio.appespakio.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -15,10 +15,10 @@ import com.development.espakio.appespakio.R;
 import com.development.espakio.appespakio.presenter.UserPerfilPresenter;
 import com.development.espakio.appespakio.view.IUserPerfilView;
 
-public class UsuarioPerfil extends AppCompatActivity implements View.OnClickListener, IUserPerfilView{
+public class UsuarioPerfil extends AppCompatActivity implements View.OnClickListener, IUserPerfilView {
 
     private TextView txtUsername;
-    private ImageView imgUser, changeUser, changeImage;
+    private ImageView imgUser, changeUser, changeImage, imgGrfica, imgVolver;
     private UserPerfilPresenter perfilPresenter;
 
     @Override
@@ -30,9 +30,13 @@ public class UsuarioPerfil extends AppCompatActivity implements View.OnClickList
         imgUser = (ImageView) findViewById(R.id.perfil_imgUserPerfil);
         changeUser = (ImageView) findViewById(R.id.imgChangeUser);
         changeImage = (ImageView) findViewById(R.id.imgChangeImage);
+        imgGrfica = (ImageView) findViewById(R.id.imgGrfica);
+        imgVolver =(ImageView) findViewById(R.id.imgVolver);
 
         changeUser.setOnClickListener(this);
         changeImage.setOnClickListener(this);
+        imgGrfica.setOnClickListener(this);
+        imgVolver.setOnClickListener(this);
 
         perfilPresenter = new UserPerfilPresenter(this, getApplicationContext());
 
@@ -74,6 +78,12 @@ public class UsuarioPerfil extends AppCompatActivity implements View.OnClickList
             case R.id.imgChangeImage:
                 goToImagesPerfil();
                 break;
+            case R.id.imgGrfica:
+                goToGrafica();
+                break;
+            case R.id.imgVolver:
+                finish();
+                break;
         }
     }
 
@@ -92,6 +102,15 @@ public class UsuarioPerfil extends AppCompatActivity implements View.OnClickList
     public void goToImagesPerfil() {
         startActivity(new Intent(this, ImagenPerfilUsuario.class));
     }
+
+    public void goToGrafica() {
+        startActivity(new Intent(this, Graficas.class));
+    }
+
+    public void goToMenuJuegos() {
+        startActivity(new Intent(this, MenuJuegos.class));
+    }
+
 
     @Override
     public void onSuccesToChangeImage() {

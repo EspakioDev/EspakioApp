@@ -1,6 +1,5 @@
 package com.development.espakio.appespakio.activities;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -16,7 +15,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.development.espakio.appespakio.R;
 import com.development.espakio.appespakio.model.GameInfo;
@@ -119,9 +117,11 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.txtCancelar:
                 desJuego.cancel();
+                pantallaCompleta();
                 break;
             case R.id.btnPlay:
                 selectGame();
+                desJuego.cancel();
                 break;
         }
     }
@@ -138,27 +138,28 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onItemClick(int childPosition, int parentPosition) {
-        Toast.makeText(this, parentPosition + " " + childPosition, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, parentPosition + " " + childPosition, Toast.LENGTH_SHORT).show();
         switch (parentPosition){
             case 0:
                 if(childPosition == 0)
-                    idJuego = 1;
+                    idJuego = 0;
                 if(childPosition == 1)
-                    idJuego = 2;
+                    idJuego = 1;
+
                 break;
             case 1:
                 if(childPosition == 0)
-                    idJuego = 3;
+                    idJuego = 2;
                 if(childPosition == 1)
-                    idJuego = 4;
+                    idJuego = 3;
                 if(childPosition == 2)
-                    idJuego = 5;
+                    idJuego = 4;
                 break;
             case 2:
                 if(childPosition == 0)
-                    idJuego = 6;
+                    idJuego = 5;
                 if(childPosition == 1)
-                    idJuego = 7;
+                    idJuego = 6;
                 break;
         }
         showpopup(childPosition, parentPosition);
@@ -166,28 +167,45 @@ public class MenuJuegos extends AppCompatActivity implements View.OnClickListene
 
     public void selectGame() {
         switch (idJuego) {
+            case 0:
+                Intent intent = new Intent(this,SplashScreen4.class);
+                intent.putExtra("correctos", 1);
+                startActivity(intent);
+                break;
             case 1:
-                Toast.makeText(this, "Juego 1", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, JuegoTres.class));
+                Intent intent7 = new Intent(this,SplashScreen4.class);
+                intent7.putExtra("correctos", 7);
+                startActivity(intent7);
                 break;
             case 2:
-                Toast.makeText(this, "Juego 2", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, JuegoUno.class));
+                //Toast.makeText(this, "Juego 3", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(this,SplashScreen4.class);
+                intent2.putExtra("correctos", 2);
+                startActivity(intent2);
                 break;
             case 3:
                 //Toast.makeText(this, "Juego 3", Toast.LENGTH_SHORT).show();
+                Intent intent3 = new Intent(this,SplashScreen4.class);
+                intent3.putExtra("correctos", 3);
+                startActivity(intent3);
                 break;
             case 4:
-                //Toast.makeText(this, "Juego 4", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, "Juego 3", Toast.LENGTH_SHORT).show();
+                Intent intent4 = new Intent(this,SplashScreen4.class);
+                intent4.putExtra("correctos", 3);
+                startActivity(intent4);
                 break;
             case 5:
-                //Toast.makeText(this, "Juego 5", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Juego 3", Toast.LENGTH_SHORT).show();
+                Intent intent5 = new Intent(this,SplashScreen4.class);
+                intent5.putExtra("correctos", 5);
+                startActivity(intent5);
                 break;
             case 6:
-                //Toast.makeText(this, "Juego 6", Toast.LENGTH_SHORT).show();
-                break;
-            case 7:
-                //Toast.makeText(this, "Juego 7", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Juego 3", Toast.LENGTH_SHORT).show();
+                Intent intent6 = new Intent(this,SplashScreen4.class);
+                intent6.putExtra("correctos", 6);
+                startActivity(intent6);
                 break;
 
         }

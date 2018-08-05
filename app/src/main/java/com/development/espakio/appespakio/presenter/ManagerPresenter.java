@@ -2,7 +2,7 @@ package com.development.espakio.appespakio.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.development.espakio.appespakio.presenter.IManagerPresenter;
+
 import com.development.espakio.appespakio.view.IManagerView;
 
 

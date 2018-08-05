@@ -1,7 +1,5 @@
 package com.development.espakio.appespakio.model;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +46,7 @@ public class GameInfo {
 
         games.add(new GameInfo(Constants.NAME_HAB_1,
                 new Juego(Constants.NAME_JUEGO_1, Constants.IMG_JUEGO_1, Constants.DESC_JUEGO_1),
-                new Juego(Constants.NAME_JUEGO_2, Constants.IMG_JUEGO_2, Constants.DESC_JUEGO_2) ));
+                new Juego(Constants.NAME_JUEGO_2, Constants.IMG_JUEGO_2, Constants.DESC_JUEGO_2)));
 
         games.add(new GameInfo(Constants.NAME_HAB_2,
                 new Juego(Constants.NAME_JUEGO_3, Constants.IMG_JUEGO_3, Constants.DESC_JUEGO_3),

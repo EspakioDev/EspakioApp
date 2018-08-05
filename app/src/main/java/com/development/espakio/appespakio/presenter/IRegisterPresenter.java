@@ -5,5 +5,5 @@ package com.development.espakio.appespakio.presenter;
  */
 
 public interface IRegisterPresenter {
-    void performRegister (String email, String password, String verPassword);
+    void performRegister(String email, String password, String verPassword);
 }

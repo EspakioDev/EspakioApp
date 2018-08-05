@@ -2,9 +2,10 @@ package com.development.espakio.appespakio.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import com.development.espakio.appespakio.view.IGetInfoGameView;
 
-public class GetInfoGamePresenter implements  IGetInfoGamePresenter{
+public class GetInfoGamePresenter implements IGetInfoGamePresenter {
 
     private Context context;
     private SharedPreferences preferences;

@@ -65,7 +65,7 @@ public class Usuario implements Serializable{
     }
 
     public int getImagen() {
-        return imagen;
+        return Constants.ID_IMAGEN[imagen];
     }
 
     public void setImagen(int imagen) {
@@ -93,4 +93,7 @@ public class Usuario implements Serializable{
         return fecha;
     }
 
+    public int getIdImagen() {
+        return imagen;
+    }
 }

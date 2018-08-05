@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_espakio"
+    tools:context=".activities.JuegoOcho">
+
+
+    <RelativeLayout
+        android:id="@+id/rlHead"
+        android:layout_width="314dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgPausa"
+            android:layout_width="95dp"
+            android:layout_height="107dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@drawable/ic_pausa"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationTime"
+            android:layout_width="95dp"
+            android:layout_height="107dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.017"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="Timer.json"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_loop="false" />
+
+        <TextView
+            android:id="@+id/txtTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/animationTime"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:text="00:60"
+            android:textColor="@color/Blanco"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlButtom"
+        android:layout_width="314dp"
+        android:layout_height="183dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDesc">
+
+        <Button
+            android:id="@+id/btnOpcUno"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btnstyle_amarillo"
+            android:text="Button"
+            android:textColor="@color/Blanco" />
+
+        <Button
+            android:id="@+id/btnOpcTres"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="68dp"
+            android:background="@drawable/btnstyle_amarillo"
+            android:text="Button"
+            android:textColor="@color/Blanco" />
+
+        <Button
+            android:id="@+id/btnOpcCinco"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/btnstyle_amarillo"
+            android:text="Button"
+            android:textColor="@color/Blanco" />
+
+        <Button
+            android:id="@+id/btnOpcDos"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/btnOpcUno"
+            android:background="@drawable/btnstyle_amarillo"
+            android:text="Button"
+            android:textColor="@color/Blanco" />
+
+        <Button
+            android:id="@+id/btnOpcCuatro"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/btnOpcTres"
+            android:background="@drawable/btnstyle_amarillo"
+            android:text="Button"
+            android:textColor="@color/Blanco" />
+
+        <Button
+            android:id="@+id/btnOpcSeis"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/btnstyle_amarillo"
+            android:text="Button"
+            android:textColor="@color/Blanco" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlBody"
+        android:layout_width="314dp"
+        android:layout_height="217dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/rlButtom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlHead">
+
+        <TextView
+            android:id="@+id/txtPregunta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Observa el Plantena por 3 Segundos"
+            android:textAlignment="center"
+            android:textColor="@color/Blanco"
+            android:textSize="19sp" />
+
+        <ImageView
+            android:id="@+id/imgPicture"
+            android:layout_width="159dp"
+            android:layout_height="146dp"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_planetanegro" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/transicion"
+            android:layout_width="176dp"
+            android:layout_height="163dp"
+            android:layout_centerInParent="true"
+            app:layout_constraintEnd_toEndOf="@+id/imgPicture"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="@+id/imgPicture"
+            app:layout_constraintTop_toTopOf="@+id/imgPicture"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="transicion.json"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_loop="false" />
+
+        <TextView
+            android:id="@+id/txtBienMal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="! CORRECTO !"
+            android:textColor="@color/Blanco"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
