@@ -22,7 +22,7 @@ public class TestPresenter {
 
     public Number[] getDatos(String fecha){
         String type = "getTest";
-        Number[] datos = new Number[0];
+        Number[] datos = null;
         int puntosMemo,puntosAten,puntosAgil;
         BackgroundWorker worker = new BackgroundWorker();
 
@@ -39,10 +39,10 @@ public class TestPresenter {
                 JSONArray jsonArray = new JSONArray(jsonObject.getString("result"));
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonOb = jsonArray.getJSONObject(i);
-                    puntosMemo = jsonArray.getInt(0);
-                    puntosAten = jsonArray.getInt(1);
-                    puntosAgil = jsonArray.getInt(2);
-                    datos = new Number[] {0, puntosMemo, puntosAten, puntosAgil, 0};
+                    puntosMemo = jsonOb.getInt("PuntajeMemo");
+                    puntosAten = jsonOb.getInt("PuntajeAten");
+                    puntosAgil = jsonOb.getInt("PuntajeAgil");
+                    datos = new Number[]{0, puntosMemo, puntosAten, puntosAgil, 0};
                 }
             }
         } catch (InterruptedException e) {e.printStackTrace();

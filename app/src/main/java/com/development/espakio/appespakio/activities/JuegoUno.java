@@ -159,8 +159,8 @@ public class JuegoUno extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onBackPressed() {
         Prube = false;
-        Intent intent = new Intent(JuegoUno.this,MenuJuegos.class);
-        startActivity(intent);
+        //Intent intent = new Intent(JuegoUno.this,MenuJuegos.class);
+        //startActivity(intent);
         fondo.reset();
         fondo2.reset();
         fondo3.reset();

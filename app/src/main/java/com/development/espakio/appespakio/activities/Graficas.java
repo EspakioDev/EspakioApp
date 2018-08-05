@@ -1,28 +1,25 @@
 package com.development.espakio.appespakio.activities;
 
-import android.graphics.Color;
+import android.app.Activity;
+import android.graphics.*;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.androidplot.xy.LineAndPointFormatter;
+import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.StepMode;
-import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
+import com.androidplot.xy.*;
 import com.development.espakio.appespakio.R;
 import com.development.espakio.appespakio.presenter.TestPresenter;
 
+import java.text.FieldPosition;
+import java.text.Format;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
-/*import com.androidplot.series.XYSeries;
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYPlot;
-import java.util.Arrays;//*/
-//https://www.programcreek.com/java-api-examples/index.php?api=com.androidplot.xy.XYPlot
+
+
 
 public class Graficas extends AppCompatActivity {
 
@@ -41,8 +38,8 @@ public class Graficas extends AppCompatActivity {
         myXYPlot.setDomainLabel("TIEMPO");
         myXYPlot.setRangeLabel("AVANCE");
         myXYPlot.setDomainStep(StepMode.SUBDIVIDE, 5);
-        myXYPlot.setDomainRightMax(this.getMes());
-        myXYPlot.setDomainLeftMin(this.getMes()-4);
+        //myXYPlot.setDomainRightMax(this.getMes());
+        //myXYPlot.setDomainLeftMin(this.getMes()-4);
 
         //Array de Datos a Graficar
 
@@ -50,6 +47,9 @@ public class Graficas extends AppCompatActivity {
         Number[] Datos2 = testPresenterst.getDatos(Integer.toString(this.getMes()-1));
         Number[] Datos3 = testPresenterst.getDatos(Integer.toString(this.getMes()-2));
 
+        /*Number[] Datos3 = {0, 1, 2, 3, 0};
+        Number[] Datos1 = {0, 1, 4, 2, 0};
+        Number[] Datos2 = {0, 5, 2, 10, 0};*/
         //Grafica una lina con los datos del arrglo 1
         XYSeries series1 = new SimpleXYSeries(
                 Arrays.asList(Datos1),
