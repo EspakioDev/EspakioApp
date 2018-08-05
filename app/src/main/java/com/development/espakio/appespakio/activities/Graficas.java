@@ -43,27 +43,25 @@ public class Graficas extends AppCompatActivity {
 
         //Array de Datos a Graficar
 
-        Number[] Datos1 = testPresenterst.getDatos(Integer.toString(this.getMes()));
-        Number[] Datos2 = testPresenterst.getDatos(Integer.toString(this.getMes()-1));
-        Number[] Datos3 = testPresenterst.getDatos(Integer.toString(this.getMes()-2));
+        Number[][] Datos = testPresenterst.getDatos();
 
         /*Number[] Datos3 = {0, 1, 2, 3, 0};
         Number[] Datos1 = {0, 1, 4, 2, 0};
         Number[] Datos2 = {0, 5, 2, 10, 0};*/
         //Grafica una lina con los datos del arrglo 1
         XYSeries series1 = new SimpleXYSeries(
-                Arrays.asList(Datos1),
+                Arrays.asList(Datos[0]),
                 SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
                 "MEMORIA");//Nombre de la linea 1
 
         //Grafica otra lina con los datos del arrglo 2
         XYSeries series2 = new SimpleXYSeries(
-                Arrays.asList(Datos2),
+                Arrays.asList(Datos[1]),
                 SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
                 "ATENCION");//Nombre de la linea 2
 
         XYSeries series3 = new SimpleXYSeries(
-                Arrays.asList(Datos3),
+                Arrays.asList(Datos[2]),
                 SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
                 "AGILIDAD");//Nombre de la linea 1
 

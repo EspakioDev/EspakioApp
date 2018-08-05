@@ -20,16 +20,17 @@ public class TestPresenter {
 
     }
 
-    public Number[] getDatos(String fecha){
+    public Number[][] getDatos(){
         String type = "getTest";
-        Number[] datos = null;
+        Number[][] datos = null;
+
         int puntosMemo,puntosAten,puntosAgil;
         BackgroundWorker worker = new BackgroundWorker();
 
         tblUsuarios tblUsuarios = new tblUsuarios(context);
         int idUsuario = tblUsuarios.getUserSelec().getID();
 
-        worker.execute(type, Integer.toString(idUsuario),fecha);
+        worker.execute(type, Integer.toString(idUsuario));
 
         try {
             String result = worker.get();
@@ -37,12 +38,13 @@ public class TestPresenter {
             status = jsonObject.getString("status");
             if(!onFailed() && !onError()){
                 JSONArray jsonArray = new JSONArray(jsonObject.getString("result"));
+                datos = new Number[3][jsonArray.length()];
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonOb = jsonArray.getJSONObject(i);
-                    puntosMemo = jsonOb.getInt("PuntajeMemo");
-                    puntosAten = jsonOb.getInt("PuntajeAten");
-                    puntosAgil = jsonOb.getInt("PuntajeAgil");
-                    datos = new Number[]{0, puntosMemo, puntosAten, puntosAgil, 0};
+                    datos[0][i] = jsonOb.getInt("PuntajeMemo");
+                    datos[1][i] = jsonOb.getInt("PuntajeAten");
+                    datos[2][i] = jsonOb.getInt("PuntajeAgil");
+
                 }
             }
         } catch (InterruptedException e) {e.printStackTrace();

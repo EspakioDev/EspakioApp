@@ -69,8 +69,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                             + URLEncoder.encode("puntaje", "UTF-8")+"="+URLEncoder.encode(strings[3], "UTF-8");
                     break;
                 case "getTest":
-                    post_data = URLEncoder.encode("idUsuario", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"
-                            + URLEncoder.encode("fecha", "UTF-8")+"="+URLEncoder.encode(strings[2], "UTF-8");
+                    post_data = URLEncoder.encode("idUsuario", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8");
                     break;
                 case "setImage":
                     post_data = URLEncoder.encode("idUsuario", "UTF-8")+"="+URLEncoder.encode(strings[1], "UTF-8")+"&"
